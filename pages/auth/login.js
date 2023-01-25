@@ -8,10 +8,10 @@ import { Password } from "primereact/password";
 import { LayoutContext } from "@/layout/context/layoutcontext";
 import { InputText } from "primereact/inputtext";
 import { classNames } from "primereact/utils";
+import { useFormik } from "formik";
+import { login_validation } from "@/lib/validation";
 
 const LoginPage = () => {
-  const [password, setPassword] = useState("");
-  const [checked, setChecked] = useState(false);
   const { layoutConfig } = useContext(LayoutContext);
   const contextPath = getConfig().publicRuntimeConfig.contextPath;
   const router = useRouter();
@@ -19,6 +19,19 @@ const LoginPage = () => {
     "surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden",
     { "p-input-filled": layoutConfig.inputStyle === "filled" }
   );
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validate: login_validation,
+    onSubmit,
+  });
+
+  async function onSubmit(values) {
+    console.log(values);
+  }
 
   return (
     <div className={containerClassName}>
@@ -43,49 +56,56 @@ const LoginPage = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="username"
-                className="block text-900 text-xl font-medium mb-2"
-              >
-                Username
-              </label>
-              <InputText
-                inputid="email1"
-                type="text"
-                placeholder="Username"
-                className="w-full md:w-30rem mb-5"
-                style={{ padding: "1rem" }}
-              />
+              <form onSubmit={formik.handleSubmit}>
+                <div>
+                  <label
+                    htmlFor="username"
+                    className="block text-900 text-xl font-medium mb-2"
+                  >
+                    Username
+                  </label>
+                  <InputText
+                    inputid="username"
+                    type="text"
+                    placeholder="Username"
+                    className="w-full md:w-30rem mb-5"
+                    style={{ padding: "1rem" }}
+                    {...formik.getFieldProps("username")}
+                  />
+                </div>
 
-              <label
-                htmlFor="password1"
-                className="block text-900 font-medium text-xl mb-2"
-              >
-                Password
-              </label>
-              <Password
-                inputid="password1"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                toggleMask
-                className="w-full mb-5"
-                inputClassName="w-full p-3 md:w-30rem"
-              ></Password>
+                <div>
+                  <label
+                    htmlFor="password"
+                    className="block text-900 font-medium text-xl mb-2"
+                  >
+                    Password
+                  </label>
+                  <Password
+                    inputid="password"
+                    placeholder="Password"
+                    toggleMask
+                    feedback={false}
+                    className="w-full mb-5"
+                    inputClassName="w-full p-3 md:w-30rem"
+                    {...formik.getFieldProps("password")}
+                  ></Password>
+                </div>
 
-              <div className="flex align-items-center justify-content-between mb-5 gap-5">
-                <a
-                  className="font-medium no-underline ml-2 text-right cursor-pointer"
-                  style={{ color: "var(--primary-color)" }}
-                >
-                  Forgot password?
-                </a>
-              </div>
-              <Button
-                label="Sign In"
-                className="w-full p-3 text-xl"
-                onClick={() => router.push("/")}
-              ></Button>
+                <div className="flex align-items-center justify-content-between mb-5 gap-5">
+                  <a
+                    className="font-medium no-underline ml-2 text-right cursor-pointer"
+                    style={{ color: "var(--primary-color)" }}
+                  >
+                    Forgot password?
+                  </a>
+                </div>
+                <Button
+                  label="Sign In"
+                  className="w-full p-3 text-xl"
+                  // onClick={() => router.push("/")}
+                ></Button>
+              </form>
             </div>
           </div>
         </div>
