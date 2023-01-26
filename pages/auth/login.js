@@ -10,6 +10,7 @@ import { InputText } from "primereact/inputtext";
 import { classNames } from "primereact/utils";
 import { useFormik } from "formik";
 import { login_validation } from "@/lib/validation";
+import { signIn, signOut } from "next-auth/react";
 
 const LoginPage = () => {
   const { layoutConfig } = useContext(LayoutContext);
@@ -30,7 +31,15 @@ const LoginPage = () => {
   });
 
   async function onSubmit(values) {
-    console.log(values);
+    const status = await signIn("credentials", {
+      redirect: false,
+      username: values.username,
+      password: values.password,
+      callbackUrl: "/",
+    });
+
+    console.log(status);
+    if (status.ok) router.push(status.url);
   }
 
   return (
