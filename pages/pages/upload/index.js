@@ -21,7 +21,7 @@ export default function upload() {
     <div>
       <h1 className="text-3xl font-semibold pb-3">Upload Surat</h1>
       <div className="grid p-fluid">
-        <div className="col-12 md:col-6">
+        <div className="col-12 lg:col-8">
           <div className="card">
             <div className="grid formgrid">
               <form action="">
@@ -48,7 +48,7 @@ export default function upload() {
                     showButtonBar
                     value={calendarValue}
                     onChange={(e) => setCalendarValue(e.value)}
-                  ></Calendar>
+                  />
                 </div>
                 <div className="field">
                   <h5 className="mb-2 font-semibold">Keterangan</h5>
@@ -65,7 +65,7 @@ export default function upload() {
                     mode="basic"
                     name="demo[]"
                     url="./upload.php"
-                    accept="image/*"
+                    accept=".pdf"
                     maxFileSize={1000000}
                     onUpload={onUpload}
                   />

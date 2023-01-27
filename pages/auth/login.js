@@ -102,12 +102,12 @@ const LoginPage = () => {
                 </div>
 
                 <div className="flex align-items-center justify-content-between mb-5 gap-5">
-                  <a
+                  <span
                     className="font-medium no-underline ml-2 text-right cursor-pointer"
                     style={{ color: "var(--primary-color)" }}
                   >
                     Forgot password?
-                  </a>
+                  </span>
                 </div>
                 <Button
                   label="Sign In"
