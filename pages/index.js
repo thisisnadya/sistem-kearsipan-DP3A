@@ -4,8 +4,8 @@ import { Column } from "primereact/column";
 import { Chart } from "primereact/chart";
 import { useState } from "react";
 
-export default function Home() {
-  const { data: session } = useSession();
+export default function Home({ session }) {
+  // const { data: session } = useSession();
   // pagination
   const [basicFirst, setBasicFirst] = useState(0);
   const [basicRows, setBasicRows] = useState(3);

@@ -1,22 +1,37 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { FileUpload } from "primereact/fileupload";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Calendar } from "primereact/calendar";
 import { Button } from "primereact/button";
+import { useFormik } from "formik";
 
 export default function upload() {
-  const toast = useRef(null);
-  const [calendarValue, setCalendarValue] = useState(null);
+  const formik = useFormik({
+    initialValues: {
+      judul_surat: "",
+      surat_dari: "",
+      nomor_surat: "",
+      perihal: "",
+      tanggal: "",
+      keterangan: "",
+      file: null,
+    },
+    // validate: login_validation,
+    onSubmit,
+  });
 
-  const onUpload = () => {
-    toast.current.show({
-      severity: "info",
-      summary: "Success",
-      detail: "File Uploaded",
-      life: 3000,
-    });
-  };
+  async function onSubmit(values) {
+    console.log(values);
+  }
+
+  const handleChange = useCallback(
+    (event) => {
+      formik.setFieldValue("file", event.currentTarget.files[0]);
+    },
+    [formik]
+  );
+
   return (
     <div>
       <h1 className="text-3xl font-semibold pb-3">Upload Surat</h1>
@@ -24,30 +39,50 @@ export default function upload() {
         <div className="col-12 lg:col-8">
           <div className="card">
             <div className="grid formgrid">
-              <form action="">
+              <form onSubmit={formik.handleSubmit}>
                 <div className="field">
                   <h5 className="mb-2 font-semibold">Judul Surat</h5>
-                  <InputText type="text" placeholder="Judul Surat"></InputText>
+                  <InputText
+                    type="text"
+                    placeholder="Judul Surat"
+                    name="judul_surat"
+                    {...formik.getFieldProps("judul_surat")}
+                  ></InputText>
                 </div>
                 <div className="field">
                   <h5 className="mb-2 font-semibold">Surat Masuk dari</h5>
-                  <InputText type="text" placeholder="Surat dari"></InputText>
+                  <InputText
+                    type="text"
+                    placeholder="Surat dari"
+                    name="surat_dari"
+                    {...formik.getFieldProps("surat_dari")}
+                  ></InputText>
                 </div>
                 <div className="field">
                   <h5 className="mb-2 font-semibold">Nomor Surat</h5>
-                  <InputText type="text" placeholder="Nomor Surat"></InputText>
+                  <InputText
+                    type="text"
+                    placeholder="Nomor Surat"
+                    name="nomor_surat"
+                    {...formik.getFieldProps("nomor_surat")}
+                  ></InputText>
                 </div>
                 <div className="field">
                   <h5 className="mb-2 font-semibold">Perihal</h5>
-                  <InputText type="text" placeholder="Perihal"></InputText>
+                  <InputText
+                    type="text"
+                    placeholder="Perihal"
+                    name="perihal"
+                    {...formik.getFieldProps("perihal")}
+                  ></InputText>
                 </div>
                 <div className="field">
                   <h5 className="mb-2 font-semibold">Tanggal</h5>
                   <Calendar
                     showIcon
                     showButtonBar
-                    value={calendarValue}
-                    onChange={(e) => setCalendarValue(e.value)}
+                    name="tanggal"
+                    {...formik.getFieldProps("tanggal")}
                   />
                 </div>
                 <div className="field">
@@ -57,18 +92,25 @@ export default function upload() {
                     autoResize
                     rows="3"
                     cols="30"
+                    name="keterangan"
+                    {...formik.getFieldProps("keterangan")}
                   />
                 </div>
                 <div className="field">
                   <h5 className="font-semibold mb-2">Upload File</h5>
-                  <FileUpload
+                  {/* <FileUpload
                     mode="basic"
-                    name="demo[]"
-                    url="./upload.php"
+                    name="file"
+                    // url="/api/upload"
                     accept=".pdf"
                     maxFileSize={1000000}
-                    onUpload={onUpload}
-                  />
+                    // onUpload={onUpload}
+                    id="file"
+                    type="file"
+                    auto={true}
+                    onChange={handleChange}
+                  /> */}
+                  <input type="file" name="file" onChange={handleChange} />
                 </div>
                 <Button label="Save" className="p-button-outlined" />
               </form>
