@@ -7,6 +7,9 @@ import { Button } from "primereact/button";
 import { useFormik } from "formik";
 
 export default function upload() {
+  // const [file, setFile] = useState("");
+  const [preview, setPreview] = useState("");
+
   const formik = useFormik({
     initialValues: {
       judul_surat: "",
@@ -25,12 +28,20 @@ export default function upload() {
     console.log(values);
   }
 
-  const handleChange = useCallback(
-    (event) => {
-      formik.setFieldValue("file", event.currentTarget.files[0]);
-    },
-    [formik]
-  );
+  const previewFile = async (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onloadend = () => {
+      setPreview(reader.result);
+    };
+  };
+
+  const handleChange = (e) => {
+    formik.setFieldValue("file", e.currentTarget.files[0]);
+    previewFile(e.currentTarget.files[0]);
+    console.log(preview);
+  };
 
   return (
     <div>
@@ -110,7 +121,15 @@ export default function upload() {
                     auto={true}
                     onChange={handleChange}
                   /> */}
-                  <input type="file" name="file" onChange={handleChange} />
+                  <div>
+                    <input type="file" name="file" onChange={handleChange} />
+                    <iframe
+                      src={preview}
+                      // frameBorder="0"
+                      id="preview-pdf"
+                      className="mt-2"
+                    ></iframe>
+                  </div>
                 </div>
                 <Button label="Save" className="p-button-outlined" />
               </form>
