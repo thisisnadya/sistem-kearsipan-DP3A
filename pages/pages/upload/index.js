@@ -25,7 +25,23 @@ export default function upload() {
   });
 
   async function onSubmit(values) {
-    console.log(values);
+    if (values.file) {
+      const formData = new FormData();
+
+      formData.append("file", values.file);
+
+      formData.append("upload_preset", "sistem-kearsipan");
+
+      const data = await fetch(
+        "https://api.cloudinary.com/v1_1/dhjvokhqm/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      ).then((res) => res.json());
+
+      console.log(values);
+    }
   }
 
   const previewFile = async (file) => {
@@ -35,12 +51,12 @@ export default function upload() {
     reader.onloadend = () => {
       setPreview(reader.result);
     };
+    console.log(preview);
   };
 
   const handleChange = (e) => {
     formik.setFieldValue("file", e.currentTarget.files[0]);
     previewFile(e.currentTarget.files[0]);
-    console.log(preview);
   };
 
   return (
