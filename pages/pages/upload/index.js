@@ -32,7 +32,7 @@ export default function upload() {
 
       formData.append("upload_preset", "sistem-kearsipan");
 
-      const data = await fetch(
+      const fileData = await fetch(
         "https://api.cloudinary.com/v1_1/dhjvokhqm/upload",
         {
           method: "POST",
@@ -40,7 +40,13 @@ export default function upload() {
         }
       ).then((res) => res.json());
 
-      console.log(values);
+      // console.log(values);
+
+      const data = {
+        ...values,
+        file: fileData.url,
+      };
+      console.log(data);
     }
   }
 
