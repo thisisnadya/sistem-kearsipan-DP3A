@@ -5,6 +5,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Calendar } from "primereact/calendar";
 import { Button } from "primereact/button";
 import { useFormik } from "formik";
+import { form_validation } from "@/lib/validation";
 
 export default function upload() {
   // const [file, setFile] = useState("");
@@ -20,12 +21,12 @@ export default function upload() {
       keterangan: "",
       file: null,
     },
-    // validate: login_validation,
+    validate: form_validation,
     onSubmit,
   });
 
   async function onSubmit(values) {
-    if (values.file) {
+    if (Object.keys(formik.errors).length == 0) {
       const formData = new FormData();
 
       formData.append("file", values.file);
@@ -47,6 +48,7 @@ export default function upload() {
         file: fileData.url,
       };
       console.log(data);
+      // console.log(formik.errors);
     }
   }
 
@@ -57,7 +59,6 @@ export default function upload() {
     reader.onloadend = () => {
       setPreview(reader.result);
     };
-    console.log(preview);
   };
 
   const handleChange = (e) => {
@@ -79,6 +80,11 @@ export default function upload() {
                     type="text"
                     placeholder="Judul Surat"
                     name="judul_surat"
+                    className={
+                      formik.errors.judul_surat && formik.touched.judul_surat
+                        ? "p-invalid"
+                        : ""
+                    }
                     {...formik.getFieldProps("judul_surat")}
                   ></InputText>
                 </div>
@@ -88,24 +94,41 @@ export default function upload() {
                     type="text"
                     placeholder="Surat dari"
                     name="surat_dari"
+                    className={
+                      formik.errors.judul_surat && formik.touched.judul_surat
+                        ? "p-invalid"
+                        : ""
+                    }
                     {...formik.getFieldProps("surat_dari")}
                   ></InputText>
                 </div>
+
                 <div className="field">
                   <h5 className="mb-2 font-semibold">Nomor Surat</h5>
                   <InputText
                     type="text"
                     placeholder="Nomor Surat"
                     name="nomor_surat"
+                    className={
+                      formik.errors.judul_surat && formik.touched.judul_surat
+                        ? "p-invalid"
+                        : ""
+                    }
                     {...formik.getFieldProps("nomor_surat")}
                   ></InputText>
                 </div>
+
                 <div className="field">
                   <h5 className="mb-2 font-semibold">Perihal</h5>
                   <InputText
                     type="text"
                     placeholder="Perihal"
                     name="perihal"
+                    className={
+                      formik.errors.judul_surat && formik.touched.judul_surat
+                        ? "p-invalid"
+                        : ""
+                    }
                     {...formik.getFieldProps("perihal")}
                   ></InputText>
                 </div>
@@ -126,6 +149,11 @@ export default function upload() {
                     rows="3"
                     cols="30"
                     name="keterangan"
+                    className={
+                      formik.errors.judul_surat && formik.touched.judul_surat
+                        ? "p-invalid"
+                        : ""
+                    }
                     {...formik.getFieldProps("keterangan")}
                   />
                 </div>
@@ -153,7 +181,11 @@ export default function upload() {
                     ></iframe>
                   </div>
                 </div>
-                <Button label="Save" className="p-button-outlined" />
+                <Button
+                  label="Save"
+                  className="p-button-outlined"
+                  type="submit"
+                />
               </form>
             </div>
           </div>
