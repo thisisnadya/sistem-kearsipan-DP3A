@@ -7,25 +7,33 @@ import "primeicons/primeicons.css";
 import "../styles/layout/layout.scss";
 import "../styles/globals.css";
 import { SessionProvider } from "next-auth/react";
+import { QueryClientProvider, QueryClient } from "react-query";
 // import "../styles/demo/Demos.scss";
+
+// create new client
+const queryClient = new QueryClient();
 
 export default function MyApp({ Component, pageProps }) {
   if (Component.getLayout) {
     return (
       <SessionProvider session={pageProps.session}>
-        <LayoutProvider>
-          {Component.getLayout(<Component {...pageProps} />)}
-        </LayoutProvider>
+        <QueryClientProvider client={queryClient}>
+          <LayoutProvider>
+            {Component.getLayout(<Component {...pageProps} />)}
+          </LayoutProvider>
+        </QueryClientProvider>
       </SessionProvider>
     );
   } else {
     return (
       <SessionProvider session={pageProps.session}>
-        <LayoutProvider>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </LayoutProvider>
+        <QueryClientProvider client={queryClient}>
+          <LayoutProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </LayoutProvider>
+        </QueryClientProvider>
       </SessionProvider>
     );
   }

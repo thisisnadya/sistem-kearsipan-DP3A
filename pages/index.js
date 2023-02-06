@@ -2,13 +2,24 @@ import { getSession, useSession, signOut } from "next-auth/react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Chart } from "primereact/chart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import { getAllSurat } from "@/lib/helper";
+import Link from "next/link";
 
 export default function Home({ session }) {
   // const { data: session } = useSession();
   // pagination
   const [basicFirst, setBasicFirst] = useState(0);
   const [basicRows, setBasicRows] = useState(3);
+  const { isLoading, isError, data, error } = useQuery(
+    "surat_umum",
+    getAllSurat
+  );
+
+  useEffect(() => {
+    console.log(data);
+  }, []);
 
   const onBasicPageChange = (event) => {
     setBasicFirst(event.first);
@@ -165,6 +176,8 @@ export default function Home({ session }) {
     </div>
   );
 
+  if (isLoading) return <div>Loading...</div>;
+
   return (
     <>
       <div>
@@ -251,26 +264,25 @@ export default function Home({ session }) {
         {/* Summary report end */}
 
         {/* Data table starts */}
-        <div className="my-4">
+        {/*<div className="my-4">
           <div className="card">
             <DataTable
-              value={dummyData}
+              value={data}
               header={tableHeader}
               showGridlines
               responsiveLayout="scroll"
               paginator
-              rows={5}
+              rows={3}
             >
-              <Column field="code" header="Code"></Column>
-              <Column field="name" header="Name"></Column>
-              <Column field="category" header="Category"></Column>
-              <Column field="quantity" header="Quantity"></Column>
-              <Column field="description" header="Description"></Column>
-              <Column field="price" header="Price"></Column>
-              <Column field="rating" header="Rating"></Column>
+              <Column field="judul" header="Judul"></Column>
+              <Column field="surat_dari" header="Surat Dari"></Column>
+              <Column field="nomor_surat" header="Nomor Surat"></Column>
+              <Column field="perihal" header="Perihal"></Column>
+              <Column field="keterangan" header="Keterangan"></Column>
+              <Column field="file" header="File"></Column>
             </DataTable>
           </div>
-        </div>
+  </div>*/}
         {/* Data table ends */}
 
         {/* Chart starts */}
