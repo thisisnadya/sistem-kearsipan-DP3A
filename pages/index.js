@@ -272,7 +272,7 @@ export default function Home({ session }) {
               showGridlines
               responsiveLayout="scroll"
               paginator
-              rows={3}
+              rows={5}
             >
               <Column field="judul" header="Judul"></Column>
               <Column field="surat_dari" header="Surat Dari"></Column>
