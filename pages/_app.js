@@ -17,23 +17,23 @@ export default function MyApp({ Component, pageProps }) {
   if (Component.getLayout) {
     return (
       <SessionProvider session={pageProps.session}>
-        <QueryClientProvider client={queryClient}>
-          <LayoutProvider>
+        <LayoutProvider>
+          <QueryClientProvider client={queryClient}>
             {Component.getLayout(<Component {...pageProps} />)}
-          </LayoutProvider>
-        </QueryClientProvider>
+          </QueryClientProvider>
+        </LayoutProvider>
       </SessionProvider>
     );
   } else {
     return (
       <SessionProvider session={pageProps.session}>
-        <QueryClientProvider client={queryClient}>
-          <LayoutProvider>
-            <Layout>
+        <LayoutProvider>
+          <Layout>
+            <QueryClientProvider client={queryClient}>
               <Component {...pageProps} />
-            </Layout>
-          </LayoutProvider>
-        </QueryClientProvider>
+            </QueryClientProvider>
+          </Layout>
+        </LayoutProvider>
       </SessionProvider>
     );
   }

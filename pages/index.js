@@ -17,9 +17,8 @@ export default function Home({ session }) {
     getAllSurat
   );
 
-  useEffect(() => {
-    console.log(data);
-  }, []);
+  // getAllSurat().then((res) => console.log(res));
+  console.log(data);
 
   const onBasicPageChange = (event) => {
     setBasicFirst(event.first);
@@ -264,7 +263,7 @@ export default function Home({ session }) {
         {/* Summary report end */}
 
         {/* Data table starts */}
-        {/*<div className="my-4">
+        <div className="my-4">
           <div className="card">
             <DataTable
               value={data}
@@ -282,7 +281,7 @@ export default function Home({ session }) {
               <Column field="file" header="File"></Column>
             </DataTable>
           </div>
-  </div>*/}
+        </div>
         {/* Data table ends */}
 
         {/* Chart starts */}
