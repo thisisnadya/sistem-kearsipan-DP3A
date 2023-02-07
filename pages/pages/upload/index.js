@@ -9,6 +9,8 @@ import { form_validation } from "@/lib/validation";
 import { useMutation, useQueryClient } from "react-query";
 import { getAllSurat, uploadSurat } from "@/lib/helper";
 import Success from "@/components/Success";
+import Bug from "@/components/Bug";
+import Loading from "@/components/Loading";
 
 export default function upload() {
   const queryClient = useQueryClient();
@@ -57,7 +59,8 @@ export default function upload() {
         ...values,
         file: fileData.url,
       };
-      console.log(data);
+      // console.log(data);
+
       addMutation.mutate(data);
       // console.log(formik.errors);
     }
@@ -77,8 +80,8 @@ export default function upload() {
     previewFile(e.currentTarget.files[0]);
   };
 
-  if (addMutation.isLoading) return <div>Loading...</div>;
-  if (addMutation.isError) return <div>error</div>;
+  if (addMutation.isLoading) return <Loading />;
+  if (addMutation.isError) return <Bug message={addMutation.error.message} />;
   if (addMutation.isSuccess)
     return <Success message={"Data berhasil ditambahkan"} />;
 
