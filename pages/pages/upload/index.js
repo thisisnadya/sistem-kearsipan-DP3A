@@ -6,10 +6,20 @@ import { Calendar } from "primereact/calendar";
 import { Button } from "primereact/button";
 import { useFormik } from "formik";
 import { form_validation } from "@/lib/validation";
+import { useMutation, useQueryClient } from "react-query";
+import { getAllSurat, uploadSurat } from "@/lib/helper";
+import Success from "@/components/Success";
 
 export default function upload() {
+  const queryClient = useQueryClient();
   // const [file, setFile] = useState("");
   const [preview, setPreview] = useState("");
+  const addMutation = useMutation(uploadSurat, {
+    onSuccess: () => {
+      console.log("Data Inserted");
+      queryClient.prefetchQuery("surat_umum", getAllSurat);
+    },
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -48,6 +58,7 @@ export default function upload() {
         file: fileData.url,
       };
       console.log(data);
+      addMutation.mutate(data);
       // console.log(formik.errors);
     }
   }
@@ -65,6 +76,11 @@ export default function upload() {
     formik.setFieldValue("file", e.currentTarget.files[0]);
     previewFile(e.currentTarget.files[0]);
   };
+
+  if (addMutation.isLoading) return <div>Loading...</div>;
+  if (addMutation.isError) return <div>error</div>;
+  if (addMutation.isSuccess)
+    return <Success message={"Data berhasil ditambahkan"} />;
 
   return (
     <div>

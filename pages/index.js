@@ -2,10 +2,11 @@ import { getSession, useSession, signOut } from "next-auth/react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Chart } from "primereact/chart";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { getAllSurat } from "@/lib/helper";
 import Link from "next/link";
+import Loading from "@/components/Loading";
 
 export default function Home({ session }) {
   // const { data: session } = useSession();
@@ -175,7 +176,7 @@ export default function Home({ session }) {
     </div>
   );
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
 
   return (
     <>
