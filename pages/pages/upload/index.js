@@ -11,11 +11,13 @@ import { getAllSurat, uploadSurat } from "@/lib/helper";
 import Success from "@/components/Success";
 import Bug from "@/components/Bug";
 import Loading from "@/components/Loading";
+import { useRouter } from "next/router";
 
 export default function upload() {
   const queryClient = useQueryClient();
-  // const [file, setFile] = useState("");
+  const router = useRouter();
   const [preview, setPreview] = useState("");
+  const [loading, setLoading] = useState(false);
   const addMutation = useMutation(uploadSurat, {
     onSuccess: () => {
       console.log("Data Inserted");
@@ -25,7 +27,7 @@ export default function upload() {
 
   const formik = useFormik({
     initialValues: {
-      judul_surat: "",
+      judul: "",
       surat_dari: "",
       nomor_surat: "",
       perihal: "",
@@ -38,6 +40,7 @@ export default function upload() {
   });
 
   async function onSubmit(values) {
+    setLoading(true);
     if (Object.keys(formik.errors).length == 0) {
       const formData = new FormData();
 
@@ -53,15 +56,17 @@ export default function upload() {
         }
       ).then((res) => res.json());
 
-      // console.log(values);
+      console.log(values);
 
       const data = {
         ...values,
         file: fileData.url,
       };
-      // console.log(data);
+      console.log(data);
 
       addMutation.mutate(data);
+      setLoading(false);
+      formik.resetForm();
       // console.log(formik.errors);
     }
   }
@@ -82,12 +87,15 @@ export default function upload() {
 
   if (addMutation.isLoading) return <Loading />;
   if (addMutation.isError) return <Bug message={addMutation.error.message} />;
-  if (addMutation.isSuccess)
-    return <Success message={"Data berhasil ditambahkan"} />;
 
   return (
     <div>
       <h1 className="text-3xl font-semibold pb-3">Upload Surat</h1>
+      {addMutation.isSuccess ? (
+        <Success message={"Data berhasil ditambahkan"} />
+      ) : (
+        <></>
+      )}
       <div className="grid p-fluid">
         <div className="col-12 lg:col-8">
           <div className="card">
@@ -98,13 +106,13 @@ export default function upload() {
                   <InputText
                     type="text"
                     placeholder="Judul Surat"
-                    name="judul_surat"
+                    name="judul"
                     className={
-                      formik.errors.judul_surat && formik.touched.judul_surat
+                      formik.errors.judul && formik.touched.judul
                         ? "p-invalid"
                         : ""
                     }
-                    {...formik.getFieldProps("judul_surat")}
+                    {...formik.getFieldProps("judul")}
                   ></InputText>
                 </div>
                 <div className="field">
@@ -114,7 +122,7 @@ export default function upload() {
                     placeholder="Surat dari"
                     name="surat_dari"
                     className={
-                      formik.errors.judul_surat && formik.touched.judul_surat
+                      formik.errors.surat_dari && formik.touched.surat_dari
                         ? "p-invalid"
                         : ""
                     }
@@ -129,7 +137,7 @@ export default function upload() {
                     placeholder="Nomor Surat"
                     name="nomor_surat"
                     className={
-                      formik.errors.judul_surat && formik.touched.judul_surat
+                      formik.errors.nomor_surat && formik.touched.nomor_surat
                         ? "p-invalid"
                         : ""
                     }
@@ -144,7 +152,7 @@ export default function upload() {
                     placeholder="Perihal"
                     name="perihal"
                     className={
-                      formik.errors.judul_surat && formik.touched.judul_surat
+                      formik.errors.perihal && formik.touched.perihal
                         ? "p-invalid"
                         : ""
                     }
@@ -157,6 +165,11 @@ export default function upload() {
                     showIcon
                     showButtonBar
                     name="tanggal"
+                    className={
+                      formik.errors.tanggal && formik.touched.tanggal
+                        ? "p-invalid"
+                        : ""
+                    }
                     {...formik.getFieldProps("tanggal")}
                   />
                 </div>
@@ -168,11 +181,6 @@ export default function upload() {
                     rows="3"
                     cols="30"
                     name="keterangan"
-                    className={
-                      formik.errors.judul_surat && formik.touched.judul_surat
-                        ? "p-invalid"
-                        : ""
-                    }
                     {...formik.getFieldProps("keterangan")}
                   />
                 </div>
@@ -201,7 +209,7 @@ export default function upload() {
                   </div>
                 </div>
                 <Button
-                  label="Save"
+                  label={loading ? "Mengunggah.." : "Simpan"}
                   className="p-button-outlined"
                   type="submit"
                 />

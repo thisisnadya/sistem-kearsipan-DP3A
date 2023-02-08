@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 import { getAllSurat } from "@/lib/helper";
 import Link from "next/link";
 import Loading from "@/components/Loading";
+import { AiFillFilePdf } from "react-icons/ai";
 
 export default function Home({ session }) {
   // const { data: session } = useSession();
@@ -176,6 +177,17 @@ export default function Home({ session }) {
     </div>
   );
 
+  const linkBodyTemplate = (rowData) => {
+    return (
+      <Link href={rowData.file} target="_blank">
+        <AiFillFilePdf
+          size={24}
+          className={`text-indigo-500 hover:text-indigo-300`}
+        />
+      </Link>
+    );
+  };
+
   if (isLoading) return <Loading />;
 
   return (
@@ -279,7 +291,7 @@ export default function Home({ session }) {
               <Column field="nomor_surat" header="Nomor Surat"></Column>
               <Column field="perihal" header="Perihal"></Column>
               <Column field="keterangan" header="Keterangan"></Column>
-              <Column field="file" header="File"></Column>
+              <Column header="File" body={linkBodyTemplate}></Column>
             </DataTable>
           </div>
         </div>
