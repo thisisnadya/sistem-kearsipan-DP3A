@@ -2,15 +2,24 @@ import { getSession, useSession, signOut } from "next-auth/react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Chart } from "primereact/chart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { getAllSurat } from "@/lib/helper";
 import Link from "next/link";
 import Loading from "@/components/Loading";
 import { AiFillFilePdf } from "react-icons/ai";
+import { useRouter } from "next/router";
 
-export default function Home({ session }) {
+export default function Home() {
   // const { data: session } = useSession();
+  const session = useSession();
+  const router = useRouter();
+  console.log(session);
+
+  useEffect(() => {
+    if (session.status == "unauthenticated") router.replace("/auth/login");
+  }, [session.status]);
+
   // pagination
   const [basicFirst, setBasicFirst] = useState(0);
   const [basicRows, setBasicRows] = useState(3);
@@ -307,19 +316,19 @@ export default function Home({ session }) {
   );
 }
 
-export async function getServerSideProps({ req }) {
-  const session = await getSession({ req });
+// export async function getServerSideProps({ req }) {
+//   const session = await getSession({ req });
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/auth/login",
-        permanent: false,
-      },
-    };
-  }
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: "/auth/login",
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: { session },
-  };
-}
+//   return {
+//     props: { session },
+//   };
+// }

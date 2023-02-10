@@ -16,25 +16,25 @@ const queryClient = new QueryClient();
 export default function MyApp({ Component, pageProps }) {
   if (Component.getLayout) {
     return (
-      <SessionProvider session={pageProps.session}>
-        <LayoutProvider>
+      <LayoutProvider>
+        <SessionProvider session={pageProps.session}>
           <QueryClientProvider client={queryClient}>
             {Component.getLayout(<Component {...pageProps} />)}
           </QueryClientProvider>
-        </LayoutProvider>
-      </SessionProvider>
+        </SessionProvider>
+      </LayoutProvider>
     );
   } else {
     return (
-      <SessionProvider session={pageProps.session}>
-        <LayoutProvider>
-          <Layout>
+      <LayoutProvider>
+        <Layout>
+          <SessionProvider session={pageProps.session}>
             <QueryClientProvider client={queryClient}>
               <Component {...pageProps} />
             </QueryClientProvider>
-          </Layout>
-        </LayoutProvider>
-      </SessionProvider>
+          </SessionProvider>
+        </Layout>
+      </LayoutProvider>
     );
   }
 }

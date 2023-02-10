@@ -8,8 +8,11 @@ export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
+      session: {
+        strategy: "jwt",
+      },
       async authorize(credentials, req) {
-        connectMongo().catch((err) => {
+        await connectMongo().catch((err) => {
           error: "Connection Failed";
         });
 
@@ -29,6 +32,18 @@ export const authOptions = {
           throw new Error("Password not match");
         }
         return result;
+      },
+      callbacks: {
+        async session({ session, token }) {
+          session.user = token.user;
+          return session;
+        },
+        async jwt({ token, user }) {
+          if (user) {
+            token.user = user;
+          }
+          return token;
+        },
       },
     }),
   ],

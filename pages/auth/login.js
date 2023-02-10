@@ -64,58 +64,57 @@ const LoginPage = () => {
               <span className="text-600 font-medium">Sign in to continue</span>
             </div>
 
-            <div>
-              <form onSubmit={formik.handleSubmit}>
-                <div>
-                  <label
-                    htmlFor="username"
-                    className="block text-900 text-xl font-medium mb-2"
-                  >
-                    Username
-                  </label>
-                  <InputText
-                    inputid="username"
-                    type="text"
-                    placeholder="Username"
-                    className="w-full md:w-30rem mb-5"
-                    style={{ padding: "1rem" }}
-                    {...formik.getFieldProps("username")}
-                  />
-                </div>
+            <form onSubmit={formik.handleSubmit}>
+              <div>
+                <label
+                  htmlFor="username"
+                  className="block text-900 text-xl font-medium mb-2"
+                >
+                  Username
+                </label>
+                <InputText
+                  inputid="username"
+                  type="text"
+                  placeholder="Username"
+                  className="w-full md:w-30rem mb-5"
+                  style={{ padding: "1rem" }}
+                  {...formik.getFieldProps("username")}
+                />
+              </div>
 
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="block text-900 font-medium text-xl mb-2"
-                  >
-                    Password
-                  </label>
-                  <Password
-                    inputid="password"
-                    placeholder="Password"
-                    toggleMask
-                    feedback={false}
-                    className="w-full mb-5"
-                    inputClassName="w-full p-3 md:w-30rem"
-                    {...formik.getFieldProps("password")}
-                  ></Password>
-                </div>
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-900 font-medium text-xl mb-2"
+                >
+                  Password
+                </label>
+                <Password
+                  inputid="password"
+                  placeholder="Password"
+                  toggleMask
+                  feedback={false}
+                  className="w-full mb-5"
+                  inputClassName="w-full p-3 md:w-30rem"
+                  {...formik.getFieldProps("password")}
+                ></Password>
+              </div>
 
-                <div className="flex align-items-center justify-content-between mb-5 gap-5">
-                  <span
-                    className="font-medium no-underline ml-2 text-right cursor-pointer"
-                    style={{ color: "var(--primary-color)" }}
-                  >
-                    Forgot password?
-                  </span>
-                </div>
-                <Button
-                  label="Sign In"
-                  className="w-full p-3 text-xl"
-                  // onClick={() => router.push("/")}
-                ></Button>
-              </form>
-            </div>
+              <div className="flex align-items-center justify-content-between mb-5 gap-5">
+                <span
+                  className="font-medium no-underline ml-2 text-right cursor-pointer"
+                  style={{ color: "var(--primary-color)" }}
+                >
+                  Forgot password?
+                </span>
+              </div>
+              <Button
+                label="Sign In"
+                className="w-full p-3 text-xl"
+                // type='submit'
+                // onClick={() => router.push("/")}
+              ></Button>
+            </form>
           </div>
         </div>
       </div>
