@@ -7,7 +7,7 @@ import { Button } from "primereact/button";
 import { useFormik } from "formik";
 import { form_validation } from "@/lib/validation";
 import { useMutation, useQueryClient } from "react-query";
-import { getAllSurat, uploadSurat } from "@/lib/helper";
+import { getAllSurat, uploadFileToCloudinary, uploadSurat } from "@/lib/helper";
 import Success from "@/components/Success";
 import Bug from "@/components/Bug";
 import Loading from "@/components/Loading";
@@ -16,7 +16,8 @@ import { useRouter } from "next/router";
 export default function upload() {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const [preview, setPreview] = useState("");
+  const [fileSrc, setFileSrc] = useState();
+  const [uploadData, setUploadData] = useState();
   const [loading, setLoading] = useState(false);
   const addMutation = useMutation(uploadSurat, {
     onSuccess: () => {
@@ -42,48 +43,42 @@ export default function upload() {
   async function onSubmit(values) {
     setLoading(true);
     if (Object.keys(formik.errors).length == 0) {
-      const formData = new FormData();
+      // const fileUploaded = await uploadFileToCloudinary(fileSrc);
 
-      formData.append("file", values.file);
+      // setUploadData(fileUploaded);
 
-      formData.append("upload_preset", "sistem-kearsipan");
+      // const data = {
+      //   ...values,
+      //   file: fileUploaded.url,
+      // };
+      // console.log(data);
 
-      const fileData = await fetch(
-        "https://api.cloudinary.com/v1_1/dhjvokhqm/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
-      ).then((res) => res.json());
+      const fileUploaded = await uploadFileToCloudinary(fileSrc);
+      console.log(fileSrc);
 
-      console.log(values);
-
-      const data = {
+      setUploadData(fileUploaded);
+      let model = {
         ...values,
-        file: fileData.url,
+        file: fileUploaded.url,
       };
-      console.log(data);
-
-      addMutation.mutate(data);
+      console.log(model);
+      addMutation.mutate(model);
       setLoading(false);
       formik.resetForm();
-      // console.log(formik.errors);
+      // console.log(uploadData);
     }
   }
 
-  const previewFile = async (file) => {
+  function handleOnChange(changeEvent) {
     const reader = new FileReader();
-    reader.readAsDataURL(file);
 
-    reader.onloadend = () => {
-      setPreview(reader.result);
+    reader.onload = function (onLoadEvent) {
+      setFileSrc(onLoadEvent.target.result);
+      setUploadData(undefined);
     };
-  };
 
-  const handleChange = (e) => {
-    formik.setFieldValue("file", e.currentTarget.files[0]);
-    previewFile(e.currentTarget.files[0]);
-  };
+    reader.readAsDataURL(changeEvent.target.files[0]);
+  }
 
   if (addMutation.isLoading) return <Loading />;
   if (addMutation.isError) return <Bug message={addMutation.error.message} />;
@@ -199,9 +194,9 @@ export default function upload() {
                     onChange={handleChange}
                   /> */}
                   <div>
-                    <input type="file" name="file" onChange={handleChange} />
+                    <input type="file" name="file" onChange={handleOnChange} />
                     <iframe
-                      src={preview}
+                      src={fileSrc}
                       // frameBorder="0"
                       id="preview-pdf"
                       className="mt-2"
@@ -215,6 +210,11 @@ export default function upload() {
                 />
               </form>
             </div>
+            {uploadData && (
+              <code>
+                <pre>{JSON.stringify(uploadData, null, 2)}</pre>
+              </code>
+            )}
           </div>
         </div>
       </div>
