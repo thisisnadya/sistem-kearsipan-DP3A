@@ -1,7 +1,9 @@
+import React from "react";
 import { getSession, useSession, signOut } from "next-auth/react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Chart } from "primereact/chart";
+import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { getAllSurat } from "@/lib/helper";
@@ -197,6 +199,23 @@ export default function Home() {
     );
   };
 
+  const actionBodyTemplate = (rowData) => {
+    return (
+      <React.Fragment>
+        <Button
+          icon="pi pi-pencil"
+          className="p-button-rounded p-button-success mr-2"
+          onClick={() => editProduct(rowData)}
+        />
+        <Button
+          icon="pi pi-trash"
+          className="p-button-rounded p-button-warning"
+          onClick={() => confirmDeleteProduct(rowData)}
+        />
+      </React.Fragment>
+    );
+  };
+
   if (isLoading) return <Loading />;
 
   return (
@@ -301,6 +320,12 @@ export default function Home() {
               <Column field="perihal" header="Perihal"></Column>
               <Column field="keterangan" header="Keterangan"></Column>
               <Column header="File" body={linkBodyTemplate}></Column>
+              <Column
+                header="Action"
+                body={actionBodyTemplate}
+                exportable={false}
+                style={{ minWidth: "8rem" }}
+              ></Column>
             </DataTable>
           </div>
         </div>
