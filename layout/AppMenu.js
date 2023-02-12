@@ -14,49 +14,49 @@ const AppMenu = () => {
       items: [{ label: "Dashboard", icon: "pi pi-fw pi-home", to: "/" }],
     },
     {
-      label: "Kearsipan",
+      label: "Umum",
       items: [
         {
-          label: "Upload Surat",
+          label: "Surat Masuk",
           icon: "pi pi-fw pi-id-card",
-          to: "/pages/upload",
+          items: [
+            {
+              label: "Upload Surat",
+              icon: "pi pi-upload",
+              to: "/pages/upload",
+            },
+          ],
         },
         {
-          label: "Surat Umum",
-          icon: "pi pi-fw pi-check-square",
-          to: "/uikit/input",
+          label: "Surat Keluar",
+          icon: "pi pi-fw pi-id-card",
+          items: [
+            {
+              label: "Upload Surat",
+              icon: "pi pi-upload",
+              to: "/pages/upload",
+            },
+          ],
         },
       ],
     },
-
     {
-      label: "Pages",
-      icon: "pi pi-fw pi-briefcase",
-      to: "/pages",
+      label: "Kepegawaian",
+      icon: "pi pi-fw pi-user",
       items: [
         {
-          label: "Landing",
-          icon: "pi pi-fw pi-globe",
-          to: "/landing",
-        },
-        {
-          label: "Kepegawaian",
-          icon: "pi pi-fw pi-user",
+          label: "Arsip Kepegawaian",
+          icon: "pi pi-fw pi-id-card",
           items: [
             {
+              label: "Upload Surat",
+              icon: "pi pi-upload",
+              to: "/pages/upload",
+            },
+            {
               label: "Arsip Surat",
-              icon: "pi pi-fw pi-sign-in",
-              to: "/auth/login",
-            },
-            {
-              label: "Error",
-              icon: "pi pi-fw pi-times-circle",
-              to: "/auth/error",
-            },
-            {
-              label: "Access Denied",
-              icon: "pi pi-fw pi-lock",
-              to: "/auth/access",
+              icon: "pi pi-upload",
+              to: "/arsip",
             },
           ],
         },

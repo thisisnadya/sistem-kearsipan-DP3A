@@ -1,5 +1,5 @@
 import React from "react";
-import { getSession, useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Chart } from "primereact/chart";
@@ -10,13 +10,14 @@ import { getAllSurat } from "@/lib/helper";
 import Link from "next/link";
 import Loading from "@/components/Loading";
 import { AiFillFilePdf } from "react-icons/ai";
+import { MdPageview } from "react-icons/md";
 import { useRouter } from "next/router";
 
 export default function Home() {
   // const { data: session } = useSession();
   const session = useSession();
   const router = useRouter();
-  console.log(session);
+  // console.log(session);
 
   useEffect(() => {
     if (session.status == "unauthenticated") router.replace("/auth/login");
@@ -25,13 +26,15 @@ export default function Home() {
   // pagination
   const [basicFirst, setBasicFirst] = useState(0);
   const [basicRows, setBasicRows] = useState(3);
+
+  // get Data
   const { isLoading, isError, data, error } = useQuery(
     "surat_umum",
     getAllSurat
   );
 
   // getAllSurat().then((res) => console.log(res));
-  console.log(data);
+  // console.log(data);
 
   const onBasicPageChange = (event) => {
     setBasicFirst(event.first);
@@ -184,9 +187,21 @@ export default function Home() {
 
   const tableHeader = (
     <div>
-      <h1 className="text-slate-700 text-3xl">Data Surat Masuk dan Keluar</h1>
+      <h1 className="text-slate-700 text-3xl">Data Surat Masuk</h1>
     </div>
   );
+
+  const viewBodyTemplate = (rowData) => {
+    return (
+      <Link href={`/pages/detail/${rowData._id}`}>
+        <MdPageview
+          size={24}
+          className={`text-indigo-500 hover:text-indigo-300`}
+        />
+        <span className="text-slate-800">Lihat Detail</span>
+      </Link>
+    );
+  };
 
   const linkBodyTemplate = (rowData) => {
     return (
@@ -233,9 +248,11 @@ export default function Home() {
               <div className="flex justify-content-between mb-3">
                 <div>
                   <span className="block text-500 font-medium mb-3">
-                    Orders
+                    Jumlah Surat
                   </span>
-                  <div className="text-900 font-medium text-xl">152</div>
+                  <div className="text-900 font-medium text-xl">
+                    {data.length}
+                  </div>
                 </div>
                 <div
                   className="flex align-items-center justify-content-center bg-blue-100 border-round"
@@ -316,9 +333,7 @@ export default function Home() {
             >
               <Column field="judul" header="Judul"></Column>
               <Column field="surat_dari" header="Surat Dari"></Column>
-              <Column field="nomor_surat" header="Nomor Surat"></Column>
-              <Column field="perihal" header="Perihal"></Column>
-              <Column field="keterangan" header="Keterangan"></Column>
+              <Column header="Detail" body={viewBodyTemplate}></Column>
               <Column header="File" body={linkBodyTemplate}></Column>
               <Column
                 header="Action"

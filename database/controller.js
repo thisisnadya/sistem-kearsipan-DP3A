@@ -14,7 +14,6 @@ export const getAllSurat = async (req, res) => {
     res.status(404).json({ error });
   }
 };
-
 // POST data surat
 // http://localhost:3000/api/data_surat
 export const uploadSurat = async (req, res) => {

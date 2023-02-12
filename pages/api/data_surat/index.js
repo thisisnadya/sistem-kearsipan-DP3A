@@ -1,12 +1,17 @@
 import connectMongo from "@/database/conn";
-import { getAllSurat, uploadSurat } from "@/database/controller";
+import {
+  getAllSurat,
+  getDetailSurat,
+  uploadSurat,
+} from "@/database/controller";
 
 export default function handler(req, res) {
   connectMongo().catch(() => {
     res.status(405).json({ error: "Mongo connection error" });
   });
 
-  const { method } = req;
+  const { method, query } = req;
+  console.log(req.query);
 
   switch (method) {
     case "GET":

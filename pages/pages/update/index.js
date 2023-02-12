@@ -49,6 +49,7 @@ export default function upload() {
         ...values,
         file: fileUploaded.url,
       };
+      console.log(model);
       addMutation.mutate(model);
       setLoading(false);
       formik.resetForm();
@@ -168,25 +169,8 @@ export default function upload() {
                 </div>
                 <div className="field">
                   <h5 className="font-semibold mb-2">Upload File</h5>
-                  {/* <FileUpload
-                    mode="basic"
-                    name="file"
-                    // url="/api/upload"
-                    accept=".pdf"
-                    maxFileSize={1000000}
-                    // onUpload={onUpload}
-                    id="file"
-                    type="file"
-                    auto={true}
-                    onChange={handleChange}
-                  /> */}
                   <div>
-                    <input
-                      type="file"
-                      name="file"
-                      accept=".pdf"
-                      onChange={handleOnChange}
-                    />
+                    <input type="file" name="file" onChange={handleOnChange} />
                     <iframe
                       src={fileSrc}
                       // frameBorder="0"
