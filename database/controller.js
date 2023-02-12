@@ -1,10 +1,10 @@
-import suratUmum from "@/model/surat_umum";
+import suratMasuk from "@/model/surat_masuk";
 
 // GET all surat
-// http://localhost:3000/api/data_surat
-export const getAllSurat = async (req, res) => {
+// http://localhost:3000/api/data_surat/surat_masuk
+export const getAllSuratMasuk = async (req, res) => {
   try {
-    const allSurat = await suratUmum.find({});
+    const allSurat = await suratMasuk.find({});
 
     if (!allSurat)
       return res.status(404).json({ message: "Tidak ada data ditemukan" });
@@ -14,9 +14,10 @@ export const getAllSurat = async (req, res) => {
     res.status(404).json({ error });
   }
 };
+
 // POST data surat
-// http://localhost:3000/api/data_surat
-export const uploadSurat = async (req, res) => {
+// http://localhost:3000/api/data_surat/surat_masuk/upload
+export const uploadSuratMasuk = async (req, res) => {
   try {
     const dataSurat = req.body;
 
@@ -24,7 +25,7 @@ export const uploadSurat = async (req, res) => {
       return res.status(404).json({ message: "Dont have form data" });
     }
 
-    await suratUmum.create(dataSurat, function (err, data) {
+    await suratMasuk.create(dataSurat, function (err, data) {
       return res.status(200).json(data);
     });
   } catch (error) {

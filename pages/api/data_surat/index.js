@@ -1,6 +1,6 @@
 import connectMongo from "@/database/conn";
 import {
-  getAllSurat,
+  getAllSuratMasuk,
   getDetailSurat,
   uploadSurat,
 } from "@/database/controller";
@@ -15,7 +15,7 @@ export default function handler(req, res) {
 
   switch (method) {
     case "GET":
-      getAllSurat(req, res);
+      getAllSuratMasuk(req, res);
       break;
     case "POST":
       uploadSurat(req, res);

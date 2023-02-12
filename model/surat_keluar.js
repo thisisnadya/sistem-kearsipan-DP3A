@@ -1,6 +1,6 @@
 import { model, models, Schema } from "mongoose";
 
-const suratUmumSchema = new Schema({
+const suratKeluarSchema = new Schema({
   judul: String,
   surat_dari: String,
   nomor_surat: String,
@@ -13,5 +13,6 @@ const suratUmumSchema = new Schema({
   file: String,
 });
 
-const suratUmum = models.surat_umum || model("surat_umum", suratUmumSchema);
-export default suratUmum;
+const suratKeluar =
+  models.surat_keluar || model("surat_keluar", suratKeluarSchema);
+export default suratKeluar;

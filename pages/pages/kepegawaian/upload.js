@@ -42,7 +42,7 @@ export default function upload() {
   async function onSubmit(values) {
     setLoading(true);
     if (Object.keys(formik.errors).length == 0) {
-      const fileUploaded = await uploadFileToCloudinary(fileSrc);
+      const fileUploaded = await uploadFileToCloudinary(fileSrc, "surat_masuk");
 
       setUploadData(fileUploaded);
       let model = {

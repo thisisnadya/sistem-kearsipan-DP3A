@@ -6,7 +6,7 @@ import { Chart } from "primereact/chart";
 import { Button } from "primereact/button";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { getAllSurat } from "@/lib/helper";
+import { getAllSuratMasuk } from "@/lib/helper";
 import Link from "next/link";
 import Loading from "@/components/Loading";
 import { AiFillFilePdf } from "react-icons/ai";
@@ -29,8 +29,8 @@ export default function Home() {
 
   // get Data
   const { isLoading, isError, data, error } = useQuery(
-    "surat_umum",
-    getAllSurat
+    "surat_masuk",
+    getAllSuratMasuk
   );
 
   // getAllSurat().then((res) => console.log(res));

@@ -23,7 +23,7 @@ const AppMenu = () => {
             {
               label: "Upload Surat",
               icon: "pi pi-upload",
-              to: "/pages/upload",
+              to: "/pages/surat_masuk/upload",
             },
           ],
         },
