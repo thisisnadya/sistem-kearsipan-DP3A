@@ -11,11 +11,10 @@ import {
   uploadFileToCloudinary,
   uploadSuratMasuk,
 } from "@/lib/helper";
-import Success from "@/components/Success";
-import Bug from "@/components/Bug";
+
 import Loading from "@/components/Loading";
 import { useRouter } from "next/router";
-import Toast from "@/components/Toast";
+import ToastMessage from "@/components/Toast";
 
 export default function upload() {
   const queryClient = useQueryClient();
@@ -33,7 +32,7 @@ export default function upload() {
   const formik = useFormik({
     initialValues: {
       judul: "",
-      surat_dari: "",
+      info: "",
       nomor_surat: "",
       perihal: "",
       tanggal: "",
@@ -73,14 +72,25 @@ export default function upload() {
   }
 
   if (addMutation.isLoading) return <Loading />;
-  if (addMutation.isError) return <Bug message={addMutation.error.message} />;
+  if (addMutation.isError)
+    return (
+      <ToastMessage
+        severity={"error"}
+        summary={"Error!"}
+        detail={"Terjadi kesalahan!"}
+      />
+    );
 
   return (
     <div>
       <h1 className="text-3xl font-semibold pb-3">Upload Surat</h1>
       {addMutation.isSuccess ? (
         // <Success message={"Data berhasil ditambahkan"} />
-        <Toast />
+        <ToastMessage
+          severity={"success"}
+          summary={"Sukses!"}
+          detail={"Data Berhasil ditambahkan"}
+        />
       ) : (
         <></>
       )}
@@ -109,11 +119,6 @@ export default function upload() {
                     type="text"
                     placeholder="Surat dari"
                     name="surat_dari"
-                    className={
-                      formik.errors.surat_dari && formik.touched.surat_dari
-                        ? "p-invalid"
-                        : ""
-                    }
                     {...formik.getFieldProps("surat_dari")}
                   ></InputText>
                 </div>

@@ -21,6 +21,11 @@ const AppMenu = () => {
           icon: "pi pi-fw pi-id-card",
           items: [
             {
+              label: "Data Surat Masuk",
+              icon: "pi pi-fw pi-id-card",
+              to: "/pages/surat_masuk/",
+            },
+            {
               label: "Upload Surat",
               icon: "pi pi-upload",
               to: "/pages/surat_masuk/upload",
@@ -32,9 +37,14 @@ const AppMenu = () => {
           icon: "pi pi-fw pi-id-card",
           items: [
             {
+              label: "Data Surat Keluar",
+              icon: "pi pi-fw pi-id-card",
+              to: "/pages/surat_keluar/",
+            },
+            {
               label: "Upload Surat",
               icon: "pi pi-upload",
-              to: "/pages/upload",
+              to: "/pages/surat_keluar/upload",
             },
           ],
         },
@@ -51,12 +61,12 @@ const AppMenu = () => {
             {
               label: "Upload Surat",
               icon: "pi pi-upload",
-              to: "/pages/upload",
+              to: "/pages/kepegawaian/upload",
             },
             {
               label: "Arsip Surat",
-              icon: "pi pi-upload",
-              to: "/arsip",
+              icon: "pi pi-fw pi-id-card",
+              to: "/pages/kepegawaian",
             },
           ],
         },

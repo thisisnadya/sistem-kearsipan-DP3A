@@ -2,7 +2,7 @@ import { model, models, Schema } from "mongoose";
 
 const suratKeluarSchema = new Schema({
   judul: String,
-  surat_dari: String,
+  surat_kepada: String,
   nomor_surat: String,
   perihal: String,
   tanggal: {

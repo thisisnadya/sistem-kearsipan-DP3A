@@ -6,11 +6,15 @@ import { Button } from "primereact/button";
 import { useFormik } from "formik";
 import { form_validation } from "@/lib/validation";
 import { useMutation, useQueryClient } from "react-query";
-import { getAllSurat, uploadFileToCloudinary, uploadSurat } from "@/lib/helper";
-import Success from "@/components/Success";
-import Bug from "@/components/Bug";
+import {
+  getAllSuratKeluar,
+  uploadFileToCloudinary,
+  uploadSuratKeluar,
+} from "@/lib/helper";
+
 import Loading from "@/components/Loading";
 import { useRouter } from "next/router";
+import ToastMessage from "@/components/Toast";
 
 export default function upload() {
   const queryClient = useQueryClient();
@@ -18,17 +22,17 @@ export default function upload() {
   const [fileSrc, setFileSrc] = useState();
   const [uploadData, setUploadData] = useState();
   const [loading, setLoading] = useState(false);
-  const addMutation = useMutation(uploadSurat, {
+  const addMutation = useMutation(uploadSuratKeluar, {
     onSuccess: () => {
       console.log("Data Inserted");
-      queryClient.prefetchQuery("surat_umum", getAllSurat);
+      queryClient.prefetchQuery("surat_keluar", getAllSuratKeluar);
     },
   });
 
   const formik = useFormik({
     initialValues: {
       judul: "",
-      surat_dari: "",
+      surat_kepada: "",
       nomor_surat: "",
       perihal: "",
       tanggal: "",
@@ -42,7 +46,10 @@ export default function upload() {
   async function onSubmit(values) {
     setLoading(true);
     if (Object.keys(formik.errors).length == 0) {
-      const fileUploaded = await uploadFileToCloudinary(fileSrc, "surat_masuk");
+      const fileUploaded = await uploadFileToCloudinary(
+        fileSrc,
+        "surat_keluar"
+      );
 
       setUploadData(fileUploaded);
       let model = {
@@ -68,13 +75,24 @@ export default function upload() {
   }
 
   if (addMutation.isLoading) return <Loading />;
-  if (addMutation.isError) return <Bug message={addMutation.error.message} />;
+  if (addMutation.isError)
+    return (
+      <ToastMessage
+        severity={"error"}
+        summary={"Error!"}
+        detail={"Terjadi kesalahan!"}
+      />
+    );
 
   return (
     <div>
-      <h1 className="text-3xl font-semibold pb-3">Upload Surat</h1>
+      <h1 className="text-3xl font-semibold pb-3">Upload Surat Keluar</h1>
       {addMutation.isSuccess ? (
-        <Success message={"Data berhasil ditambahkan"} />
+        <ToastMessage
+          severity={"success"}
+          summary={"Sukses!"}
+          detail={"Data Berhasil ditambahkan"}
+        />
       ) : (
         <></>
       )}
@@ -98,17 +116,17 @@ export default function upload() {
                   ></InputText>
                 </div>
                 <div className="field">
-                  <h5 className="mb-2 font-semibold">Surat Masuk dari</h5>
+                  <h5 className="mb-2 font-semibold">Dikirim kepada</h5>
                   <InputText
                     type="text"
-                    placeholder="Surat dari"
-                    name="surat_dari"
-                    className={
-                      formik.errors.surat_dari && formik.touched.surat_dari
-                        ? "p-invalid"
-                        : ""
-                    }
-                    {...formik.getFieldProps("surat_dari")}
+                    placeholder="Surat ke"
+                    name="surat_kepada"
+                    // className={
+                    //   formik.errors.surat_dari && formik.touched.surat_dari
+                    //     ? "p-invalid"
+                    //     : ""
+                    // }
+                    {...formik.getFieldProps("surat_kepada")}
                   ></InputText>
                 </div>
 
