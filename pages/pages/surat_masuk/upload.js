@@ -32,7 +32,7 @@ export default function upload() {
   const formik = useFormik({
     initialValues: {
       judul: "",
-      info: "",
+      surat_dari: "",
       nomor_surat: "",
       perihal: "",
       tanggal: "",
