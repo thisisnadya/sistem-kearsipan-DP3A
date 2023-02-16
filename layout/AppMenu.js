@@ -22,7 +22,7 @@ const AppMenu = () => {
           items: [
             {
               label: "Data Surat Masuk",
-              icon: "pi pi-fw pi-id-card",
+              icon: "pi pi-id-card",
               to: "/pages/surat_masuk/",
             },
             {
@@ -38,7 +38,7 @@ const AppMenu = () => {
           items: [
             {
               label: "Data Surat Keluar",
-              icon: "pi pi-fw pi-id-card",
+              icon: "pi pi-id-card",
               to: "/pages/surat_keluar/",
             },
             {
@@ -65,7 +65,7 @@ const AppMenu = () => {
             },
             {
               label: "Arsip Surat",
-              icon: "pi pi-fw pi-id-card",
+              icon: "pi pi-id-card",
               to: "/pages/kepegawaian",
             },
           ],

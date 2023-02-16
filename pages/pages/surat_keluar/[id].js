@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { useRouter } from "next/router";
-import { getDetailSuratMasuk } from "@/lib/helper";
+import { getDetailSuratKeluar } from "@/lib/helper";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -15,8 +15,8 @@ export default function detail() {
   //   );
 
   const { isLoading, isError, data, error } = useQuery(
-    ["surat_masuk", id],
-    () => getDetailSuratMasuk(id)
+    ["surat_keluar", id],
+    () => getDetailSuratKeluar(id)
   );
 
   if (isLoading) return <h1>Loading..</h1>;
@@ -29,8 +29,8 @@ export default function detail() {
       <div className="detail">
         <h1 className="font-normal text-xl py-3">Judul : {data.judul}</h1>
         <h1 className="font-normal text-xl py-3">
-          Surat dari :{" "}
-          {data.surat_dari ? data.surat_dari : "Tidak ada keterangan"}
+          Surat Untuk :{" "}
+          {data.surat_kepada ? data.surat_kepada : "Tidak ada keterangan"}
         </h1>
         <h1 className="font-normal text-xl py-3">
           Nomor Surat : {data.nomor_surat}

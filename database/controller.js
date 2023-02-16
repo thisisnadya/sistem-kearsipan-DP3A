@@ -21,15 +21,17 @@ export const getAllSuratMasuk = async (req, res) => {
 
 // GET SPECIFIC SURAT
 // http://localhost:3000/api/data_surat/surat_masuk/[id]
-// export const getDetailSuratMasuk = async (req, res) => {
-//   try {
-//     res.send(req.query);
-//     console.log(req.query);
-//     // res.status(200).json(findSurat);
-//   } catch (error) {
-//     res.status(404).json({ error });
-//   }
-// };
+export const getDetailSuratMasuk = async (req, res) => {
+  try {
+    const findSurat = await suratMasuk.findById(req.query.id);
+    res.status(200).json(findSurat);
+  } catch (error) {
+    res.status(404).json({ error });
+  }
+};
+
+// DELETE SURAT
+// http://localhost:3000/api/data_surat/surat_masuk/[id]
 
 // POST data surat
 // http://localhost:3000/api/data_surat/surat_masuk/upload
@@ -52,7 +54,8 @@ export const uploadSuratMasuk = async (req, res) => {
 // UPDATE data surat
 
 // SURAT KELUAR
-// get All Surat Keluar
+// GET All Surat Keluar
+// http://localhost:3000/api/data_surat/surat_keluar/
 export const getAllSuratKeluar = async (req, res) => {
   try {
     const allSurat = await suratKeluar.find({});
@@ -61,6 +64,17 @@ export const getAllSuratKeluar = async (req, res) => {
       return res.status(404).json({ message: "Tidak ada data ditemukan" });
 
     res.status(200).json(allSurat);
+  } catch (error) {
+    res.status(404).json({ error });
+  }
+};
+
+// get specific surat keluar
+// http://localhost:3000/api/data_surat/surat_keluar/[id]
+export const getDetailSuratKeluar = async (req, res) => {
+  try {
+    const findSurat = await suratKeluar.findById(req.query.id);
+    res.status(200).json(findSurat);
   } catch (error) {
     res.status(404).json({ error });
   }
@@ -96,6 +110,17 @@ export const getAllSuratKepegawaian = async (req, res) => {
       return res.status(404).json({ message: "Tidak ada data ditemukan" });
 
     res.status(200).json(allSurat);
+  } catch (error) {
+    res.status(404).json({ error });
+  }
+};
+
+// get specific surat kepegawaian
+// http://localhost:3000/api/data_surat/kepegawaian/[id]
+export const getDetailSuratKepegawaian = async (req, res) => {
+  try {
+    const findSurat = await suratKepegawaian.findById(req.query.id);
+    res.status(200).json(findSurat);
   } catch (error) {
     res.status(404).json({ error });
   }

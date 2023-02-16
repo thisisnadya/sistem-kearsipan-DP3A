@@ -23,7 +23,7 @@ export default function homeSuratKeluar() {
 
   const viewBodyTemplate = (rowData) => {
     return (
-      <Link href={`/pages/surat_keluar/${rowData._id}`}>
+      <Link href={`/pages/kepegawaian/${rowData._id}`}>
         <MdPageview
           size={24}
           className={`text-indigo-500 hover:text-indigo-300`}

@@ -1,5 +1,5 @@
 import connectMongo from "@/database/conn";
-import { getDetailSuratMasuk } from "@/database/controller";
+import { getDetailSuratKeluar } from "@/database/controller";
 
 export default function handler(req, res) {
   connectMongo().catch(() => {
@@ -14,7 +14,7 @@ export default function handler(req, res) {
 
   switch (method) {
     case "GET":
-      getDetailSuratMasuk(req, res);
+      getDetailSuratKeluar(req, res);
       break;
     case "PUT":
       res.status(200).json("PUT REQUEST");
