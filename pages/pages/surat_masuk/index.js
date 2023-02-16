@@ -8,12 +8,45 @@ import Link from "next/link";
 import { AiFillFilePdf } from "react-icons/ai";
 import { MdPageview } from "react-icons/md";
 import { Button } from "primereact/button";
+import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { Toast } from "primereact/toast";
+import { useRef } from "react";
 
 export default function homeSuratMasuk() {
+  const toast = useRef(null);
   const { isLoading, isError, data, error } = useQuery(
     "surat_masuk",
     getAllSuratMasuk
   );
+
+  const accept = () => {
+    toast.current.show({
+      severity: "info",
+      summary: "Confirmed",
+      detail: "You have accepted",
+      life: 3000,
+    });
+  };
+
+  const reject = () => {
+    toast.current.show({
+      severity: "warn",
+      summary: "Rejected",
+      detail: "You have rejected",
+      life: 3000,
+    });
+  };
+
+  const confirmDelete = () => {
+    confirmDialog({
+      message: "Yakin ingin menghapus?",
+      header: "Konfirmasi Penghapusan",
+      icon: "pi pi-info-circle",
+      acceptClassName: "p-button-danger",
+      accept,
+      reject,
+    });
+  };
 
   const tableHeader = (
     <div>
@@ -46,16 +79,20 @@ export default function homeSuratMasuk() {
   const actionBodyTemplate = (rowData) => {
     return (
       <React.Fragment>
-        <Button
-          icon="pi pi-pencil"
-          className="p-button-rounded p-button-success mr-2"
-          onClick={() => editProduct(rowData)}
-        />
-        <Button
-          icon="pi pi-trash"
-          className="p-button-rounded p-button-warning"
-          onClick={() => confirmDeleteProduct(rowData)}
-        />
+        <Toast ref={toast} />
+        <ConfirmDialog />
+        <div>
+          <Button
+            icon="pi pi-pencil"
+            className="p-button-rounded p-button-success mr-2"
+            onClick={() => editProduct(rowData)}
+          />
+          <Button
+            icon="pi pi-trash"
+            className="p-button-rounded p-button-warning"
+            onClick={confirmDelete}
+          />
+        </div>
       </React.Fragment>
     );
   };

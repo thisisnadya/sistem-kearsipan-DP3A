@@ -1,5 +1,5 @@
 import connectMongo from "@/database/conn";
-import { getDetailSuratMasuk } from "@/database/controller";
+import { deleteSuratMasuk, getDetailSuratMasuk } from "@/database/controller";
 
 export default function handler(req, res) {
   connectMongo().catch(() => {
@@ -20,7 +20,7 @@ export default function handler(req, res) {
       res.status(200).json("PUT REQUEST");
       break;
     case "DELETE":
-      res.status(200).json("DELETE REQUEST");
+      deleteSuratMasuk(req, res);
       break;
   }
 }

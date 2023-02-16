@@ -30,9 +30,6 @@ export const getDetailSuratMasuk = async (req, res) => {
   }
 };
 
-// DELETE SURAT
-// http://localhost:3000/api/data_surat/surat_masuk/[id]
-
 // POST data surat
 // http://localhost:3000/api/data_surat/surat_masuk/upload
 export const uploadSuratMasuk = async (req, res) => {
@@ -48,6 +45,17 @@ export const uploadSuratMasuk = async (req, res) => {
     });
   } catch (error) {
     res.status(404).json({ error });
+  }
+};
+
+// DELETE SURAT
+// http://localhost:3000/api/data_surat/surat_masuk/[id]
+export const deleteSuratMasuk = async (req, res) => {
+  try {
+    const response = await suratMasuk.deleteOne({ _id: req.query.id });
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(404).json(error);
   }
 };
 
@@ -98,6 +106,17 @@ export const uploadSuratKeluar = async (req, res) => {
   }
 };
 
+// delete surat
+// http://localhost:3000/api/data_surat/surat_keluar/[id]
+export const deleteSuratKeluar = async (req, res) => {
+  try {
+    const response = await suratKeluar.deleteOne({ _id: req.query.id });
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(404).json(error);
+  }
+};
+
 // KEPEGAWAIAN
 
 // get All Surat
@@ -141,5 +160,16 @@ export const uploadSuratKepegawaian = async (req, res) => {
     });
   } catch (error) {
     res.status(404).json({ error });
+  }
+};
+
+// delete surat
+// http://localhost:3000/api/data_surat/kepegawaian/[id]
+export const deleteSuratKepegawaian = async (req, res) => {
+  try {
+    const response = await suratKepegawaian.deleteOne({ _id: req.query.id });
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(404).json(error);
   }
 };

@@ -1,5 +1,8 @@
 import connectMongo from "@/database/conn";
-import { getDetailSuratKepegawaian } from "@/database/controller";
+import {
+  deleteSuratKepegawaian,
+  getDetailSuratKepegawaian,
+} from "@/database/controller";
 
 export default function handler(req, res) {
   connectMongo().catch(() => {
@@ -20,7 +23,7 @@ export default function handler(req, res) {
       res.status(200).json("PUT REQUEST");
       break;
     case "DELETE":
-      res.status(200).json("DELETE REQUEST");
+      deleteSuratKepegawaian(req, res);
       break;
   }
 }
