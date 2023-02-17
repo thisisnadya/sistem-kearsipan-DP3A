@@ -1,6 +1,6 @@
 import React from "react";
 import Loading from "@/components/Loading";
-import { getAllSuratMasuk } from "@/lib/helper";
+import { deleteFileCloudinary, getAllSuratMasuk } from "@/lib/helper";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { useQuery } from "react-query";
@@ -19,34 +19,10 @@ export default function homeSuratMasuk() {
     getAllSuratMasuk
   );
 
-  const accept = () => {
-    toast.current.show({
-      severity: "info",
-      summary: "Confirmed",
-      detail: "You have accepted",
-      life: 3000,
-    });
-  };
-
-  const reject = () => {
-    toast.current.show({
-      severity: "warn",
-      summary: "Rejected",
-      detail: "You have rejected",
-      life: 3000,
-    });
-  };
-
-  const confirmDelete = () => {
-    confirmDialog({
-      message: "Yakin ingin menghapus?",
-      header: "Konfirmasi Penghapusan",
-      icon: "pi pi-info-circle",
-      acceptClassName: "p-button-danger",
-      accept,
-      reject,
-    });
-  };
+  async function deleteFile() {
+    const res = await deleteFileCloudinary("surat_masuk/ytpkaietbu7oi98qrajz");
+    console.log(res);
+  }
 
   const tableHeader = (
     <div>
@@ -79,8 +55,6 @@ export default function homeSuratMasuk() {
   const actionBodyTemplate = (rowData) => {
     return (
       <React.Fragment>
-        <Toast ref={toast} />
-        <ConfirmDialog />
         <div>
           <Button
             icon="pi pi-pencil"
@@ -90,7 +64,7 @@ export default function homeSuratMasuk() {
           <Button
             icon="pi pi-trash"
             className="p-button-rounded p-button-warning"
-            onClick={confirmDelete}
+            onClick={() => deleteFile()}
           />
         </div>
       </React.Fragment>

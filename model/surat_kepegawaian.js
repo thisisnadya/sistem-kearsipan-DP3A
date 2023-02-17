@@ -10,6 +10,7 @@ const suratKepegawaianSchema = new Schema({
   },
   keterangan: String,
   file: String,
+  public_id: String,
 });
 
 const suratKepegawaian =

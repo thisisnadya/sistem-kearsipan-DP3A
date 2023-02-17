@@ -53,6 +53,7 @@ export default function upload() {
       let model = {
         ...values,
         file: fileUploaded.url,
+        public_id: fileUploaded.public_id,
       };
       addMutation.mutate(model);
       setLoading(false);

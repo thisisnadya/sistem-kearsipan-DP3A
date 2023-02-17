@@ -11,6 +11,7 @@ const suratMasukSchema = new Schema({
   },
   keterangan: String,
   file: String,
+  public_id: String,
 });
 
 const suratMasuk = models.surat_masuk || model("surat_masuk", suratMasukSchema);
