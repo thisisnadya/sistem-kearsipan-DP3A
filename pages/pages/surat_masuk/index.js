@@ -1,9 +1,13 @@
 import React from "react";
 import Loading from "@/components/Loading";
-import { deleteFileCloudinary, getAllSuratMasuk } from "@/lib/helper";
+import {
+  deleteFileCloudinary,
+  deleteSuratMasuk,
+  getAllSuratMasuk,
+} from "@/lib/helper";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import Link from "next/link";
 import { AiFillFilePdf } from "react-icons/ai";
 import { MdPageview } from "react-icons/md";
@@ -11,16 +15,26 @@ import { Button } from "primereact/button";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
 import { useRef } from "react";
+import ToastMessage from "@/components/Toast";
 
 export default function homeSuratMasuk() {
+  const queryClient = useQueryClient();
   const toast = useRef(null);
   const { isLoading, isError, data, error } = useQuery(
     "surat_masuk",
     getAllSuratMasuk
   );
+  const addMutation = useMutation(deleteSuratMasuk, {
+    onSuccess: () => {
+      console.log("Data Deleted");
+      queryClient.prefetchQuery("surat_masuk", getAllSuratMasuk);
+    },
+  });
 
-  async function handleDelete(public_id) {
+  async function handleDelete(public_id, id) {
+    addMutation.mutate(id);
     const res = await deleteFileCloudinary(public_id);
+
     console.log(res);
   }
 
@@ -63,13 +77,21 @@ export default function homeSuratMasuk() {
         <Button
           icon="pi pi-trash"
           className="p-button-rounded p-button-warning"
-          onClick={() => handleDelete(rowData.public_id)}
+          onClick={() => handleDelete(rowData.public_id, rowData._id)}
         />
       </div>
     );
   };
 
   if (isLoading) return <Loading />;
+  if (addMutation.isSuccess)
+    return (
+      <ToastMessage
+        severity={"success"}
+        summary={"Success!"}
+        detail={"Data berhasil dihapus"}
+      />
+    );
   return (
     // Data Table Starts
     <>
