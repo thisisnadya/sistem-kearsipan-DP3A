@@ -8,7 +8,10 @@ cloudinary.config({
 
 export default async function handler(req, res) {
   const { public_id } = JSON.parse(req.body);
-  //   const { type } = req.query;
-  const result = await cloudinary.uploader.destroy(public_id);
+  // const { type } = req.query;
+  const result = await cloudinary.uploader.destroy(public_id, {
+    resource_type: "raw",
+    format: "pdf",
+  });
   res.status(200).json(result);
 }

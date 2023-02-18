@@ -19,8 +19,8 @@ export default function homeSuratMasuk() {
     getAllSuratMasuk
   );
 
-  async function deleteFile() {
-    const res = await deleteFileCloudinary("surat_masuk/ytpkaietbu7oi98qrajz");
+  async function handleDelete(public_id) {
+    const res = await deleteFileCloudinary(public_id);
     console.log(res);
   }
 
@@ -54,20 +54,18 @@ export default function homeSuratMasuk() {
 
   const actionBodyTemplate = (rowData) => {
     return (
-      <React.Fragment>
-        <div>
-          <Button
-            icon="pi pi-pencil"
-            className="p-button-rounded p-button-success mr-2"
-            onClick={() => editProduct(rowData)}
-          />
-          <Button
-            icon="pi pi-trash"
-            className="p-button-rounded p-button-warning"
-            onClick={() => deleteFile()}
-          />
-        </div>
-      </React.Fragment>
+      <div>
+        <Button
+          icon="pi pi-pencil"
+          className="p-button-rounded p-button-success mr-2"
+          onClick={() => editProduct(rowData)}
+        />
+        <Button
+          icon="pi pi-trash"
+          className="p-button-rounded p-button-warning"
+          onClick={() => handleDelete(rowData.public_id)}
+        />
+      </div>
     );
   };
 

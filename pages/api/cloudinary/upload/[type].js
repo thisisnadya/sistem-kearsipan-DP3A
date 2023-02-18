@@ -9,6 +9,10 @@ cloudinary.config({
 export default async function handler(req, res) {
   const { file } = JSON.parse(req.body);
   const { type } = req.query;
-  const result = await cloudinary.uploader.unsigned_upload(file, type);
+  const result = await cloudinary.uploader.upload(file, {
+    folder: type,
+    resource_type: "raw",
+    format: "pdf",
+  });
   res.status(200).json(result);
 }
