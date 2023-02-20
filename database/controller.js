@@ -2,7 +2,7 @@ import suratMasuk from "@/model/surat_masuk";
 import suratKeluar from "@/model/surat_keluar";
 import suratKepegawaian from "@/model/surat_kepegawaian";
 
-// SURAT MASUK
+// ----------------------------------SURAT MASUK------------------------------------
 
 // GET all surat
 // http://localhost:3000/api/data_surat/surat_masuk
@@ -59,9 +59,23 @@ export const deleteSuratMasuk = async (req, res) => {
   }
 };
 
-// UPDATE data surat
+// UPDATE data surat masuk
+// http://localhost:3000/api/data_surat/surat_masuk/[id]
+export const updateSuratMasuk = async (req, res) => {
+  const { keterangan } = req.body;
+  try {
+    const updatedData = await suratMasuk.updateOne(
+      { _id: req.query.id },
+      { $set: { keterangan: keterangan } }
+    );
+    res.status(200).json(updatedData);
+  } catch (error) {
+    res.status(404).json(error);
+  }
+};
 
-// SURAT KELUAR
+// -------------------------------------SURAT KELUAR------------------------------------------------------
+
 // GET All Surat Keluar
 // http://localhost:3000/api/data_surat/surat_keluar/
 export const getAllSuratKeluar = async (req, res) => {
@@ -117,7 +131,7 @@ export const deleteSuratKeluar = async (req, res) => {
   }
 };
 
-// KEPEGAWAIAN
+//---------------------------------------- KEPEGAWAIAN --------------------------------------
 
 // get All Surat
 // http://localhost:3000/api/data_surat/kepegawaian/

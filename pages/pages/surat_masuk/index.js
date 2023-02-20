@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import Loading from "@/components/Loading";
 import {
   deleteFileCloudinary,
@@ -14,16 +14,18 @@ import { MdPageview } from "react-icons/md";
 import { Button } from "primereact/button";
 import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toast } from "primereact/toast";
-import { useRef } from "react";
 import ToastMessage from "@/components/Toast";
 
 export default function homeSuratMasuk() {
   const queryClient = useQueryClient();
   const toast = useRef(null);
+  const [visible, setVisible] = useState(false);
+
   const { isLoading, isError, data, error } = useQuery(
     "surat_masuk",
     getAllSuratMasuk
   );
+
   const addMutation = useMutation(deleteSuratMasuk, {
     onSuccess: () => {
       console.log("Data Deleted");
@@ -37,6 +39,15 @@ export default function homeSuratMasuk() {
 
     console.log(res);
   }
+
+  const reject = () => {
+    toast.current.show({
+      severity: "warn",
+      summary: "Rejected",
+      detail: "You have rejected",
+      life: 3000,
+    });
+  };
 
   const tableHeader = (
     <div>
@@ -69,16 +80,28 @@ export default function homeSuratMasuk() {
   const actionBodyTemplate = (rowData) => {
     return (
       <div>
-        <Button
-          icon="pi pi-pencil"
-          className="p-button-rounded p-button-success mr-2"
-          onClick={() => editProduct(rowData)}
+        <Toast ref={toast} />
+        <ConfirmDialog
+          visible={visible}
+          onHide={() => setVisible(false)}
+          message="Are you sure you want to proceed?"
+          header="Confirmation"
+          icon="pi pi-exclamation-triangle"
+          accept={() => handleDelete(rowData.public_id, rowData._id)}
+          reject={reject}
         />
-        <Button
-          icon="pi pi-trash"
-          className="p-button-rounded p-button-warning"
-          onClick={() => handleDelete(rowData.public_id, rowData._id)}
-        />
+        <>
+          <Button
+            icon="pi pi-pencil"
+            className="p-button-rounded p-button-success mr-2"
+            // onClick={() => setVisible(true)}
+          />
+          <Button
+            icon="pi pi-trash"
+            className="p-button-rounded p-button-warning"
+            onClick={() => setVisible(true)}
+          />
+        </>
       </div>
     );
   };
