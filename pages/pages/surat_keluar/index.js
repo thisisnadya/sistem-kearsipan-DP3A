@@ -1,25 +1,59 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import Loading from "@/components/Loading";
-import { getAllSuratKeluar } from "@/lib/helper";
+import {
+  deleteFileCloudinary,
+  deleteSuratKeluar,
+  getAllSuratKeluar,
+} from "@/lib/helper";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient, useMutation } from "react-query";
 import Link from "next/link";
 import { AiFillFilePdf } from "react-icons/ai";
 import { MdPageview } from "react-icons/md";
 import { Button } from "primereact/button";
+import ToastMessage from "@/components/Toast";
+import { Toast } from "primereact/toast";
+import { ConfirmDialog } from "primereact/confirmdialog";
 
 export default function homeSuratKeluar() {
+  const queryClient = useQueryClient();
+  const toast = useRef(null);
+  const [visible, setVisible] = useState(false);
   const { isLoading, isError, data, error } = useQuery(
     "surat_keluar",
     getAllSuratKeluar
   );
+
+  const addMutation = useMutation(deleteSuratKeluar, {
+    onSuccess: () => {
+      console.log("Data Deleted");
+      queryClient.prefetchQuery("surat_keluar", getAllSuratKeluar);
+    },
+  });
+
+  async function handleDelete(public_id, id) {
+    addMutation.mutate(id);
+    const res = await deleteFileCloudinary(public_id);
+
+    console.log(res);
+  }
+
+  const reject = () => {
+    toast.current.show({
+      severity: "warn",
+      summary: "Rejected",
+      detail: "You have rejected",
+      life: 3000,
+    });
+  };
 
   const tableHeader = (
     <div>
       <h1 className="text-slate-700 text-3xl">Data Surat Keluar</h1>
     </div>
   );
+
   const viewBodyTemplate = (rowData) => {
     return (
       <Link href={`/pages/surat_keluar/${rowData._id}`}>
@@ -45,22 +79,44 @@ export default function homeSuratKeluar() {
 
   const actionBodyTemplate = (rowData) => {
     return (
-      <React.Fragment>
-        <Button
-          icon="pi pi-pencil"
-          className="p-button-rounded p-button-success mr-2"
-          onClick={() => editProduct(rowData)}
+      <div>
+        <Toast ref={toast} />
+        <ConfirmDialog
+          visible={visible}
+          onHide={() => setVisible(false)}
+          message="Apakah Anda yakin ingin menghapus?"
+          header="Confirmation"
+          icon="pi pi-exclamation-triangle"
+          accept={() => handleDelete(rowData.public_id, rowData._id)}
+          reject={reject}
         />
-        <Button
-          icon="pi pi-trash"
-          className="p-button-rounded p-button-warning"
-          onClick={() => confirmDeleteProduct(rowData)}
-        />
-      </React.Fragment>
+        <>
+          <Link href={`/pages/surat_keluar/update/${rowData._id}`}>
+            <Button
+              icon="pi pi-pencil"
+              className="p-button-rounded p-button-success mr-2"
+              // onClick={() => setVisible(true)}
+            />
+          </Link>
+          <Button
+            icon="pi pi-trash"
+            className="p-button-rounded p-button-warning"
+            onClick={() => setVisible(true)}
+          />
+        </>
+      </div>
     );
   };
 
   if (isLoading) return <Loading />;
+  if (addMutation.isSuccess)
+    return (
+      <ToastMessage
+        severity={"success"}
+        summary={"Success!"}
+        detail={"Data berhasil dihapus"}
+      />
+    );
   return (
     // Data Table Starts
     <>

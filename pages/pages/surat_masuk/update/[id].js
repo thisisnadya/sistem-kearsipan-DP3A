@@ -5,23 +5,30 @@ import { Calendar } from "primereact/calendar";
 import { Button } from "primereact/button";
 import { useFormik } from "formik";
 import { form_validation } from "@/lib/validation";
-import { useMutation, useQueryClient } from "react-query";
+import { useRouter } from "next/router";
+import { useMutation, useQueryClient, useQuery } from "react-query";
+import Loading from "@/components/Loading";
+import ToastMessage from "@/components/Toast";
 import {
-  getAllSuratMasuk,
+  getDetailSuratMasuk,
   uploadFileToCloudinary,
   uploadSuratMasuk,
 } from "@/lib/helper";
 
-import Loading from "@/components/Loading";
-import { useRouter } from "next/router";
-import ToastMessage from "@/components/Toast";
-
 export default function upload() {
   const queryClient = useQueryClient();
   const router = useRouter();
+
+  const { id } = router.query;
   const [fileSrc, setFileSrc] = useState();
   const [uploadData, setUploadData] = useState();
   const [loading, setLoading] = useState(false);
+
+  const { isLoading, isError, data, error } = useQuery(
+    ["surat_masuk", id],
+    () => getDetailSuratMasuk(id)
+  );
+
   const addMutation = useMutation(uploadSuratMasuk, {
     onSuccess: () => {
       console.log("Data Inserted");
@@ -84,7 +91,7 @@ export default function upload() {
 
   return (
     <div>
-      <h1 className="text-3xl font-semibold pb-3">Upload Surat Masuk</h1>
+      <h1 className="text-3xl font-semibold pb-3">Update Surat Masuk</h1>
       {addMutation.isSuccess ? (
         // <Success message={"Data berhasil ditambahkan"} />
         <ToastMessage

@@ -19,6 +19,7 @@ import ToastMessage from "@/components/Toast";
 export default function upload() {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { id } = router.query;
   const [fileSrc, setFileSrc] = useState();
   const [uploadData, setUploadData] = useState();
   const [loading, setLoading] = useState(false);
@@ -84,7 +85,7 @@ export default function upload() {
 
   return (
     <div>
-      <h1 className="text-3xl font-semibold pb-3">Upload Surat Masuk</h1>
+      <h1 className="text-3xl font-semibold pb-3">Update Surat Keluar</h1>
       {addMutation.isSuccess ? (
         // <Success message={"Data berhasil ditambahkan"} />
         <ToastMessage

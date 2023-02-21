@@ -84,18 +84,20 @@ export default function homeSuratMasuk() {
         <ConfirmDialog
           visible={visible}
           onHide={() => setVisible(false)}
-          message="Are you sure you want to proceed?"
+          message="Apakah Anda yakin ingin menghapus?"
           header="Confirmation"
           icon="pi pi-exclamation-triangle"
           accept={() => handleDelete(rowData.public_id, rowData._id)}
           reject={reject}
         />
         <>
-          <Button
-            icon="pi pi-pencil"
-            className="p-button-rounded p-button-success mr-2"
-            // onClick={() => setVisible(true)}
-          />
+          <Link href={`/pages/surat_masuk/update/${rowData._id}`}>
+            <Button
+              icon="pi pi-pencil"
+              className="p-button-rounded p-button-success mr-2"
+              // onClick={() => setVisible(true)}
+            />
+          </Link>
           <Button
             icon="pi pi-trash"
             className="p-button-rounded p-button-warning"

@@ -59,14 +59,14 @@ const AppMenu = () => {
           icon: "pi pi-fw pi-id-card",
           items: [
             {
+              label: "Data Surat Kepegawaian",
+              icon: "pi pi-id-card",
+              to: "/pages/kepegawaian",
+            },
+            {
               label: "Upload Surat",
               icon: "pi pi-upload",
               to: "/pages/kepegawaian/upload",
-            },
-            {
-              label: "Arsip Surat",
-              icon: "pi pi-id-card",
-              to: "/pages/kepegawaian",
             },
           ],
         },
