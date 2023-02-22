@@ -1,25 +1,19 @@
 import { useQuery } from "react-query";
 import { useRouter } from "next/router";
 import { getDetailSuratMasuk } from "@/lib/helper";
-import { useState } from "react";
 import Link from "next/link";
+import Loading from "@/components/Loading";
 
 export default function detail() {
   const router = useRouter();
   const { id } = router.query;
-  const [detailSurat, setDetailSurat] = useState();
-
-  //   const { data, error, isLoading, isError } = useQuery(
-  //     ["detail", { id }],
-  //     (id) => getDetailSuratMasuk(id)
-  //   );
 
   const { isLoading, isError, data, error } = useQuery(
     ["surat_masuk", id],
     () => getDetailSuratMasuk(id)
   );
 
-  if (isLoading) return <h1>Loading..</h1>;
+  if (isLoading) return <Loading />;
 
   return (
     <div>
@@ -48,8 +42,11 @@ export default function detail() {
           height="700"
         >
           <p>
-            Alternative: Klik <Link href={data.file}>disini</Link> untuk lihat
-            file
+            Alternative: Klik{" "}
+            <Link href={data.file} className="text-zinc-900" target="_blank">
+              disini
+            </Link>{" "}
+            untuk lihat file
           </p>
         </object>
       </div>

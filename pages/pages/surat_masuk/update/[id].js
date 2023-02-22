@@ -29,6 +29,8 @@ export default function upload() {
     () => getDetailSuratMasuk(id)
   );
 
+  // console.log(data);
+
   const addMutation = useMutation(uploadSuratMasuk, {
     onSuccess: () => {
       console.log("Data Inserted");
@@ -79,6 +81,7 @@ export default function upload() {
     reader.readAsDataURL(changeEvent.target.files[0]);
   }
 
+  // if (isLoading) return <Loading />;
   if (addMutation.isLoading) return <Loading />;
   if (addMutation.isError)
     return (

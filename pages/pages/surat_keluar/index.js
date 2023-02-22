@@ -109,17 +109,10 @@ export default function homeSuratKeluar() {
   };
 
   if (isLoading) return <Loading />;
-  if (addMutation.isSuccess)
-    return (
-      <ToastMessage
-        severity={"success"}
-        summary={"Success!"}
-        detail={"Data berhasil dihapus"}
-      />
-    );
+
   return (
     // Data Table Starts
-    <>
+    <div>
       <div className="my-4">
         <div className="card">
           <DataTable
@@ -143,7 +136,16 @@ export default function homeSuratKeluar() {
           </DataTable>
         </div>
       </div>
-    </>
+      {addMutation.isSuccess ? (
+        <ToastMessage
+          severity={"success"}
+          summary={"Success!"}
+          detail={"Data berhasil dihapus"}
+        />
+      ) : (
+        <></>
+      )}
+    </div>
     // Data table ends
   );
 }
