@@ -24,6 +24,7 @@ export default function homeSuratKepegawaian() {
     "surat_kepegawaian",
     getAllSuratKepegawaian
   );
+
   const addMutation = useMutation(deleteSuratKepegawaian, {
     onSuccess: () => {
       console.log("Data Deleted");

@@ -20,23 +20,10 @@ export default function upload() {
   const router = useRouter();
 
   const { id } = router.query;
+  console.log(id);
   const [fileSrc, setFileSrc] = useState();
   const [uploadData, setUploadData] = useState();
   const [loading, setLoading] = useState(false);
-
-  const { isLoading, isError, data, error } = useQuery(
-    ["surat_masuk", id],
-    () => getDetailSuratMasuk(id)
-  );
-
-  // console.log(data);
-
-  const addMutation = useMutation(uploadSuratMasuk, {
-    onSuccess: () => {
-      console.log("Data Inserted");
-      queryClient.prefetchQuery("surat_masuk", getAllSuratMasuk);
-    },
-  });
 
   const formik = useFormik({
     initialValues: {
@@ -50,6 +37,13 @@ export default function upload() {
     },
     validate: form_validation,
     onSubmit,
+  });
+
+  const addMutation = useMutation(uploadSuratMasuk, {
+    onSuccess: () => {
+      console.log("Data Inserted");
+      queryClient.prefetchQuery("surat_masuk", getAllSuratMasuk);
+    },
   });
 
   async function onSubmit(values) {
@@ -81,21 +75,29 @@ export default function upload() {
     reader.readAsDataURL(changeEvent.target.files[0]);
   }
 
-  // if (isLoading) return <Loading />;
-  if (addMutation.isLoading) return <Loading />;
-  if (addMutation.isError)
-    return (
-      <ToastMessage
-        severity={"error"}
-        summary={"Error!"}
-        detail={"Terjadi kesalahan!"}
-      />
-    );
+  const { isLoading, isError, data, error } = useQuery(
+    ["surat_masuk", id],
+    () => getDetailSuratMasuk(id)
+  );
+
+  if (isLoading) return <div>Loading..</div>;
+  if (isError) return <div>Error!</div>;
+
+  console.log(data);
+  // if (addMutation.isLoading) return <Loading />;
+  // if (addMutation.isError)
+  //   return (
+  //     <ToastMessage
+  //       severity={"error"}
+  //       summary={"Error!"}
+  //       detail={"Terjadi kesalahan!"}
+  //     />
+  //   );
 
   return (
     <div>
       <h1 className="text-3xl font-semibold pb-3">Update Surat Masuk</h1>
-      {addMutation.isSuccess ? (
+      {/* {addMutation.isSuccess ? (
         // <Success message={"Data berhasil ditambahkan"} />
         <ToastMessage
           severity={"success"}
@@ -104,7 +106,7 @@ export default function upload() {
         />
       ) : (
         <></>
-      )}
+      )} */}
       <div className="grid p-fluid">
         <div className="col-12 lg:col-8">
           <div className="card">

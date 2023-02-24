@@ -8,6 +8,7 @@ import "../styles/layout/layout.scss";
 import "../styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import { QueryClientProvider, QueryClient } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 // import "../styles/demo/Demos.scss";
 
 // create new client
@@ -20,6 +21,7 @@ export default function MyApp({ Component, pageProps }) {
         <SessionProvider session={pageProps.session}>
           <QueryClientProvider client={queryClient}>
             {Component.getLayout(<Component {...pageProps} />)}
+            <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
           </QueryClientProvider>
         </SessionProvider>
       </LayoutProvider>
@@ -31,6 +33,10 @@ export default function MyApp({ Component, pageProps }) {
           <SessionProvider session={pageProps.session}>
             <QueryClientProvider client={queryClient}>
               <Component {...pageProps} />
+              <ReactQueryDevtools
+                initialIsOpen={false}
+                position="bottom-right"
+              />
             </QueryClientProvider>
           </SessionProvider>
         </Layout>

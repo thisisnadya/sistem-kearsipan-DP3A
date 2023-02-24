@@ -52,6 +52,15 @@ export default function upload() {
       );
 
       setUploadData(fileUploaded);
+
+      if (!fileUploaded)
+        return (
+          <ToastMessage
+            severity={"error"}
+            summary={"Error"}
+            message={"Terjadi kesalahan!"}
+          />
+        );
       let model = {
         ...values,
         file: fileUploaded.url,
@@ -187,23 +196,12 @@ export default function upload() {
                 </div>
                 <div className="field">
                   <h5 className="font-semibold mb-2">Upload File</h5>
-                  {/* <FileUpload
-                    mode="basic"
-                    name="file"
-                    // url="/api/upload"
-                    accept=".pdf"
-                    maxFileSize={1000000}
-                    // onUpload={onUpload}
-                    id="file"
-                    type="file"
-                    auto={true}
-                    onChange={handleChange}
-                  /> */}
                   <div>
                     <input
                       type="file"
                       name="file"
                       accept=".pdf"
+                      required
                       onChange={handleOnChange}
                     />
                     <iframe
