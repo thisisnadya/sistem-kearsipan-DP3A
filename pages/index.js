@@ -18,11 +18,14 @@ import { useRouter } from "next/router";
 import ToastMessage from "@/components/Toast";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
+import { InputText } from "primereact/inputtext";
+import { FilterMatchMode } from "primereact/api";
 
 export default function Home() {
   const queryClient = useQueryClient();
   const toast = useRef(null);
   const [visible, setVisible] = useState(false);
+  const [globalFilterValue, setGlobalFilterValue] = useState("");
   // const { data: session } = useSession();
   const session = useSession();
   const router = useRouter();
@@ -32,9 +35,21 @@ export default function Home() {
     if (session.status == "unauthenticated") router.replace("/auth/login");
   }, [session.status]);
 
-  // pagination
-  const [basicFirst, setBasicFirst] = useState(0);
-  const [basicRows, setBasicRows] = useState(3);
+  // filters
+  const [filters, setFilters] = useState({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    asal: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  });
+
+  const onGlobalFilterChange = (e) => {
+    const value = e.target.value;
+    let _filters = { ...filters };
+
+    _filters["global"].value = value;
+
+    setFilters(_filters);
+    setGlobalFilterValue(value);
+  };
 
   // get Data
   const { isLoading, isError, data, error } = useQuery(
@@ -42,6 +57,7 @@ export default function Home() {
     getAllSuratMasuk
   );
 
+  // handle delete button
   const addMutation = useMutation(deleteSuratMasuk, {
     onSuccess: () => {
       console.log("Data Deleted");
@@ -64,123 +80,6 @@ export default function Home() {
       life: 3000,
     });
   };
-
-  const onBasicPageChange = (event) => {
-    setBasicFirst(event.first);
-    setBasicRows(event.rows);
-  };
-
-  // data to dipslay in the table
-  const dummyData = [
-    {
-      id: "1000",
-      code: "f230fh0g3",
-      name: "Bamboo Watch",
-      description: "Product Description",
-      image: "bamboo-watch.jpg",
-      price: 65,
-      category: "Accessories",
-      quantity: 24,
-      inventoryStatus: "INSTOCK",
-      rating: 5,
-    },
-    {
-      id: "1000",
-      code: "f230fh0g3",
-      name: "Bamboo Watch",
-      description: "Product Description",
-      image: "bamboo-watch.jpg",
-      price: 65,
-      category: "Accessories",
-      quantity: 24,
-      inventoryStatus: "INSTOCK",
-      rating: 5,
-    },
-    {
-      id: "1000",
-      code: "f230fh0g3",
-      name: "Bamboo Watch",
-      description: "Product Description",
-      image: "bamboo-watch.jpg",
-      price: 65,
-      category: "Accessories",
-      quantity: 24,
-      inventoryStatus: "INSTOCK",
-      rating: 5,
-    },
-    {
-      id: "1000",
-      code: "f230fh0g3",
-      name: "Bamboo Watch",
-      description: "Product Description",
-      image: "bamboo-watch.jpg",
-      price: 65,
-      category: "Accessories",
-      quantity: 24,
-      inventoryStatus: "INSTOCK",
-      rating: 5,
-    },
-    {
-      id: "1000",
-      code: "f230fh0g3",
-      name: "Bamboo Watch",
-      description: "Product Description",
-      image: "bamboo-watch.jpg",
-      price: 65,
-      category: "Accessories",
-      quantity: 24,
-      inventoryStatus: "INSTOCK",
-      rating: 5,
-    },
-    {
-      id: "1000",
-      code: "f230fh0g3",
-      name: "Bamboo Watch",
-      description: "Product Description",
-      image: "bamboo-watch.jpg",
-      price: 65,
-      category: "Accessories",
-      quantity: 24,
-      inventoryStatus: "INSTOCK",
-      rating: 5,
-    },
-    {
-      id: "1000",
-      code: "f230fh0g3",
-      name: "Bamboo Watch",
-      description: "Product Description",
-      image: "bamboo-watch.jpg",
-      price: 65,
-      category: "Accessories",
-      quantity: 24,
-      inventoryStatus: "INSTOCK",
-      rating: 5,
-    },
-    {
-      id: "1000",
-      code: "f230fh0g3",
-      name: "Bamboo Watch",
-      description: "Product Description",
-      image: "bamboo-watch.jpg",
-      price: 65,
-      category: "Accessories",
-      quantity: 24,
-      inventoryStatus: "INSTOCK",
-      rating: 5,
-    },
-    {
-      id: "1000",
-      code: "f230fh0g3",
-      name: "Bamboo Watch",
-      description: "Product Description",
-      image: "bamboo-watch.jpg",
-      price: 65,
-      category: "Accessories",
-      quantity: 24,
-      inventoryStatus: "INSTOCK",
-      rating: 5,
-    },
-  ];
 
   // data to displat in the chart
   const dummyData2 = {
@@ -217,6 +116,16 @@ export default function Home() {
   const tableHeader = (
     <div>
       <h1 className="text-slate-700 text-3xl">Data Surat Masuk</h1>
+      <div className="flex justify-content-end">
+        <span className="p-input-icon-left">
+          <i className="pi pi-search" />
+          <InputText
+            value={globalFilterValue}
+            onChange={onGlobalFilterChange}
+            placeholder="Keyword Search"
+          />
+        </span>
+      </div>
     </div>
   );
 
@@ -369,10 +278,13 @@ export default function Home() {
             <DataTable
               value={data}
               header={tableHeader}
+              filters={filters}
+              filterDisplay="row"
+              globalFilterFields={["judul", "surat_dari"]}
               showGridlines
               responsiveLayout="scroll"
               paginator
-              rows={5}
+              rows={10}
             >
               <Column field="judul" header="Judul"></Column>
               <Column field="surat_dari" header="Surat Dari"></Column>

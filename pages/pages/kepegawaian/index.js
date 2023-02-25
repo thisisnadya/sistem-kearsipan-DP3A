@@ -15,11 +15,15 @@ import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import ToastMessage from "@/components/Toast";
+import { InputText } from "primereact/inputtext";
+import { FilterMatchMode } from "primereact/api";
 
 export default function homeSuratKepegawaian() {
   const queryClient = useQueryClient();
   const toast = useRef(null);
   const [visible, setVisible] = useState(false);
+  const [globalFilterValue, setGlobalFilterValue] = useState("");
+
   const { isLoading, isError, data, error } = useQuery(
     "surat_kepegawaian",
     getAllSuratKepegawaian
@@ -31,6 +35,22 @@ export default function homeSuratKepegawaian() {
       queryClient.prefetchQuery("surat_kepegawaian", getAllSuratKepegawaian);
     },
   });
+
+  // filters
+  const [filters, setFilters] = useState({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    kepegawaian: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  });
+
+  const onGlobalFilterChange = (e) => {
+    const value = e.target.value;
+    let _filters = { ...filters };
+
+    _filters["global"].value = value;
+
+    setFilters(_filters);
+    setGlobalFilterValue(value);
+  };
 
   async function handleDelete(public_id, id) {
     addMutation.mutate(id);
@@ -51,6 +71,16 @@ export default function homeSuratKepegawaian() {
   const tableHeader = (
     <div>
       <h1 className="text-slate-700 text-3xl">Data Surat Kepegawaian</h1>
+      <div className="flex justify-content-end">
+        <span className="p-input-icon-left">
+          <i className="pi pi-search" />
+          <InputText
+            value={globalFilterValue}
+            onChange={onGlobalFilterChange}
+            placeholder="Keyword Search"
+          />
+        </span>
+      </div>
     </div>
   );
 
@@ -118,10 +148,13 @@ export default function homeSuratKepegawaian() {
           <DataTable
             value={data}
             header={tableHeader}
+            filters={filters}
+            filterDisplay="row"
+            globalFilterFields={["judul", "perihal"]}
             showGridlines
             responsiveLayout="scroll"
             paginator
-            rows={5}
+            rows={10}
           >
             <Column field="judul" header="Judul"></Column>
             <Column field="perihal" header="Perihal"></Column>
