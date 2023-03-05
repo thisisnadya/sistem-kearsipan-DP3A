@@ -5,30 +5,37 @@ import { Calendar } from "primereact/calendar";
 import { Button } from "primereact/button";
 import { useFormik } from "formik";
 import { form_validation } from "@/lib/validation";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient, useQuery } from "react-query";
 import {
-  getAllSuratMasuk,
+  getAllSuratKeluar,
+  getDetailSuratKeluar,
   uploadFileToCloudinary,
-  uploadSuratMasuk,
+  uploadSuratKeluar,
 } from "@/lib/helper";
 
 import Loading from "@/components/Loading";
 import { useRouter } from "next/router";
 import ToastMessage from "@/components/Toast";
 
-export default function upload() {
-  const queryClient = useQueryClient();
+export default function update() {
   const router = useRouter();
   const { id } = router.query;
+
+  const queryClient = useQueryClient();
   const [fileSrc, setFileSrc] = useState();
   const [uploadData, setUploadData] = useState();
   const [loading, setLoading] = useState(false);
-  const addMutation = useMutation(uploadSuratMasuk, {
+  const addMutation = useMutation(uploadSuratKeluar, {
     onSuccess: () => {
       console.log("Data Inserted");
-      queryClient.prefetchQuery("surat_masuk", getAllSuratMasuk);
+      queryClient.prefetchQuery("surat_keluar", getAllSuratKeluar);
     },
   });
+
+  const { isLoading, isError, data, error } = useQuery(
+    ["surat_keluar", id],
+    () => getDetailSuratKeluar(id)
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -47,7 +54,10 @@ export default function upload() {
   async function onSubmit(values) {
     setLoading(true);
     if (Object.keys(formik.errors).length == 0) {
-      const fileUploaded = await uploadFileToCloudinary(fileSrc, "surat_masuk");
+      const fileUploaded = await uploadFileToCloudinary(
+        fileSrc,
+        "surat_keluar"
+      );
 
       setUploadData(fileUploaded);
       let model = {

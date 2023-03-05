@@ -15,15 +15,21 @@ import {
   uploadSuratMasuk,
 } from "@/lib/helper";
 
-export default function upload() {
-  const queryClient = useQueryClient();
+export default function update() {
   const router = useRouter();
-
   const { id } = router.query;
-  console.log(id);
+
+  const queryClient = useQueryClient();
+
+  // console.log(id);
   const [fileSrc, setFileSrc] = useState();
   const [uploadData, setUploadData] = useState();
   const [loading, setLoading] = useState(false);
+
+  const { isLoading, isError, data, error } = useQuery(
+    ["surat_masuk", id],
+    () => getDetailSuratMasuk(id)
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -75,11 +81,6 @@ export default function upload() {
     reader.readAsDataURL(changeEvent.target.files[0]);
   }
 
-  const { isLoading, isError, data, error } = useQuery(
-    ["surat_masuk", id],
-    () => getDetailSuratMasuk(id)
-  );
-
   if (isLoading) return <div>Loading..</div>;
   if (isError) return <div>Error!</div>;
 
@@ -123,6 +124,7 @@ export default function upload() {
                         ? "p-invalid"
                         : ""
                     }
+                    value={"ini adalah judul"}
                     {...formik.getFieldProps("judul")}
                   ></InputText>
                 </div>

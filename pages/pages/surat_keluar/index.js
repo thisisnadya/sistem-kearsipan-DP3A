@@ -109,7 +109,14 @@ export default function homeSuratKeluar() {
 
   const actionBodyTemplate = (rowData) => {
     return (
-      <div>
+      <>
+        <Link href={`/pages/surat_keluar/update/${rowData._id}`}>
+          <Button
+            icon="pi pi-pencil"
+            className="p-button-rounded p-button-success mr-2"
+            // onClick={() => setVisible(true)}
+          />
+        </Link>
         <Toast ref={toast} />
         <ConfirmDialog
           visible={visible}
@@ -121,20 +128,13 @@ export default function homeSuratKeluar() {
           reject={reject}
         />
         <>
-          <Link href={`/pages/surat_keluar/update/${rowData._id}`}>
-            <Button
-              icon="pi pi-pencil"
-              className="p-button-rounded p-button-success mr-2"
-              // onClick={() => setVisible(true)}
-            />
-          </Link>
           <Button
             icon="pi pi-trash"
             className="p-button-rounded p-button-warning"
             onClick={() => setVisible(true)}
           />
         </>
-      </div>
+      </>
     );
   };
 

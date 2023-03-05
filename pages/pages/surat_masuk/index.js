@@ -109,6 +109,12 @@ export default function homeSuratMasuk() {
   const actionBodyTemplate = (rowData) => {
     return (
       <div>
+        <Link href={`/pages/surat_masuk/update/${rowData._id}`}>
+          <Button
+            icon="pi pi-pencil"
+            className="p-button-rounded p-button-success mr-2"
+          />
+        </Link>
         <Toast ref={toast} />
         <ConfirmDialog
           visible={visible}
@@ -120,13 +126,6 @@ export default function homeSuratMasuk() {
           reject={reject}
         />
         <>
-          <Link href={`/pages/surat_masuk/update/${rowData._id}`}>
-            <Button
-              icon="pi pi-pencil"
-              className="p-button-rounded p-button-success mr-2"
-              // onClick={() => setVisible(true)}
-            />
-          </Link>
           <Button
             icon="pi pi-trash"
             className="p-button-rounded p-button-warning"
