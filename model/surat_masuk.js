@@ -7,7 +7,7 @@ const suratMasukSchema = new Schema({
   perihal: String,
   tanggal: {
     type: Date,
-    default: Date.now,
+    // default: Date.now,
   },
   keterangan: String,
   file: String,

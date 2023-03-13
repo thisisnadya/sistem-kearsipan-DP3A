@@ -2,7 +2,6 @@ import getConfig from "next/config";
 import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
 import AppConfig from "@/layout/AppConfig";
-import { Checkbox } from "primereact/checkbox";
 import { Button } from "primereact/button";
 import { Password } from "primereact/password";
 import { LayoutContext } from "@/layout/context/layoutcontext";
@@ -20,6 +19,7 @@ const LoginPage = () => {
     "surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden",
     { "p-input-filled": layoutConfig.inputStyle === "filled" }
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -31,6 +31,7 @@ const LoginPage = () => {
   });
 
   async function onSubmit(values) {
+    setIsLoading(true);
     const status = await signIn("credentials", {
       redirect: false,
       username: values.username,
@@ -39,7 +40,10 @@ const LoginPage = () => {
     });
 
     console.log(status);
-    if (status.ok) router.push(status.url);
+    if (status.ok) {
+      setIsLoading(false);
+      router.push(status.url);
+    }
   }
 
   return (
@@ -109,7 +113,7 @@ const LoginPage = () => {
                 </span>
               </div>
               <Button
-                label="Sign In"
+                label={isLoading ? "Logging In..." : "Login"}
                 className="w-full p-3 text-xl"
                 // type='submit'
                 // onClick={() => router.push("/")}

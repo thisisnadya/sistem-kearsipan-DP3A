@@ -13,6 +13,7 @@ import React, {
 import { LayoutContext } from "./context/layoutcontext";
 import { FaSignOutAlt } from "react-icons/fa";
 import { signOut } from "next-auth/react";
+import Image from "next/image";
 
 const AppTopbar = forwardRef((props, ref) => {
   const { layoutConfig, layoutState, onMenuToggle, showProfileSidebar } =
@@ -50,12 +51,11 @@ const AppTopbar = forwardRef((props, ref) => {
       <Link legacyBehavior href="/">
         <a className="layout-topbar-logo">
           <>
-            <img
-              src={`/public/images/logo_pemkot_semarang.png`}
-              width="47.22px"
-              height={"35px"}
-              widt={"true"}
+            <Image
+              src={"/images/logo_pemkot_semarang.png"}
               alt="logo"
+              width={35}
+              height={50}
             />
             <span>DP3A</span>
           </>
@@ -86,10 +86,14 @@ const AppTopbar = forwardRef((props, ref) => {
           "layout-topbar-menu-mobile-active": layoutState.profileSidebarVisible,
         })}
       >
-        <button type="button" className="p-link layout-topbar-button">
-          <i className="pi pi-calendar"></i>
-          <span>Calendar</span>
-        </button>
+        <Link
+          href={"https://calendar.google.com/calendar/u/0/r"}
+          target="_blank"
+        >
+          <button type="button" className="p-link layout-topbar-button">
+            <i className="pi pi-calendar"></i>
+          </button>
+        </Link>
 
         <>
           <Toast ref={toast}></Toast>
