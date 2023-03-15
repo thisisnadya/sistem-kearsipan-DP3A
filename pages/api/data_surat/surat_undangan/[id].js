@@ -1,8 +1,7 @@
 import connectMongo from "@/database/conn";
 import {
-  deleteSuratMasuk,
-  getDetailSuratMasuk,
-  updateSuratMasuk,
+  deleteSuratUndangan,
+  getDetailSuratUndangan,
 } from "@/database/controller";
 
 export default function handler(req, res) {
@@ -18,13 +17,13 @@ export default function handler(req, res) {
 
   switch (method) {
     case "GET":
-      getDetailSuratMasuk(req, res);
+      getDetailSuratUndangan(req, res);
       break;
     case "PUT":
-      updateSuratMasuk(req, res);
+      res.status(200).json("PUT REQUEST");
       break;
     case "DELETE":
-      deleteSuratMasuk(req, res);
+      deleteSuratUndangan(req, res);
       break;
   }
 }

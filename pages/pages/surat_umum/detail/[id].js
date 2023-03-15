@@ -1,0 +1,54 @@
+import { useQuery } from "react-query";
+import { useRouter } from "next/router";
+import { getDetailSuratUmum } from "@/lib/helper";
+import Link from "next/link";
+import Loading from "@/components/Loading";
+
+export default function detail() {
+  const router = useRouter();
+  const { id } = router.query;
+
+  const { isLoading, isError, data, error } = useQuery(["surat_umum", id], () =>
+    getDetailSuratUmum(id)
+  );
+
+  if (isLoading) return <Loading />;
+
+  return (
+    <div>
+      <div className="title">
+        <h1 className="text-3xl font-semibold pb-3">Detail Page</h1>
+      </div>
+      <div className="detail">
+        <h1 className="font-normal text-xl py-3">Judul : {data.judul}</h1>
+        <h1 className="font-normal text-xl py-3">
+          Surat dari :{" "}
+          {data.surat_dari ? data.surat_dari : "Tidak ada keterangan"}
+        </h1>
+        <h1 className="font-normal text-xl py-3">
+          Nomor Surat : {data.nomor_surat}
+        </h1>
+        <h1 className="font-normal text-xl py-3">Perihal : {data.perihal}</h1>
+        <h1 className="font-normal text-xl py-3">Tanggal : {data.tanggal}</h1>
+        <h1 className="font-normal text-xl py-3">
+          Keterangan :{" "}
+          {data.keterangan ? data.keterangan : "Tidak ada keterangan"}
+        </h1>
+        <object
+          data={data.file}
+          type="application/pdf"
+          width="100%"
+          height="700"
+        >
+          <p>
+            Alternative: Klik{" "}
+            <Link href={data.file} className="text-zinc-900" target="_blank">
+              disini
+            </Link>{" "}
+            untuk lihat file
+          </p>
+        </object>
+      </div>
+    </div>
+  );
+}

@@ -17,45 +17,45 @@ const AppMenu = () => {
       label: "Umum",
       items: [
         {
-          label: "Surat Masuk",
+          label: "Surat",
           icon: "pi pi-fw pi-id-card",
           items: [
             {
-              label: "Data Surat Masuk",
+              label: "Data Surat",
               icon: "pi pi-id-card",
-              to: "/pages/surat_masuk/",
+              to: "/pages/surat_umum/",
             },
             {
               label: "Upload Surat",
               icon: "pi pi-upload",
-              to: "/pages/surat_masuk/upload",
+              to: "/pages/surat_umum/upload",
             },
           ],
         },
         {
-          label: "Surat Keluar",
+          label: "Undangan",
           icon: "pi pi-fw pi-id-card",
           items: [
             {
-              label: "Data Surat Keluar",
+              label: "Data Surat Undangan",
               icon: "pi pi-id-card",
-              to: "/pages/surat_keluar/",
+              to: "/pages/surat_undangan/",
             },
             {
               label: "Upload Surat",
               icon: "pi pi-upload",
-              to: "/pages/surat_keluar/upload",
+              to: "/pages/surat_undangan/upload",
             },
           ],
         },
       ],
     },
     {
-      label: "Kepegawaian",
+      label: "Agenda",
       icon: "pi pi-fw pi-user",
       items: [
         {
-          label: "Arsip Kepegawaian",
+          label: "Agenda",
           icon: "pi pi-fw pi-id-card",
           items: [
             {
@@ -67,50 +67,6 @@ const AppMenu = () => {
               label: "Upload Surat",
               icon: "pi pi-upload",
               to: "/pages/kepegawaian/upload",
-            },
-          ],
-        },
-      ],
-    },
-    {
-      label: "Hierarchy",
-      items: [
-        {
-          label: "Submenu 1",
-          icon: "pi pi-fw pi-bookmark",
-          items: [
-            {
-              label: "Submenu 1.1",
-              icon: "pi pi-fw pi-bookmark",
-              items: [
-                { label: "Submenu 1.1.1", icon: "pi pi-fw pi-bookmark" },
-                { label: "Submenu 1.1.2", icon: "pi pi-fw pi-bookmark" },
-                { label: "Submenu 1.1.3", icon: "pi pi-fw pi-bookmark" },
-              ],
-            },
-            {
-              label: "Submenu 1.2",
-              icon: "pi pi-fw pi-bookmark",
-              items: [{ label: "Submenu 1.2.1", icon: "pi pi-fw pi-bookmark" }],
-            },
-          ],
-        },
-        {
-          label: "Submenu 2",
-          icon: "pi pi-fw pi-bookmark",
-          items: [
-            {
-              label: "Submenu 2.1",
-              icon: "pi pi-fw pi-bookmark",
-              items: [
-                { label: "Submenu 2.1.1", icon: "pi pi-fw pi-bookmark" },
-                { label: "Submenu 2.1.2", icon: "pi pi-fw pi-bookmark" },
-              ],
-            },
-            {
-              label: "Submenu 2.2",
-              icon: "pi pi-fw pi-bookmark",
-              items: [{ label: "Submenu 2.2.1", icon: "pi pi-fw pi-bookmark" }],
             },
           ],
         },

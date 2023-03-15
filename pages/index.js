@@ -7,8 +7,8 @@ import { Chart } from "primereact/chart";
 import { Button } from "primereact/button";
 import {
   deleteFileCloudinary,
-  deleteSuratMasuk,
-  getAllSuratMasuk,
+  deleteSuratUmum,
+  getAllSuratUmum,
 } from "@/lib/helper";
 import Link from "next/link";
 import Loading from "@/components/Loading";
@@ -54,14 +54,14 @@ export default function Home() {
   // get Data
   const { isLoading, isError, data, error } = useQuery(
     "surat_masuk",
-    getAllSuratMasuk
+    getAllSuratUmum
   );
 
   // handle delete button
-  const addMutation = useMutation(deleteSuratMasuk, {
+  const addMutation = useMutation(deleteSuratUmum, {
     onSuccess: () => {
       console.log("Data Deleted");
-      queryClient.prefetchQuery("surat_masuk", getAllSuratMasuk);
+      queryClient.prefetchQuery("surat_masuk", getAllSuratUmum);
     },
   });
 
@@ -115,7 +115,7 @@ export default function Home() {
 
   const tableHeader = (
     <div>
-      <h1 className="text-slate-700 text-3xl">Data Surat Masuk</h1>
+      <h1 className="text-slate-700 text-3xl">Data Surat Umum</h1>
       <div className="flex justify-content-end">
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
