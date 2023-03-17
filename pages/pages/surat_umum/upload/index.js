@@ -23,6 +23,7 @@ export default function upload() {
   const [fileSrc, setFileSrc] = useState();
   const [uploadData, setUploadData] = useState();
   const [loading, setLoading] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const addMutation = useMutation(uploadSuratUmum, {
     onSuccess: () => {
       console.log("Data Inserted");
@@ -84,15 +85,6 @@ export default function upload() {
 
     reader.readAsDataURL(changeEvent.target.files[0]);
   }
-
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  // const categories = [
-  //   { name: "001 - Lambang", code: "001" },
-  //   { name: "002 - Tanda Kehormatan / Penghargaan", code: "002" },
-  //   { name: "002.6 - Penghargaan Lainnya (Cinderamata)", code: "002.6" },
-  //   { name: "003 - Hari Raya / Besar", code: "003" },
-  //   { name: "003.1 - Nasional, 17 Agustus, Hari Pahlwan, dst", code: "003.1" },
-  // ];
 
   if (addMutation.isLoading) return <Loading />;
   if (addMutation.isError)

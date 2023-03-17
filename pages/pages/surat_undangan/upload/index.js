@@ -174,11 +174,6 @@ export default function upload() {
                     showIcon
                     showButtonBar
                     name="tanggal"
-                    className={
-                      formik.errors.tanggal && formik.touched.tanggal
-                        ? "p-invalid"
-                        : ""
-                    }
                     {...formik.getFieldProps("tanggal")}
                   />
                 </div>
@@ -188,11 +183,6 @@ export default function upload() {
                     type="text"
                     placeholder="ex 08.00"
                     name="jam_pelaksanaan"
-                    // className={
-                    //   formik.errors.jam_pelaksanaa && formik.touched.perihal
-                    //     ? "p-invalid"
-                    //     : ""
-                    // }
                     {...formik.getFieldProps("jam_pelaksanaan")}
                   ></InputText>
                 </div>
