@@ -6,5 +6,5 @@ export default function handler(req, res) {
     res.status(405).json({ error: "Mongo connection error" });
   });
 
-  getAllSuratUndangan(req, res);
+  return getAllSuratUndangan(req, res);
 }

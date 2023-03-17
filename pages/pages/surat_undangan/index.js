@@ -115,7 +115,7 @@ export default function homeSuratUndangan() {
             className="p-button-rounded p-button-success mr-2"
           />
         </Link>
-        <Toast ref={toast} />
+        {/* <Toast ref={toast} />
         <ConfirmDialog
           visible={visible}
           onHide={() => setVisible(false)}
@@ -124,12 +124,13 @@ export default function homeSuratUndangan() {
           icon="pi pi-exclamation-triangle"
           accept={() => handleDelete(rowData.public_id, rowData._id)}
           reject={reject}
-        />
+        /> */}
         <>
           <Button
             icon="pi pi-trash"
             className="p-button-rounded p-button-warning"
-            onClick={() => setVisible(true)}
+            // onClick={() => setVisible(true)}
+            onClick={() => handleDelete(rowData.public_id, rowData._id)}
           />
         </>
       </div>

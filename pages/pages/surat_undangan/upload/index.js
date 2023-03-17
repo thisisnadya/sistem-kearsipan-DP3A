@@ -35,7 +35,7 @@ export default function upload() {
       surat_dari: "",
       nomor_surat: "",
       perihal: "",
-      tanggal_pelaksanaan: "",
+      tanggal: "",
       jam_pelaksanaan: "",
       keterangan: "",
       file: null,
@@ -179,7 +179,7 @@ export default function upload() {
                         ? "p-invalid"
                         : ""
                     }
-                    {...formik.getFieldProps("tanggal_pelaksanaan")}
+                    {...formik.getFieldProps("tanggal")}
                   />
                 </div>
                 <div className="field">
@@ -187,12 +187,12 @@ export default function upload() {
                   <InputText
                     type="text"
                     placeholder="ex 08.00"
-                    name="perihal"
-                    className={
-                      formik.errors.perihal && formik.touched.perihal
-                        ? "p-invalid"
-                        : ""
-                    }
+                    name="jam_pelaksanaan"
+                    // className={
+                    //   formik.errors.jam_pelaksanaa && formik.touched.perihal
+                    //     ? "p-invalid"
+                    //     : ""
+                    // }
                     {...formik.getFieldProps("jam_pelaksanaan")}
                   ></InputText>
                 </div>

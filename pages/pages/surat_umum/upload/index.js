@@ -170,7 +170,7 @@ export default function upload() {
                     options={categories}
                     optionLabel="name"
                     placeholder="Pilih kode dan kategori"
-                    className="w-full sm:w-14rem"
+                    // className="w-full"
                     {...formik.getFieldProps("klasifikasi_surat")}
                   />
                 </div>

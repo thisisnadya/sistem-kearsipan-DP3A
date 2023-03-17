@@ -1,10 +1,11 @@
 import suratUmum from "@/model/surat_umum";
 import suratUndangan from "@/model/surat_undangan";
+import undangan from "@/model/undangan";
 
-// ----------------------------------SURAT MASUK------------------------------------
+// ----------------------------------SURAT UMUM------------------------------------
 
 // GET all surat
-// http://localhost:3000/api/data_surat/surat_masuk
+// http://localhost:3000/api/data_surat/surat_umum
 export const getAllSuratUmum = async (req, res) => {
   try {
     const allSurat = await suratUmum.find({});
@@ -19,7 +20,7 @@ export const getAllSuratUmum = async (req, res) => {
 };
 
 // GET SPECIFIC SURAT
-// http://localhost:3000/api/data_surat/surat_masuk/[id]
+// http://localhost:3000/api/data_surat/surat_umum/[id]
 export const getDetailSuratUmum = async (req, res) => {
   try {
     const findSurat = await suratUmum.findById(req.query.id);
@@ -30,7 +31,7 @@ export const getDetailSuratUmum = async (req, res) => {
 };
 
 // POST data surat
-// http://localhost:3000/api/data_surat/surat_masuk/upload
+// http://localhost:3000/api/data_surat/surat_umum/upload
 export const uploadSuratUmum = async (req, res) => {
   try {
     const dataSurat = req.body;
@@ -73,70 +74,13 @@ export const updateSuratUmum = async (req, res) => {
   }
 };
 
-// -------------------------------------SURAT KELUAR------------------------------------------------------
-
-// GET All Surat Keluar
-// http://localhost:3000/api/data_surat/surat_keluar/
-export const getAllSuratKeluar = async (req, res) => {
-  try {
-    const allSurat = await suratKeluar.find({});
-
-    if (!allSurat)
-      return res.status(404).json({ message: "Tidak ada data ditemukan" });
-
-    res.status(200).json(allSurat);
-  } catch (error) {
-    res.status(404).json({ error });
-  }
-};
-
-// get specific surat keluar
-// http://localhost:3000/api/data_surat/surat_keluar/[id]
-export const getDetailSuratKeluar = async (req, res) => {
-  try {
-    const findSurat = await suratKeluar.findById(req.query.id);
-    res.status(200).json(findSurat);
-  } catch (error) {
-    res.status(404).json({ error });
-  }
-};
-
-// upload surat
-// http://localhost:3000/api/data_surat/surat_keluar/upload
-export const uploadSuratKeluar = async (req, res) => {
-  try {
-    const dataSurat = req.body;
-
-    if (!dataSurat) {
-      return res.status(404).json({ message: "Dont have form data" });
-    }
-
-    await suratKeluar.create(dataSurat, function (err, data) {
-      return res.status(200).json(data);
-    });
-  } catch (error) {
-    res.status(404).json({ error });
-  }
-};
-
-// delete surat
-// http://localhost:3000/api/data_surat/surat_keluar/[id]
-export const deleteSuratKeluar = async (req, res) => {
-  try {
-    const response = await suratKeluar.deleteOne({ _id: req.query.id });
-    res.status(200).json(response);
-  } catch (error) {
-    res.status(404).json(error);
-  }
-};
-
-//---------------------------------------- KEPEGAWAIAN --------------------------------------
+//---------------------------------------- UNDANGAN --------------------------------------
 
 // get All Surat
-// http://localhost:3000/api/data_surat/kepegawaian/
+// http://localhost:3000/api/data_surat/surat_undangan/
 export const getAllSuratUndangan = async (req, res) => {
   try {
-    const allSurat = await suratUndangan.find({});
+    const allSurat = await undangan.find({});
 
     if (!allSurat)
       return res.status(404).json({ message: "Tidak ada data ditemukan" });
@@ -148,10 +92,10 @@ export const getAllSuratUndangan = async (req, res) => {
 };
 
 // get specific surat kepegawaian
-// http://localhost:3000/api/data_surat/kepegawaian/[id]
+// http://localhost:3000/api/data_surat/surat_undangan/[id]
 export const getDetailSuratUndangan = async (req, res) => {
   try {
-    const findSurat = await suratUndangan.findById(req.query.id);
+    const findSurat = await undangan.findById(req.query.id);
     res.status(200).json(findSurat);
   } catch (error) {
     res.status(404).json({ error });
@@ -168,19 +112,19 @@ export const uploadSuratUndangan = async (req, res) => {
       return res.status(404).json({ message: "Dont have form data" });
     }
 
-    await suratUndangan.create(dataSurat, function (err, data) {
+    await undangan.create(dataSurat, function (err, data) {
       return res.status(200).json(data);
     });
   } catch (error) {
-    res.status(404).json({ error });
+    return res.status(404).json({ error });
   }
 };
 
 // delete surat
-// http://localhost:3000/api/data_surat/kepegawaian/[id]
+// http://localhost:3000/api/data_surat/surat_undangan/[id]
 export const deleteSuratUndangan = async (req, res) => {
   try {
-    const response = await suratUndangan.deleteOne({ _id: req.query.id });
+    const response = await undangan.deleteOne({ _id: req.query.id });
     res.status(200).json(response);
   } catch (error) {
     res.status(404).json(error);

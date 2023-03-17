@@ -1,20 +1,22 @@
 import { model, models, Schema } from "mongoose";
 
-const suratUndanganSchema = new Schema({
+const undanganSchema = new Schema({
   judul: String,
   surat_dari: String,
   nomor_surat: String,
   perihal: String,
+  tanggal: {
+    type: Date,
+  },
   jam_pelaksanaan: String,
-  keterangan: String,
-  file: String,
-  public_id: String,
   createdAt: {
     type: Date,
     default: new Date().toISOString(),
   },
+  keterangan: String,
+  file: String,
+  public_id: String,
 });
 
-const suratUndangan =
-  models.surat_undangan || model("surat_undangan", suratUndanganSchema);
-export default suratUndangan;
+const undangan = models.undangan || model("undangan", undanganSchema);
+export default undangan;
