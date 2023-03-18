@@ -21,7 +21,7 @@ import { Dropdown } from "primereact/dropdown";
 export default function updatePage() {
   const router = useRouter();
   const [id, setId] = useState();
-  const [dataSurat, setDataSurat] = useState();
+  // const [dataSurat, setDataSurat] = useState();
   const queryClient = useQueryClient();
   const [fileSrc, setFileSrc] = useState();
   const [uploadData, setUploadData] = useState();
@@ -45,12 +45,12 @@ export default function updatePage() {
     getDetailSuratUmum(id)
   );
 
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-      setDataSurat(data);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     console.log(data);
+  //     setDataSurat(data);
+  //   }
+  // }, [data]);
 
   // if (!isLoading && !isError) {
   //   setDataSurat(data);
@@ -58,8 +58,8 @@ export default function updatePage() {
 
   const formik = useFormik({
     initialValues: {
-      judul: "",
-      surat_dari: "",
+      judul: data?.judul,
+      surat_dari: data?.surat_dari,
       nomor_surat: "",
       klasifikasi_surat: "",
       perihal: "",
