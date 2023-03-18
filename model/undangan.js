@@ -6,7 +6,7 @@ const undanganSchema = new Schema({
   nomor_surat: String,
   perihal: String,
   tanggal: {
-    type: Date,
+    type: String,
   },
   jam_pelaksanaan: String,
   createdAt: {

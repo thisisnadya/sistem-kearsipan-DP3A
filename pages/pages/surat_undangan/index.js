@@ -17,6 +17,7 @@ import { Toast } from "primereact/toast";
 import ToastMessage from "@/components/Toast";
 import { InputText } from "primereact/inputtext";
 import { FilterMatchMode } from "primereact/api";
+import moment from "moment/moment";
 
 export default function homeSuratUndangan() {
   const queryClient = useQueryClient();
@@ -83,6 +84,10 @@ export default function homeSuratUndangan() {
       </div>
     </div>
   );
+
+  const showDate = (rowData) => {
+    return moment(rowData.tanggal).utc().format("DD-MM-YYYY");
+  };
   const viewBodyTemplate = (rowData) => {
     return (
       <Link href={`/pages/surat_undangan/detail/${rowData._id}`}>
@@ -155,8 +160,18 @@ export default function homeSuratUndangan() {
             paginator
             rows={10}
           >
-            <Column field="judul" header="Judul"></Column>
-            <Column field="surat_dari" header="Surat Dari"></Column>
+            <Column
+              field="judul"
+              header="Judul"
+              sortable
+              style={{ width: "25%" }}
+            ></Column>
+            <Column
+              header="Tanggal Pelaksanaan"
+              body={showDate}
+              sortable
+              style={{ width: "25%" }}
+            ></Column>
             <Column header="Detail" body={viewBodyTemplate}></Column>
             <Column header="File" body={linkBodyTemplate}></Column>
             <Column

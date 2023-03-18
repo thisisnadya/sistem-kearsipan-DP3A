@@ -59,9 +59,9 @@ const AppMenu = () => {
           icon: "pi pi-fw pi-id-card",
           items: [
             {
-              label: "Data Surat Kepegawaian",
+              label: "Agenda Kegiatan",
               icon: "pi pi-id-card",
-              to: "/pages/kepegawaian",
+              to: "/pages/agenda",
             },
             {
               label: "Upload Surat",

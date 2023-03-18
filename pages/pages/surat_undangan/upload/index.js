@@ -15,6 +15,7 @@ import {
 import Loading from "@/components/Loading";
 import { useRouter } from "next/router";
 import ToastMessage from "@/components/Toast";
+import moment from "moment-timezone";
 
 export default function upload() {
   const queryClient = useQueryClient();
@@ -65,6 +66,7 @@ export default function upload() {
 
       let model = {
         ...values,
+        tanggal: moment.utc(values.tanggal).tz("Asia/Jakarta").format(),
         file: fileUploaded.url,
         public_id: fileUploaded.public_id,
       };

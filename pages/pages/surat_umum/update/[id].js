@@ -56,7 +56,6 @@ export default function updatePage() {
   //   setDataSurat(data);
   // }
 
-  console.log(dataSurat);
   const formik = useFormik({
     initialValues: {
       judul: "",

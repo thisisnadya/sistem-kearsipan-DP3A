@@ -163,7 +163,12 @@ export default function homeSuratUmum() {
           >
             <Column field="klasifikasi_surat" header="Kode"></Column>
             <Column field="judul" header="Judul"></Column>
-            <Column header="Tanggal Diarsipkan" body={showDate}></Column>
+            <Column
+              header="Tanggal Diarsipkan"
+              body={showDate}
+              sortable
+              style={{ width: "25%" }}
+            ></Column>
             <Column header="Detail" body={viewBodyTemplate}></Column>
             <Column header="File" body={linkBodyTemplate}></Column>
             <Column

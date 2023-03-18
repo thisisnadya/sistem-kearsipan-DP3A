@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { getDetailSuratUmum } from "@/lib/helper";
 import Link from "next/link";
 import Loading from "@/components/Loading";
+import moment from "moment/moment";
 
 export default function detail() {
   const router = useRouter();
@@ -29,7 +30,10 @@ export default function detail() {
           Nomor Surat : {data.nomor_surat}
         </h1>
         <h1 className="font-normal text-xl py-3">Perihal : {data.perihal}</h1>
-        <h1 className="font-normal text-xl py-3">Tanggal : {data.tanggal}</h1>
+        <h1 className="font-normal text-xl py-3">
+          Tanggal Diarsipkan:{" "}
+          {moment(data.createdAt).utc().format("DD-MM-YYYY")}
+        </h1>
         <h1 className="font-normal text-xl py-3">
           Keterangan :{" "}
           {data.keterangan ? data.keterangan : "Tidak ada keterangan"}
