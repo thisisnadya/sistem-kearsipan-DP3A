@@ -16,7 +16,7 @@ export default function agenda() {
   const getEvents = (data) => {
     if (data && !isLoading && !isError) {
       return data.map((item) => ({
-        title: item.judul,
+        title: item.acara,
         date: moment(item.tanggal).format("YYYY-MM-DD"),
         jam: item.jam_pelaksanaan,
       }));
@@ -37,6 +37,7 @@ export default function agenda() {
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
         events={events}
+        eventClick={(info) => alert(`Event title ${info.event.title}`)}
       />
     </>
   );

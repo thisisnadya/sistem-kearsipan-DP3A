@@ -1,5 +1,4 @@
 import suratUmum from "@/model/surat_umum";
-import suratUndangan from "@/model/surat_undangan";
 import undangan from "@/model/undangan";
 
 // ----------------------------------SURAT UMUM------------------------------------

@@ -21,32 +21,32 @@ export default function detail() {
         <h1 className="text-3xl font-semibold pb-3">Detail Page</h1>
       </div>
       <div className="detail">
-        <h1 className="font-normal text-xl py-3">Judul : {data.judul}</h1>
+        <h1 className="font-normal text-xl py-3">Judul : {data?.judul}</h1>
         <h1 className="font-normal text-xl py-3">
           Surat dari :{" "}
-          {data.surat_dari ? data.surat_dari : "Tidak ada keterangan"}
+          {data?.surat_dari ? data.surat_dari : "Tidak ada keterangan"}
         </h1>
         <h1 className="font-normal text-xl py-3">
-          Nomor Surat : {data.nomor_surat}
+          Nomor Surat : {data?.nomor_surat}
         </h1>
-        <h1 className="font-normal text-xl py-3">Perihal : {data.perihal}</h1>
+        <h1 className="font-normal text-xl py-3">Perihal : {data?.perihal}</h1>
         <h1 className="font-normal text-xl py-3">
           Tanggal Diarsipkan:{" "}
-          {moment(data.createdAt).utc().format("DD-MM-YYYY")}
+          {moment(data?.createdAt).utc().format("DD-MM-YYYY")}
         </h1>
         <h1 className="font-normal text-xl py-3">
           Keterangan :{" "}
-          {data.keterangan ? data.keterangan : "Tidak ada keterangan"}
+          {data?.keterangan ? data.keterangan : "Tidak ada keterangan"}
         </h1>
         <object
-          data={data.file}
+          data={data?.file}
           type="application/pdf"
           width="100%"
           height="700"
         >
           <p>
             Alternative: Klik{" "}
-            <Link href={data.file} className="text-zinc-900" target="_blank">
+            <Link href={data?.file} className="text-zinc-900" target="_blank">
               disini
             </Link>{" "}
             untuk lihat file

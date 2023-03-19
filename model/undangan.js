@@ -2,6 +2,7 @@ import { model, models, Schema } from "mongoose";
 
 const undanganSchema = new Schema({
   judul: String,
+  acara: String,
   surat_dari: String,
   nomor_surat: String,
   perihal: String,

@@ -86,7 +86,7 @@ export default function homeSuratUndangan() {
   );
 
   const showDate = (rowData) => {
-    return moment(rowData.tanggal).utc().format("DD-MM-YYYY");
+    return moment(rowData.tanggal).format("DD-MM-YYYY");
   };
   const viewBodyTemplate = (rowData) => {
     return (

@@ -33,6 +33,7 @@ export default function upload() {
   const formik = useFormik({
     initialValues: {
       judul: "",
+      acara: "",
       surat_dari: "",
       nomor_surat: "",
       perihal: "",
@@ -129,6 +130,20 @@ export default function upload() {
                         : ""
                     }
                     {...formik.getFieldProps("judul")}
+                  ></InputText>
+                </div>
+                <div className="field">
+                  <h5 className="mb-2 font-semibold">Acara</h5>
+                  <InputText
+                    type="text"
+                    placeholder="Contoh: Upacara Kemerdekaan"
+                    name="acara"
+                    // className={
+                    //   formik.errors.judul && formik.touched.judul
+                    //     ? "p-invalid"
+                    //     : ""
+                    // }
+                    {...formik.getFieldProps("acara")}
                   ></InputText>
                 </div>
                 <div className="field">
