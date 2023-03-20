@@ -59,10 +59,10 @@ export default function updatePage() {
     if (data) {
       setInitialValues({
         judul: data?.judul,
-        surat_dari: "",
-        nomor_surat: "",
-        klasifikasi_surat: "",
-        perihal: "",
+        surat_dari: data?.surat_dari,
+        nomor_surat: data?.nomor_surat,
+        klasifikasi_surat: data?.klasifikasi_surat,
+        perihal: data?.perihal,
         keterangan: "",
         file: null,
       });
@@ -71,6 +71,7 @@ export default function updatePage() {
 
   const formik = useFormik({
     initialValues,
+    enableReinitialize: true,
     validate: form_validation,
     onSubmit,
   });
