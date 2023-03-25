@@ -12,6 +12,7 @@ import {
   uploadFileToCloudinary,
   uploadSuratUmum,
   getDetailSuratUmum,
+  updateSuratUmum,
 } from "@/lib/helper";
 
 import Loading from "@/components/Loading";
@@ -24,10 +25,11 @@ export default function updatePage() {
   // const [dataSurat, setDataSurat] = useState();
   const queryClient = useQueryClient();
   const [fileSrc, setFileSrc] = useState();
+  const [newFileSrc, setNewFileSrc] = useState();
   const [uploadData, setUploadData] = useState();
   const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const addMutation = useMutation(uploadSuratUmum, {
+  const addMutation = useMutation(updateSuratUmum, {
     onSuccess: () => {
       console.log("Data Inserted");
       queryClient.prefetchQuery("surat_umum", getAllSuratUmum);
@@ -63,10 +65,11 @@ export default function updatePage() {
         nomor_surat: data?.nomor_surat,
         klasifikasi_surat: data?.klasifikasi_surat,
         perihal: data?.perihal,
-        keterangan: "",
-        file: null,
+        keterangan: data?.keterangan,
+        file: data?.file,
       });
     }
+    setFileSrc(data?.file);
   }, [data]);
 
   const formik = useFormik({
@@ -81,29 +84,41 @@ export default function updatePage() {
   async function onSubmit(values) {
     setLoading(true);
     if (Object.keys(formik.errors).length == 0) {
-      const fileUploaded = await uploadFileToCloudinary(fileSrc, "surat_umum");
-
-      setUploadData(fileUploaded);
-
-      if (!fileUploaded)
-        return (
-          <ToastMessage
-            severity={"error"}
-            summary={"Error"}
-            message={"Terjadi kesalahan!"}
-          />
+      if (newFileSrc) {
+        const fileUploaded = await uploadFileToCloudinary(
+          newFileSrc,
+          "surat_umum"
         );
-
+        setUploadData(fileUploaded);
+        if (!fileUploaded)
+          return (
+            <ToastMessage
+              severity={"error"}
+              summary={"Error"}
+              message={"Terjadi kesalahan!"}
+            />
+          );
+        let model = {
+          ...values,
+          klasifikasi_surat: values.klasifikasi_surat["code"],
+          file: fileUploaded.url,
+          public_id: fileUploaded.public_id,
+        };
+        addMutation.mutate(model);
+        setLoading(false);
+        formik.resetForm();
+      }
       let model = {
         ...values,
-        klasifikasi_surat: values.klasifikasi_surat["code"],
-        file: fileUploaded.url,
-        public_id: fileUploaded.public_id,
+        // klasifikasi_surat: values.klasifikasi_surat["code"],
+        // file: fileUploaded.url,
+        // public_id: fileUploaded.public_id,
       };
-      console.log(model);
-      addMutation.mutate(model);
+      addMutation.mutate(id, model);
       setLoading(false);
       formik.resetForm();
+
+      console.log("model:", model);
       // console.log(uploadData);
     }
   }
@@ -112,7 +127,7 @@ export default function updatePage() {
     const reader = new FileReader();
 
     reader.onload = function (onLoadEvent) {
-      setFileSrc(onLoadEvent.target.result);
+      setNewFileSrc(onLoadEvent.target.result);
       setUploadData(undefined);
     };
 
@@ -218,11 +233,13 @@ export default function updatePage() {
                             type="file"
                             name="file"
                             accept=".pdf"
-                            required
+                            // required
                             onChange={handleOnChange}
                           />
                           <iframe
-                            src={fileSrc}
+                            src={
+                              initialValues.file ? initialValues.file : fileSrc
+                            }
                             // frameBorder="0"
                             id="preview-pdf"
                             className="mt-2"

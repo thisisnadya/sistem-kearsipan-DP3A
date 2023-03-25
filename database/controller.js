@@ -48,7 +48,7 @@ export const uploadSuratUmum = async (req, res) => {
 };
 
 // DELETE SURAT
-// http://localhost:3000/api/data_surat/surat_masuk/[id]
+// http://localhost:3000/api/data_surat/surat_umum/[id]
 export const deleteSuratUmum = async (req, res) => {
   try {
     const response = await suratUmum.deleteOne({ _id: req.query.id });
@@ -58,14 +58,32 @@ export const deleteSuratUmum = async (req, res) => {
   }
 };
 
-// UPDATE data surat masuk
-// http://localhost:3000/api/data_surat/surat_masuk/[id]
+// UPDATE data surat umum
+// http://localhost:3000/api/data_surat/surat_umum/[id]
 export const updateSuratUmum = async (req, res) => {
-  const { keterangan } = req.body;
+  const {
+    keterangan,
+    file,
+    judul,
+    klasifikasi_surat,
+    nomor_surat,
+    perihal,
+    surat_dari,
+  } = req.body;
   try {
     const updatedData = await suratUmum.updateOne(
       { _id: req.query.id },
-      { $set: { keterangan: keterangan } }
+      {
+        $set: {
+          keterangan,
+          file,
+          judul,
+          klasifikasi_surat,
+          nomor_surat,
+          perihal,
+          surat_dari,
+        },
+      }
     );
     res.status(200).json(updatedData);
   } catch (error) {

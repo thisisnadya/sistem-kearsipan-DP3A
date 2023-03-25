@@ -60,7 +60,7 @@ const AppMenu = () => {
           items: [
             {
               label: "Agenda Kegiatan",
-              icon: "pi pi-id-card",
+              icon: "pi pi-calendar",
               to: "/pages/agenda",
             },
             {
