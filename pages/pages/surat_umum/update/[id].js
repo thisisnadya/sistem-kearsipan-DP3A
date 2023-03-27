@@ -30,12 +30,6 @@ export default function updatePage() {
   const [uploadData, setUploadData] = useState();
   const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const addMutation = useMutation(updateSuratUmum, {
-    onSuccess: () => {
-      console.log("Data Inserted");
-      queryClient.prefetchQuery("surat_umum", getAllSuratUmum);
-    },
-  });
 
   useEffect(() => {
     const { id } = router.query;
@@ -46,6 +40,14 @@ export default function updatePage() {
 
   const { isLoading, isError, data, error } = useQuery(["surat_umum", id], () =>
     getDetailSuratUmum(id)
+  );
+  const updateMutation = useMutation(
+    (newData) => updateSuratUmum(id, newData),
+    {
+      onSuccess: async (data) => {
+        console.log("data updated");
+      },
+    }
   );
 
   const [initialValues, setInitialValues] = useState({
@@ -86,23 +88,17 @@ export default function updatePage() {
   async function onSubmit(values) {
     setLoading(true);
     if (Object.keys(formik.errors).length == 0) {
+      let model = {
+        ...values,
+      };
       if (newFileSrc) {
         const fileUploaded = await updateFileCloudinary(
           data?.public_id,
           newFileSrc
         );
         setUploadData(fileUploaded);
-        // if (!fileUploaded)
-        //   return (
-        //     <ToastMessage
-        //       severity={"error"}
-        //       summary={"Error"}
-        //       message={"Terjadi kesalahan!"}
-        //     />
-        //   );
-        let model = {
-          ...values,
-          // klasifikasi_surat: values.klasifikasi_surat["code"],
+        model = {
+          ...model,
           file: fileUploaded.url,
           public_id: fileUploaded.public_id,
         };
@@ -111,17 +107,13 @@ export default function updatePage() {
         // formik.resetForm();
         console.log("model:", model);
       }
-      let model = {
-        ...values,
-        klasifikasi_surat: values.klasifikasi_surat["code"],
-        // file: fileUploaded.url,
-        // public_id: fileUploaded.public_id,
-      };
+      console.log("model created:", model);
+      await updateMutation.mutate(model);
       // addMutation.mutate(id, model);
       setLoading(false);
+
       // formik.resetForm();
 
-      console.log("model:", model);
       // console.log(uploadData);
     }
   }
@@ -142,6 +134,16 @@ export default function updatePage() {
       {!isLoading && !isError && data ? (
         <>
           <h1 className="text-3xl font-semibold pb-3">Update Page</h1>
+          {updateMutation.isSuccess ? (
+            // <Success message={"Data berhasil ditambahkan"} />
+            <ToastMessage
+              severity={"success"}
+              summary={"Sukses!"}
+              detail={"Data Berhasil diupdate"}
+            />
+          ) : (
+            <></>
+          )}
           <div>
             <div className="grid p-fluid">
               <div className="col-12 lg:col-8">
