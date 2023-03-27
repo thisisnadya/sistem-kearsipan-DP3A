@@ -40,7 +40,7 @@ export default function homeSuratUmum() {
   // filters
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    asal: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    klasifikasi_surat: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   });
 
   const onGlobalFilterChange = (e) => {
@@ -161,13 +161,19 @@ export default function homeSuratUmum() {
             paginator
             rows={10}
           >
-            <Column field="klasifikasi_surat" header="Kode"></Column>
+            <Column
+              field="klasifikasi_surat"
+              header="Kode"
+              style={{ width: "20%" }}
+              filter
+              filterPlaceholder="Cari"
+            ></Column>
             <Column field="judul" header="Judul"></Column>
             <Column
               header="Tanggal Diarsipkan"
               body={showDate}
               sortable
-              style={{ width: "25%" }}
+              style={{ width: "20%" }}
             ></Column>
             <Column header="Detail" body={viewBodyTemplate}></Column>
             <Column header="File" body={linkBodyTemplate}></Column>

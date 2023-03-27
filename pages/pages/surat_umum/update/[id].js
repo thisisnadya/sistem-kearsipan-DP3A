@@ -13,6 +13,7 @@ import {
   uploadSuratUmum,
   getDetailSuratUmum,
   updateSuratUmum,
+  updateFileCloudinary,
 } from "@/lib/helper";
 
 import Loading from "@/components/Loading";
@@ -67,6 +68,7 @@ export default function updatePage() {
         perihal: data?.perihal,
         keterangan: data?.keterangan,
         file: data?.file,
+        public_id: data?.public_id,
       });
     }
     setFileSrc(data?.file);
@@ -85,38 +87,39 @@ export default function updatePage() {
     setLoading(true);
     if (Object.keys(formik.errors).length == 0) {
       if (newFileSrc) {
-        const fileUploaded = await uploadFileToCloudinary(
-          newFileSrc,
-          "surat_umum"
+        const fileUploaded = await updateFileCloudinary(
+          data?.public_id,
+          newFileSrc
         );
         setUploadData(fileUploaded);
-        if (!fileUploaded)
-          return (
-            <ToastMessage
-              severity={"error"}
-              summary={"Error"}
-              message={"Terjadi kesalahan!"}
-            />
-          );
+        // if (!fileUploaded)
+        //   return (
+        //     <ToastMessage
+        //       severity={"error"}
+        //       summary={"Error"}
+        //       message={"Terjadi kesalahan!"}
+        //     />
+        //   );
         let model = {
           ...values,
-          klasifikasi_surat: values.klasifikasi_surat["code"],
+          // klasifikasi_surat: values.klasifikasi_surat["code"],
           file: fileUploaded.url,
           public_id: fileUploaded.public_id,
         };
-        addMutation.mutate(model);
+        // addMutation.mutate(model);
         setLoading(false);
-        formik.resetForm();
+        // formik.resetForm();
+        console.log("model:", model);
       }
       let model = {
         ...values,
-        // klasifikasi_surat: values.klasifikasi_surat["code"],
+        klasifikasi_surat: values.klasifikasi_surat["code"],
         // file: fileUploaded.url,
         // public_id: fileUploaded.public_id,
       };
-      addMutation.mutate(id, model);
+      // addMutation.mutate(id, model);
       setLoading(false);
-      formik.resetForm();
+      // formik.resetForm();
 
       console.log("model:", model);
       // console.log(uploadData);
@@ -237,9 +240,7 @@ export default function updatePage() {
                             onChange={handleOnChange}
                           />
                           <iframe
-                            src={
-                              initialValues.file ? initialValues.file : fileSrc
-                            }
+                            src={newFileSrc ? newFileSrc : initialValues.file}
                             // frameBorder="0"
                             id="preview-pdf"
                             className="mt-2"

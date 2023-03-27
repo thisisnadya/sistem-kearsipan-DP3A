@@ -20,6 +20,7 @@ import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { InputText } from "primereact/inputtext";
 import { FilterMatchMode } from "primereact/api";
+import moment from "moment/moment";
 
 export default function Home() {
   const queryClient = useQueryClient();
@@ -38,7 +39,8 @@ export default function Home() {
   // filters
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    asal: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    klasifikasi_surat: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    createdAt: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   });
 
   const onGlobalFilterChange = (e) => {
@@ -129,6 +131,10 @@ export default function Home() {
     </div>
   );
 
+  const showDate = (rowData) => {
+    return moment(rowData.createdAt).utc().format("DD-MM-YYYY");
+  };
+
   const viewBodyTemplate = (rowData) => {
     return (
       <Link href={`/pages/surat_masuk/${rowData._id}`}>
@@ -166,7 +172,7 @@ export default function Home() {
           reject={reject}
         />
         <>
-          <Link href={`/pages/surat_masuk/update/${rowData._id}`}>
+          <Link href={`/pages/surat_umum/update/${rowData._id}`}>
             <Button
               icon="pi pi-pencil"
               className="p-button-rounded p-button-success mr-2"
@@ -280,14 +286,26 @@ export default function Home() {
               header={tableHeader}
               filters={filters}
               filterDisplay="row"
-              globalFilterFields={["judul", "surat_dari"]}
+              globalFilterFields={["judul", "klasifikasi_surat", "createdAt"]}
               showGridlines
               responsiveLayout="scroll"
               paginator
               rows={10}
             >
+              <Column
+                field="klasifikasi_surat"
+                header="Kode"
+                style={{ width: "20%" }}
+                filter
+                filterPlaceholder="Cari"
+              ></Column>
               <Column field="judul" header="Judul"></Column>
-              <Column field="surat_dari" header="Surat Dari"></Column>
+              <Column
+                header="Tanggal Diarsipkan"
+                body={showDate}
+                sortable
+                style={{ width: "20%" }}
+              ></Column>
               <Column header="Detail" body={viewBodyTemplate}></Column>
               <Column header="File" body={linkBodyTemplate}></Column>
               <Column
