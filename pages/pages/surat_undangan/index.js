@@ -114,7 +114,7 @@ export default function homeSuratUndangan() {
   const actionBodyTemplate = (rowData) => {
     return (
       <div>
-        <Link href={`/pages/surat_umum/update/${rowData._id}`}>
+        <Link href={`/pages/surat_undangan/update/${rowData._id}`}>
           <Button
             icon="pi pi-pencil"
             className="p-button-rounded p-button-success mr-2"

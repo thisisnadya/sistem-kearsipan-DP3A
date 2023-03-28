@@ -2,6 +2,7 @@ import connectMongo from "@/database/conn";
 import {
   deleteSuratUndangan,
   getDetailSuratUndangan,
+  updateSuratUndangan,
 } from "@/database/controller";
 
 export default function handler(req, res) {
@@ -20,7 +21,7 @@ export default function handler(req, res) {
       getDetailSuratUndangan(req, res);
       break;
     case "PUT":
-      res.status(200).json("PUT REQUEST");
+      updateSuratUndangan(req, res);
       break;
     case "DELETE":
       deleteSuratUndangan(req, res);

@@ -147,3 +147,40 @@ export const deleteSuratUndangan = async (req, res) => {
     res.status(404).json(error);
   }
 };
+
+// update surat undangan
+// http://localhost:3000/api/data_surat/surat_undangan/[id]
+export const updateSuratUndangan = async (req, res) => {
+  const {
+    keterangan,
+    file,
+    judul,
+    acara,
+    nomor_surat,
+    perihal,
+    tanggal,
+    jam_pelaksanaan,
+    surat_dari,
+  } = req.body;
+  try {
+    const updatedData = await undangan.updateOne(
+      { _id: req.query.id },
+      {
+        $set: {
+          keterangan,
+          file,
+          judul,
+          acara,
+          nomor_surat,
+          perihal,
+          tanggal,
+          jam_pelaksanaan,
+          surat_dari,
+        },
+      }
+    );
+    res.status(200).json(updatedData);
+  } catch (error) {
+    res.status(404).json(error);
+  }
+};

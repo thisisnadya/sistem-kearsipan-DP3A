@@ -5,9 +5,12 @@ import { useQuery } from "react-query";
 import { getAllSuratUndangan } from "@/lib/helper";
 import Loading from "@/components/Loading";
 import moment from "moment/moment";
+import { Dialog } from "primereact/dialog";
 
 export default function agenda() {
   const [events, setEvents] = useState([]);
+  const [detailEvent, setDetailEvent] = useState();
+  const [visible, setVisible] = useState(false);
   const { isLoading, isError, data, error } = useQuery(
     "surat_undangan",
     getAllSuratUndangan
@@ -29,7 +32,13 @@ export default function agenda() {
     setEvents(transformedData);
   }, [data]);
 
+  const showEventDetail = (info) => {
+    setVisible(true);
+    setDetailEvent(info.event);
+  };
+
   console.log(events);
+  console.log(detailEvent);
   if (isLoading) return <Loading />;
   return (
     <>
@@ -37,8 +46,18 @@ export default function agenda() {
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
         events={events}
-        eventClick={(info) => alert(`Event title ${info.event.title}`)}
+        eventClick={(info) => showEventDetail(info)}
       />
+      <Dialog
+        header="Detail Acara"
+        visible={visible}
+        style={{ width: "50vw" }}
+        onHide={() => setVisible(false)}
+      >
+        <h1 className="m-0">Kegiatan: {detailEvent?.title}</h1>
+        <br />
+        <h1>Tanggal pelaksanaan: {detailEvent?.startStr}</h1>
+      </Dialog>
     </>
   );
 }
