@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSession } from "next-auth/react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueries, useQuery, useQueryClient } from "react-query";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Chart } from "primereact/chart";
@@ -9,6 +9,7 @@ import {
   deleteFileCloudinary,
   deleteSuratUmum,
   getAllSuratUmum,
+  getAllSuratUndangan,
 } from "@/lib/helper";
 import Link from "next/link";
 import Loading from "@/components/Loading";
@@ -54,10 +55,23 @@ export default function Home() {
   };
 
   // get Data
-  const { isLoading, isError, data, error } = useQuery(
-    "surat_masuk",
-    getAllSuratUmum
-  );
+  const queries = [
+    {
+      queryKey: "surat_umum",
+      queryFn: getAllSuratUmum,
+    },
+    {
+      queryKey: "surat_undangan",
+      queryFn: getAllSuratUndangan,
+    },
+  ];
+  const results = useQueries(queries);
+
+  const isError = results.some((result) => result.isError);
+  const isLoading = results.every((result) => result.isLoading);
+
+  const suratUmumData = results[0].data;
+  const suratUndanganData = results[1].data;
 
   // handle delete button
   const addMutation = useMutation(deleteSuratUmum, {
@@ -190,6 +204,7 @@ export default function Home() {
   };
 
   if (isLoading) return <Loading />;
+  if (isError) return <div>Failed to fetch data</div>;
 
   return (
     <>
@@ -206,10 +221,10 @@ export default function Home() {
               <div className="flex justify-content-between mb-3">
                 <div>
                   <span className="block text-500 font-medium mb-3">
-                    Jumlah Surat
+                    Surat Umum
                   </span>
                   <div className="text-900 font-medium text-xl">
-                    {data.length}
+                    {suratUmumData.length}
                   </div>
                 </div>
                 <div
@@ -226,9 +241,11 @@ export default function Home() {
               <div className="flex justify-content-between mb-3">
                 <div>
                   <span className="block text-500 font-medium mb-3">
-                    Orders
+                    Undangan
                   </span>
-                  <div className="text-900 font-medium text-xl">152</div>
+                  <div className="text-900 font-medium text-xl">
+                    {suratUndanganData.length}
+                  </div>
                 </div>
                 <div
                   className="flex align-items-center justify-content-center bg-blue-100 border-round"
@@ -282,7 +299,7 @@ export default function Home() {
         <div className="my-4">
           <div className="card">
             <DataTable
-              value={data}
+              value={suratUmumData}
               header={tableHeader}
               filters={filters}
               filterDisplay="row"
