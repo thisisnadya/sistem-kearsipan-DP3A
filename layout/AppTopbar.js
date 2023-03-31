@@ -86,10 +86,7 @@ const AppTopbar = forwardRef((props, ref) => {
           "layout-topbar-menu-mobile-active": layoutState.profileSidebarVisible,
         })}
       >
-        <Link
-          href={"https://calendar.google.com/calendar/u/0/r"}
-          target="_blank"
-        >
+        <Link href={"/pages/agenda"}>
           <button type="button" className="p-link layout-topbar-button">
             <i className="pi pi-calendar"></i>
           </button>

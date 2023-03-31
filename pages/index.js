@@ -175,7 +175,13 @@ export default function Home() {
   const actionBodyTemplate = (rowData) => {
     return (
       <div>
-        <Toast ref={toast} />
+        <Link href={`/pages/surat_umum/update/${rowData._id}`}>
+          <Button
+            icon="pi pi-pencil"
+            className="p-button-rounded p-button-success mr-2"
+          />
+        </Link>
+        {/* <Toast ref={toast} />
         <ConfirmDialog
           visible={visible}
           onHide={() => setVisible(false)}
@@ -184,19 +190,13 @@ export default function Home() {
           icon="pi pi-exclamation-triangle"
           accept={() => handleDelete(rowData.public_id, rowData._id)}
           reject={reject}
-        />
+        /> */}
         <>
-          <Link href={`/pages/surat_umum/update/${rowData._id}`}>
-            <Button
-              icon="pi pi-pencil"
-              className="p-button-rounded p-button-success mr-2"
-              // onClick={() => setVisible(true)}
-            />
-          </Link>
           <Button
             icon="pi pi-trash"
             className="p-button-rounded p-button-warning"
-            onClick={() => setVisible(true)}
+            // onClick={() => setVisible(true)}
+            onClick={() => handleDelete(rowData.public_id, rowData._id)}
           />
         </>
       </div>
@@ -224,7 +224,7 @@ export default function Home() {
                     Surat Umum
                   </span>
                   <div className="text-900 font-medium text-xl">
-                    {suratUmumData.length}
+                    {suratUmumData?.length}
                   </div>
                 </div>
                 <div
@@ -244,7 +244,7 @@ export default function Home() {
                     Undangan
                   </span>
                   <div className="text-900 font-medium text-xl">
-                    {suratUndanganData.length}
+                    {suratUndanganData?.length}
                   </div>
                 </div>
                 <div
