@@ -8,6 +8,7 @@ import { Button } from "primereact/button";
 import {
   deleteFileCloudinary,
   deleteSuratUmum,
+  getAllSK,
   getAllSuratUmum,
   getAllSuratUndangan,
 } from "@/lib/helper";
@@ -64,6 +65,10 @@ export default function Home() {
       queryKey: "surat_undangan",
       queryFn: getAllSuratUndangan,
     },
+    {
+      queryKey: "surat_keterangan",
+      queryFn: getAllSK,
+    },
   ];
   const results = useQueries(queries);
 
@@ -72,6 +77,7 @@ export default function Home() {
 
   const suratUmumData = results[0].data;
   const suratUndanganData = results[1].data;
+  const suratKeteranganData = results[2].data;
 
   // handle delete button
   const addMutation = useMutation(deleteSuratUmum, {
@@ -261,9 +267,11 @@ export default function Home() {
               <div className="flex justify-content-between mb-3">
                 <div>
                   <span className="block text-500 font-medium mb-3">
-                    Orders
+                    Surat Keterangan
                   </span>
-                  <div className="text-900 font-medium text-xl">152</div>
+                  <div className="text-900 font-medium text-xl">
+                    {suratKeteranganData?.length}
+                  </div>
                 </div>
                 <div
                   className="flex align-items-center justify-content-center bg-blue-100 border-round"

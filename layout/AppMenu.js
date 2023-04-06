@@ -17,7 +17,7 @@ const AppMenu = () => {
       label: "Umum",
       items: [
         {
-          label: "Surat",
+          label: "Surat Umum",
           icon: "pi pi-fw pi-id-card",
           items: [
             {
@@ -45,6 +45,22 @@ const AppMenu = () => {
               label: "Upload Surat",
               icon: "pi pi-upload",
               to: "/pages/surat_undangan/upload",
+            },
+          ],
+        },
+        {
+          label: "SK",
+          icon: "pi pi-fw pi-id-card",
+          items: [
+            {
+              label: "Data Surat Keterangan",
+              icon: "pi pi-id-card",
+              to: "/pages/surat_keterangan/",
+            },
+            {
+              label: "Upload Surat",
+              icon: "pi pi-upload",
+              to: "/pages/surat_keterangan/upload",
             },
           ],
         },
