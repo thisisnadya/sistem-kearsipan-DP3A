@@ -71,7 +71,7 @@ export default function homeSuratUndangan() {
 
   const tableHeader = (
     <div>
-      <h1 className="text-slate-700 text-3xl">Data Surat</h1>
+      <h1 className="text-slate-700 text-3xl">Data Surat Undangan</h1>
       <div className="flex justify-content-end">
         <span className="p-input-icon-left">
           <i className="pi pi-search" />

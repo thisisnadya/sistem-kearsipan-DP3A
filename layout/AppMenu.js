@@ -79,11 +79,6 @@ const AppMenu = () => {
               icon: "pi pi-calendar",
               to: "/pages/agenda",
             },
-            {
-              label: "Upload Surat",
-              icon: "pi pi-upload",
-              to: "/pages/kepegawaian/upload",
-            },
           ],
         },
       ],
