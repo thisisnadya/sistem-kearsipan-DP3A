@@ -11,6 +11,7 @@ import {
   getAllSK,
   getAllSuratUmum,
   getAllSuratUndangan,
+  getSuratUmumChartData,
 } from "@/lib/helper";
 import Link from "next/link";
 import Loading from "@/components/Loading";
@@ -29,6 +30,7 @@ export default function Home() {
   const toast = useRef(null);
   const [visible, setVisible] = useState(false);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
+  const [chartData, setChartData] = useState();
   // const { data: session } = useSession();
   const session = useSession();
   const router = useRouter();
@@ -37,6 +39,10 @@ export default function Home() {
   useEffect(() => {
     if (session.status == "unauthenticated") router.replace("/auth/login");
   }, [session.status]);
+
+  useEffect(async () => {
+    setChartData(await getSuratUmumChartData());
+  }, []);
 
   // filters
   const [filters, setFilters] = useState({
@@ -105,11 +111,11 @@ export default function Home() {
 
   // data to displat in the chart
   const dummyData2 = {
-    labels: ["Q1", "Q2", "Q3", "Q4"],
+    labels: chartData?.map((item) => item.bulan),
     datasets: [
       {
-        label: "Sales",
-        data: [540, 325, 702, 620],
+        label: "Surat Umum",
+        data: chartData?.map((item) => item.count),
         backgroundColor: [
           "rgba(255, 159, 64, 0.2)",
           "rgba(75, 192, 192, 0.2)",
@@ -127,11 +133,19 @@ export default function Home() {
     ],
   };
 
+  console.log(chartData);
+
   const options = {
     scales: {
-      y: {
-        beginAtZero: true,
-      },
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+            stepSize: 5,
+            max: 50,
+          },
+        },
+      ],
     },
   };
 
