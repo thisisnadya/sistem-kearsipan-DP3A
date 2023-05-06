@@ -11,7 +11,7 @@ import {
   getAllSK,
   getAllSuratUmum,
   getAllSuratUndangan,
-  getSuratUmumChartData,
+  getChartData,
 } from "@/lib/helper";
 import Link from "next/link";
 import Loading from "@/components/Loading";
@@ -41,7 +41,7 @@ export default function Home() {
   }, [session.status]);
 
   useEffect(async () => {
-    setChartData(await getSuratUmumChartData());
+    setChartData(await getChartData());
   }, []);
 
   // filters
@@ -110,42 +110,48 @@ export default function Home() {
   };
 
   // data to displat in the chart
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "Mei",
+    "Jun",
+    "Jul",
+    "Agust",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   const dummyData2 = {
-    labels: chartData?.map((item) => item.bulan),
+    // labels: chartData?.map((item) => item.bulan),
+    labels: months,
     datasets: [
       {
         label: "Surat Umum",
-        data: chartData?.map((item) => item.count),
-        backgroundColor: [
-          "rgba(255, 159, 64, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-        ],
-        borderColor: [
-          "rgb(255, 159, 64)",
-          "rgb(75, 192, 192)",
-          "rgb(54, 162, 235)",
-          "rgb(153, 102, 255)",
-        ],
+        data: chartData?.umum,
+        backgroundColor: "rgba(54, 162, 235, 0.5)",
+        borderWidth: 1,
+      },
+      {
+        label: "Surat Keterangan",
+        data: chartData?.keterangan,
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
         borderWidth: 1,
       },
     ],
   };
 
-  console.log(chartData);
+  // console.log(chartData);
 
   const options = {
     scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-            stepSize: 5,
-            max: 50,
-          },
-        },
-      ],
+      y: {
+        beginAtZero: true,
+        stepSize: 10,
+        max: 50,
+      },
     },
   };
 
