@@ -8,9 +8,9 @@ export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
-      session: {
-        strategy: "jwt",
-      },
+      // session: {
+      //   strategy: "jwt",
+      // },
       async authorize(credentials, req) {
         await connectMongo().catch((err) => {
           error: "Connection Failed";
