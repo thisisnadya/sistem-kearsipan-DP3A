@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
 import ToastMessage from "@/components/Toast";
 import moment from "moment-timezone";
 
-export default function upload() {
+export default function Upload() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const [fileSrc, setFileSrc] = useState();

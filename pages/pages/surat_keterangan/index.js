@@ -15,7 +15,7 @@ import { InputText } from "primereact/inputtext";
 import { FilterMatchMode } from "primereact/api";
 import moment from "moment/moment";
 
-export default function homeSuratUmum() {
+export default function HomeSuratKeterangan() {
   const queryClient = useQueryClient();
   const toast = useRef(null);
   const [visible, setVisible] = useState(false);

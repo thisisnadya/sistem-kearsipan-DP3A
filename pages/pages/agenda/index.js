@@ -7,7 +7,7 @@ import Loading from "@/components/Loading";
 import moment from "moment/moment";
 import { Dialog } from "primereact/dialog";
 
-export default function agenda() {
+export default function Agenda() {
   const [events, setEvents] = useState([]);
   const [detailEvent, setDetailEvent] = useState();
   const [visible, setVisible] = useState(false);

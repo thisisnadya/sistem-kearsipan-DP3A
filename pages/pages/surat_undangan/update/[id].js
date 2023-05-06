@@ -22,7 +22,7 @@ import Loading from "@/components/Loading";
 import ToastMessage from "@/components/Toast";
 import { Dropdown } from "primereact/dropdown";
 
-export default function updatePage() {
+export default function UpdatePage() {
   const router = useRouter();
   const [id, setId] = useState();
   // const [dataSurat, setDataSurat] = useState();

@@ -5,7 +5,7 @@ import Link from "next/link";
 import Loading from "@/components/Loading";
 import moment from "moment/moment";
 
-export default function detail() {
+export default function Detail() {
   const router = useRouter();
   const { id } = router.query;
 
