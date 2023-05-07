@@ -11,12 +11,11 @@ import { useFormik } from "formik";
 import { login_validation } from "@/lib/validation";
 import { signIn, signOut } from "next-auth/react";
 
-const BASE_URL =
-  process.env.NODE_ENV == "production"
-    ? "https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react/"
-    : "http://localhost:3000";
-
 const LoginPage = () => {
+  const callbackUrl =
+    process.env.NODE_ENV === "production"
+      ? `${process.env.NEXT_PUBLIC_VERCEL_URL}/sakai-react/`
+      : `${window.location.origin}/`;
   const { layoutConfig } = useContext(LayoutContext);
   const contextPath = getConfig().publicRuntimeConfig.contextPath;
   const router = useRouter();
@@ -41,7 +40,7 @@ const LoginPage = () => {
       redirect: false,
       username: values.username,
       password: values.password,
-      callbackUrl: BASE_URL,
+      callbackUrl,
     });
 
     console.log(status);
