@@ -14,8 +14,8 @@ import { signIn, signOut } from "next-auth/react";
 const LoginPage = () => {
   const callbackUrl =
     process.env.NODE_ENV === "production"
-      ? `${process.env.NEXT_PUBLIC_VERCEL_URL}/sakai-react/`
-      : `${window.location.origin}/`;
+      ? "https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react/"
+      : "http://localhost:3000";
   const { layoutConfig } = useContext(LayoutContext);
   const contextPath = getConfig().publicRuntimeConfig.contextPath;
   const router = useRouter();
