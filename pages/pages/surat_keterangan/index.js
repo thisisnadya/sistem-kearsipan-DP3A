@@ -15,6 +15,11 @@ import { InputText } from "primereact/inputtext";
 import { FilterMatchMode } from "primereact/api";
 import moment from "moment/moment";
 
+const BASE_URL =
+  process.env.NODE_ENV == "production"
+    ? "https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react/"
+    : "http://localhost:3000";
+
 export default function HomeSuratKeterangan() {
   const queryClient = useQueryClient();
   const toast = useRef(null);
@@ -84,7 +89,7 @@ export default function HomeSuratKeterangan() {
 
   const viewBodyTemplate = (rowData) => {
     return (
-      <Link href={`/pages/surat_keterangan/detail/${rowData._id}`}>
+      <Link href={`${BASE_URL}/pages/surat_keterangan/detail/${rowData._id}`}>
         <MdPageview
           size={24}
           className={`text-indigo-500 hover:text-indigo-300`}
@@ -108,7 +113,7 @@ export default function HomeSuratKeterangan() {
   const actionBodyTemplate = (rowData) => {
     return (
       <div>
-        <Link href={`/pages/surat_keterangan/update/${rowData._id}`}>
+        <Link href={`${BASE_URL}/pages/surat_keterangan/update/${rowData._id}`}>
           <Button
             icon="pi pi-pencil"
             className="p-button-rounded p-button-success mr-2"
