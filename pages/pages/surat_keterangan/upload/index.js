@@ -3,8 +3,7 @@ import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { useFormik } from "formik";
-import { form_validation } from "@/lib/validation";
-import { categories } from "@/lib/data";
+import { surat_keterangan_validation } from "@/lib/validation";
 import { useMutation, useQueryClient } from "react-query";
 import { getAllSK, uploadFileToCloudinary, uploadSK } from "@/lib/helper";
 
@@ -36,7 +35,7 @@ export default function Upload() {
       keterangan: "",
       file: null,
     },
-    validate: form_validation,
+    validate: surat_keterangan_validation,
     onSubmit,
   });
 
@@ -176,7 +175,9 @@ export default function Upload() {
                   />
                 </div>
                 <div className="field">
-                  <h5 className="font-semibold mb-2">Upload File</h5>
+                  <h5 className="font-semibold mb-2">
+                    Upload File (Ukuran file maksimum 10 MB)
+                  </h5>
                   <div>
                     <input
                       type="file"

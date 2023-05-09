@@ -3,7 +3,7 @@ import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { useFormik } from "formik";
-import { form_validation } from "@/lib/validation";
+import { surat_umum_validation } from "@/lib/validation";
 import { categories } from "@/lib/data";
 import { useMutation, useQueryClient } from "react-query";
 import {
@@ -41,7 +41,7 @@ export default function Upload() {
       keterangan: "",
       file: null,
     },
-    validate: form_validation,
+    validate: surat_umum_validation,
     onSubmit,
   });
 
@@ -193,13 +193,16 @@ export default function Upload() {
                   />
                 </div>
                 <div className="field">
-                  <h5 className="font-semibold mb-2">Upload File</h5>
+                  <h5 className="font-semibold mb-2">
+                    Upload File (Ukuran file maksimum 10 MB)
+                  </h5>
                   <div>
                     <input
                       type="file"
                       name="file"
                       accept=".pdf"
                       required
+                      maxSize={1024 * 1024 * 10}
                       onChange={handleOnChange}
                     />
                     <iframe

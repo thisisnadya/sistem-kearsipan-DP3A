@@ -4,7 +4,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Calendar } from "primereact/calendar";
 import { Button } from "primereact/button";
 import { useFormik } from "formik";
-import { form_validation } from "@/lib/validation";
+import { surat_undangan_validation } from "@/lib/validation";
 import { useMutation, useQueryClient } from "react-query";
 import {
   getAllSuratUndangan,
@@ -42,7 +42,7 @@ export default function Upload() {
       keterangan: "",
       file: null,
     },
-    validate: form_validation,
+    validate: surat_undangan_validation,
     onSubmit,
   });
 
@@ -215,7 +215,9 @@ export default function Upload() {
                   />
                 </div>
                 <div className="field">
-                  <h5 className="font-semibold mb-2">Upload File</h5>
+                  <h5 className="font-semibold mb-2">
+                    Upload File (Ukuran file maksimum 10 MB)
+                  </h5>{" "}
                   <div>
                     <input
                       type="file"

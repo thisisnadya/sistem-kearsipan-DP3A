@@ -4,7 +4,7 @@ import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Button } from "primereact/button";
 import { useFormik } from "formik";
-import { form_validation } from "@/lib/validation";
+import { surat_umum_validation } from "@/lib/validation";
 import { categories } from "@/lib/data";
 import { useMutation, useQueryClient, useQuery } from "react-query";
 import {
@@ -31,6 +31,10 @@ export default function UpdatePage() {
   const [loading, setLoading] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
 
+  const { isLoading, isError, data, error } = useQuery(["surat_umum", id], () =>
+    getDetailSuratUmum(id)
+  );
+
   useEffect(() => {
     const { id } = router.query;
     if (id) {
@@ -38,9 +42,12 @@ export default function UpdatePage() {
     }
   }, [router.query]);
 
-  const { isLoading, isError, data, error } = useQuery(["surat_umum", id], () =>
-    getDetailSuratUmum(id)
-  );
+  useEffect(() => {
+    setSelectedCategory(
+      categories.find((item) => item.code === data?.klasifikasi_surat)
+    );
+  }, []);
+
   const updateMutation = useMutation(
     (newData) => updateSuratUmum(id, newData),
     {
@@ -79,7 +86,7 @@ export default function UpdatePage() {
   const formik = useFormik({
     initialValues,
     enableReinitialize: true,
-    validate: form_validation,
+    validate: surat_umum_validation,
     onSubmit,
   });
   console.log("data: ", data);
@@ -200,7 +207,9 @@ export default function UpdatePage() {
                           name="klasifikasi_surat"
                           options={categories}
                           optionLabel="name"
+                          optionValue="code"
                           placeholder="Pilih kode dan kategori"
+                          // keyField="code"
                           // className="w-full"
                           {...formik.getFieldProps("klasifikasi_surat")}
                         />

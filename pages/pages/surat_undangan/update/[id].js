@@ -5,7 +5,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Calendar } from "primereact/calendar";
 import { Button } from "primereact/button";
 import { useFormik } from "formik";
-import { form_validation } from "@/lib/validation";
+import { surat_undangan_validation } from "@/lib/validation";
 import { categories } from "@/lib/data";
 import { useMutation, useQueryClient, useQuery } from "react-query";
 import {
@@ -20,7 +20,7 @@ import {
 
 import Loading from "@/components/Loading";
 import ToastMessage from "@/components/Toast";
-import { Dropdown } from "primereact/dropdown";
+import moment from "moment/moment";
 
 export default function UpdatePage() {
   const router = useRouter();
@@ -31,7 +31,7 @@ export default function UpdatePage() {
   const [newFileSrc, setNewFileSrc] = useState();
   const [uploadData, setUploadData] = useState();
   const [loading, setLoading] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedDate, setSelectedDate] = useState();
 
   useEffect(() => {
     const { id } = router.query;
@@ -69,6 +69,7 @@ export default function UpdatePage() {
     if (data) {
       setInitialValues({
         judul: data?.judul,
+        acara: data?.acara,
         surat_dari: data?.surat_dari,
         nomor_surat: data?.nomor_surat,
         perihal: data?.perihal,
@@ -85,11 +86,17 @@ export default function UpdatePage() {
   const formik = useFormik({
     initialValues,
     enableReinitialize: true,
-    validate: form_validation,
+    validate: surat_undangan_validation,
     onSubmit,
   });
   console.log("data: ", data);
   console.log("formik.values", formik.values);
+
+  useEffect(() => {
+    const date = new Date(data?.tanggal);
+    setSelectedDate(date);
+  }, [data]);
+  console.log(selectedDate);
 
   async function onSubmit(values) {
     setLoading(true);
@@ -229,9 +236,11 @@ export default function UpdatePage() {
                           Tanggal Pelaksanaan
                         </h5>
                         <Calendar
-                          showIcon
+                          value={selectedDate}
+                          showIcon={true}
                           showButtonBar
                           name="tanggal"
+                          dateFormat="dd/mm/yy"
                           {...formik.getFieldProps("tanggal")}
                         />
                       </div>
