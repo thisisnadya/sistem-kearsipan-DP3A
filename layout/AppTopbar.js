@@ -17,7 +17,7 @@ import Image from "next/image";
 
 const IMAGE_URL =
   process.env.NODE_ENV == "production"
-    ? "/sakai_react/images/logo_pemkot_semarang.png"
+    ? "/sakai-react/images/logo_pemkot_semarang.png"
     : "/images/logo_pemkot_semarang.png";
 
 const AppTopbar = forwardRef((props, ref) => {
