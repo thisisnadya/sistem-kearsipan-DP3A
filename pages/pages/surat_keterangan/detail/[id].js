@@ -45,7 +45,11 @@ export default function Detail() {
         >
           <p>
             Alternative: Klik{" "}
-            <Link href={data?.file} className="text-zinc-900" target="_blank">
+            <Link
+              href={data?.file}
+              className="text-zinc-900 font-bold"
+              target="_blank"
+            >
               disini
             </Link>{" "}
             untuk lihat file

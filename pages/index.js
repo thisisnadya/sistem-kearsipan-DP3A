@@ -182,7 +182,7 @@ export default function Home() {
 
   const viewBodyTemplate = (rowData) => {
     return (
-      <Link href={`${BASE_URL}/pages/surat_masuk/${rowData._id}`}>
+      <Link href={`${BASE_URL}/pages/surat_umum/detail/${rowData._id}`}>
         <MdPageview
           size={24}
           className={`text-indigo-500 hover:text-indigo-300`}
