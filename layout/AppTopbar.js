@@ -15,6 +15,11 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 
+const IMAGE_URL =
+  process.env.NODE_ENV == "production"
+    ? "/sakai_react/images/logo_pemkot_semarang.png"
+    : "/images/logo_pemkot_semarang.png";
+
 const AppTopbar = forwardRef((props, ref) => {
   const { layoutConfig, layoutState, onMenuToggle, showProfileSidebar } =
     useContext(LayoutContext);
@@ -51,12 +56,7 @@ const AppTopbar = forwardRef((props, ref) => {
       <Link legacyBehavior href="/">
         <a className="layout-topbar-logo">
           <>
-            <Image
-              src={"/images/logo_pemkot_semarang.png"}
-              alt="logo"
-              width={35}
-              height={50}
-            />
+            <Image src={IMAGE_URL} alt="logo" width={35} height={50} />
             <span>DP3A</span>
           </>
         </a>
