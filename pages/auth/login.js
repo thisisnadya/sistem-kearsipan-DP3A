@@ -46,7 +46,7 @@ const LoginPage = () => {
     console.log(status);
     if (status.ok) {
       setIsLoading(false);
-      router.push(status.url);
+      router.push(callbackUrl);
     }
   }
 
