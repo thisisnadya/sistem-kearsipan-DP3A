@@ -14,7 +14,7 @@ import { signIn, signOut } from "next-auth/react";
 const LoginPage = () => {
   const callbackUrl =
     process.env.NODE_ENV == "production"
-      ? "https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react/index.js"
+      ? "https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react/"
       : "http://localhost:3000";
   const { layoutConfig } = useContext(LayoutContext);
   const contextPath = getConfig().publicRuntimeConfig.contextPath;
@@ -46,7 +46,7 @@ const LoginPage = () => {
     console.log(status);
     if (status.ok) {
       setIsLoading(false);
-      router.push(callbackUrl);
+      router.push("https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react/");
     }
   }
 
