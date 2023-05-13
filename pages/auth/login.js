@@ -13,8 +13,8 @@ import { signIn, signOut } from "next-auth/react";
 
 const LoginPage = () => {
   const callbackUrl =
-    process.env.NODE_ENV === "production"
-      ? "https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react/"
+    process.env.NODE_ENV == "production"
+      ? "https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react/index.js"
       : "http://localhost:3000";
   const { layoutConfig } = useContext(LayoutContext);
   const contextPath = getConfig().publicRuntimeConfig.contextPath;
