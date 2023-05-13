@@ -21,7 +21,7 @@ export default function MyApp({ Component, pageProps }) {
         <SessionProvider session={pageProps.session}>
           <QueryClientProvider client={queryClient}>
             {Component.getLayout(<Component {...pageProps} />)}
-            <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+            {/* <ReactQueryDevtools initialIsOpen={false} position="bottom-right" /> */}
           </QueryClientProvider>
         </SessionProvider>
       </LayoutProvider>
@@ -33,10 +33,10 @@ export default function MyApp({ Component, pageProps }) {
           <SessionProvider session={pageProps.session}>
             <QueryClientProvider client={queryClient}>
               <Component {...pageProps} />
-              <ReactQueryDevtools
+              {/* <ReactQueryDevtools
                 initialIsOpen={false}
                 position="bottom-right"
-              />
+              /> */}
             </QueryClientProvider>
           </SessionProvider>
         </Layout>

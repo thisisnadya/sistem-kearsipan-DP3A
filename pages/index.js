@@ -41,9 +41,10 @@ export default function Home() {
   const router = useRouter();
   // console.log(session);
 
-  // useEffect(() => {
-  //   if (session.status == "unauthenticated") router.replace("/auth/login");
-  // }, [session.status]);
+  useEffect(() => {
+    if (session.status == "unauthenticated")
+      router.replace(`${BASE_URL}/auth/login`);
+  }, [session.status]);
 
   useEffect(async () => {
     setChartData(await getChartData());
@@ -262,7 +263,7 @@ export default function Home() {
                   className="flex align-items-center justify-content-center bg-blue-100 border-round"
                   style={{ width: "2.5rem", height: "2.5rem" }}
                 >
-                  <i className="pi pi-shopping-cart text-blue-500 text-xl" />
+                  <i className="pi pi-file text-blue-500 text-xl" />
                 </div>
               </div>
             </div>
@@ -282,7 +283,7 @@ export default function Home() {
                   className="flex align-items-center justify-content-center bg-blue-100 border-round"
                   style={{ width: "2.5rem", height: "2.5rem" }}
                 >
-                  <i className="pi pi-shopping-cart text-blue-500 text-xl" />
+                  <i className="pi pi-file text-blue-500 text-xl" />
                 </div>
               </div>
             </div>
@@ -302,13 +303,13 @@ export default function Home() {
                   className="flex align-items-center justify-content-center bg-blue-100 border-round"
                   style={{ width: "2.5rem", height: "2.5rem" }}
                 >
-                  <i className="pi pi-shopping-cart text-blue-500 text-xl" />
+                  <i className="pi pi-file text-blue-500 text-xl" />
                 </div>
               </div>
             </div>
           </div>
           <div>
-            <div className="card mb-0">
+            {/* <div className="card mb-0">
               <div className="flex justify-content-between mb-3">
                 <div>
                   <span className="block text-500 font-medium mb-3">
@@ -323,7 +324,7 @@ export default function Home() {
                   <i className="pi pi-shopping-cart text-blue-500 text-xl" />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         {/* Summary report end */}

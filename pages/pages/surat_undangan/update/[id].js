@@ -265,7 +265,9 @@ export default function UpdatePage() {
                         />
                       </div>
                       <div className="field">
-                        <h5 className="font-semibold mb-2">Upload File</h5>
+                        <h5 className="font-semibold mb-2">
+                          Upload File (Ukuran File Maksimum 10MB)
+                        </h5>
                         <div>
                           <input
                             type="file"
