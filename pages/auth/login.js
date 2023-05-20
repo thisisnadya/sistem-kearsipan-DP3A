@@ -46,7 +46,7 @@ const LoginPage = () => {
     console.log(status);
     if (status.ok) {
       setIsLoading(false);
-      router.push("https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react/");
+      router.push(status.url);
     }
   }
 

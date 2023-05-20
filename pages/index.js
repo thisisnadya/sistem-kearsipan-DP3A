@@ -41,10 +41,10 @@ export default function Home() {
   const router = useRouter();
   // console.log(session);
 
-  useEffect(() => {
-    if (session.status == "unauthenticated")
-      router.replace(`${BASE_URL}/auth/login`);
-  }, [session.status]);
+  // useEffect(() => {
+  //   if (session.status == "unauthenticated")
+  //     router.replace(`${BASE_URL}/auth/login`);
+  // }, [session.status]);
 
   useEffect(async () => {
     setChartData(await getChartData());
