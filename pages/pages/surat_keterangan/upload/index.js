@@ -130,6 +130,11 @@ export default function Upload() {
                     type="text"
                     placeholder="Nama"
                     name="nama"
+                    className={
+                      formik.errors.nama && formik.touched.nama
+                        ? "p-invalid"
+                        : ""
+                    }
                     {...formik.getFieldProps("nama")}
                   ></InputText>
                 </div>
@@ -201,11 +206,11 @@ export default function Upload() {
                 />
               </form>
             </div>
-            {uploadData && (
+            {/* {uploadData && (
               <code>
                 <pre>{JSON.stringify(uploadData, null, 2)}</pre>
               </code>
-            )}
+            )} */}
           </div>
         </div>
       </div>

@@ -134,6 +134,11 @@ export default function Upload() {
                     type="text"
                     placeholder="Surat dari"
                     name="surat_dari"
+                    className={
+                      formik.errors.surat_dari && formik.touched.surat_dari
+                        ? "p-invalid"
+                        : ""
+                    }
                     {...formik.getFieldProps("surat_dari")}
                   ></InputText>
                 </div>
@@ -220,11 +225,11 @@ export default function Upload() {
                 />
               </form>
             </div>
-            {uploadData && (
+            {/* {uploadData && (
               <code>
                 <pre>{JSON.stringify(uploadData, null, 2)}</pre>
               </code>
-            )}
+            )} */}
           </div>
         </div>
       </div>

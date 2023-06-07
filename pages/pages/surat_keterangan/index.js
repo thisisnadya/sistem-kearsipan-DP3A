@@ -160,7 +160,7 @@ export default function HomeSuratKeterangan() {
             rows={10}
           >
             <Column field="judul" header="Judul"></Column>
-            <Column field="nama" header="Judul"></Column>
+            <Column field="nama" header="Nama"></Column>
             <Column
               header="Tanggal Diarsipkan"
               body={showDate}

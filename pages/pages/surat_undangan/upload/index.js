@@ -138,11 +138,11 @@ export default function Upload() {
                     type="text"
                     placeholder="Contoh: Upacara Kemerdekaan"
                     name="acara"
-                    // className={
-                    //   formik.errors.judul && formik.touched.judul
-                    //     ? "p-invalid"
-                    //     : ""
-                    // }
+                    className={
+                      formik.errors.acara && formik.touched.acara
+                        ? "p-invalid"
+                        : ""
+                    }
                     {...formik.getFieldProps("acara")}
                   ></InputText>
                 </div>
@@ -152,6 +152,11 @@ export default function Upload() {
                     type="text"
                     placeholder="Surat dari"
                     name="surat_dari"
+                    className={
+                      formik.errors.surat_dari && formik.touched.surat_dari
+                        ? "p-invalid"
+                        : ""
+                    }
                     {...formik.getFieldProps("surat_dari")}
                   ></InputText>
                 </div>
@@ -191,6 +196,11 @@ export default function Upload() {
                     showIcon
                     showButtonBar
                     name="tanggal"
+                    className={
+                      formik.errors.tanggal && formik.touched.tanggal
+                        ? "p-invalid"
+                        : ""
+                    }
                     {...formik.getFieldProps("tanggal")}
                   />
                 </div>
@@ -200,6 +210,12 @@ export default function Upload() {
                     type="text"
                     placeholder="ex 08.00"
                     name="jam_pelaksanaan"
+                    className={
+                      formik.errors.jam_pelaksanaan &&
+                      formik.touched.jam_pelaksanaan
+                        ? "p-invalid"
+                        : ""
+                    }
                     {...formik.getFieldProps("jam_pelaksanaan")}
                   ></InputText>
                 </div>
@@ -241,11 +257,11 @@ export default function Upload() {
                 />
               </form>
             </div>
-            {uploadData && (
+            {/* {uploadData && (
               <code>
                 <pre>{JSON.stringify(uploadData, null, 2)}</pre>
               </code>
-            )}
+            )} */}
           </div>
         </div>
       </div>
