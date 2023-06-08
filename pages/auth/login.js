@@ -17,13 +17,16 @@ const LoginPage = () => {
       ? "https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react/"
       : "http://localhost:3000";
   const { layoutConfig } = useContext(LayoutContext);
-  const contextPath = getConfig().publicRuntimeConfig.contextPath;
+  // const contextPath = getConfig().publicRuntimeConfig.contextPath;
   const router = useRouter();
   const containerClassName = classNames(
     "surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden",
     { "p-input-filled": layoutConfig.inputStyle === "filled" }
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState({
+    status: "",
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -45,8 +48,14 @@ const LoginPage = () => {
 
     console.log(status);
     if (status.ok) {
+      setIsLoggedIn({ status: "logged in" });
       setIsLoading(false);
       router.push(status.url);
+      return;
+    } else {
+      setIsLoggedIn({ status: "not logged in" });
+      setIsLoading(false);
+      return;
     }
   }
 
@@ -70,6 +79,11 @@ const LoginPage = () => {
                 Welcome, Admin!!
               </div>
               <span className="text-600 font-medium">Sign in to continue</span>
+              <h5 className="text-red-400">
+                {isLoggedIn.status == "not logged in"
+                  ? "Username atau password salah"
+                  : ""}
+              </h5>
             </div>
 
             <form onSubmit={formik.handleSubmit}>
@@ -84,7 +98,11 @@ const LoginPage = () => {
                   inputid="username"
                   type="text"
                   placeholder="Username"
-                  className="w-full md:w-30rem mb-5"
+                  className={`w-full md:w-30rem mb-5 ${
+                    formik.errors.username && formik.touched.username
+                      ? "p-invalid"
+                      : ""
+                  }`}
                   style={{ padding: "1rem" }}
                   {...formik.getFieldProps("username")}
                 />
@@ -102,7 +120,11 @@ const LoginPage = () => {
                   placeholder="Password"
                   toggleMask
                   feedback={false}
-                  className="w-full mb-5"
+                  className={`w-full mb-5 ${
+                    formik.errors.password && formik.touched.password
+                      ? "p-invalid"
+                      : ""
+                  }`}
                   inputClassName="w-full p-3 md:w-30rem"
                   {...formik.getFieldProps("password")}
                 ></Password>

@@ -63,6 +63,7 @@ export default function HomeSuratUndangan() {
     const res = await deleteFileCloudinary(public_id);
 
     console.log(res);
+    return;
   }
 
   const reject = () => {
