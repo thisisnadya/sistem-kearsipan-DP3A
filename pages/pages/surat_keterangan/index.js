@@ -69,7 +69,7 @@ export default function HomeSuratKeterangan() {
 
   const tableHeader = (
     <div>
-      <h1 className="text-slate-700 text-3xl">Data Surat</h1>
+      <h1 className="text-slate-700 text-3xl">Data Surat Keterangan</h1>
       <div className="flex justify-content-end">
         <span className="p-input-icon-left">
           <i className="pi pi-search" />
@@ -164,7 +164,6 @@ export default function HomeSuratKeterangan() {
             <Column
               header="Tanggal Diarsipkan"
               body={showDate}
-              sortable
               style={{ width: "20%" }}
             ></Column>
             <Column header="Detail" body={viewBodyTemplate}></Column>

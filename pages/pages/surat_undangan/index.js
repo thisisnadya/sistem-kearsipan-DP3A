@@ -45,7 +45,6 @@ export default function HomeSuratUndangan() {
   // filters
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    asal: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
   });
 
   const onGlobalFilterChange = (e) => {
@@ -160,7 +159,7 @@ export default function HomeSuratUndangan() {
             header={tableHeader}
             filters={filters}
             filterDisplay="row"
-            globalFilterFields={["judul", "surat_dari"]}
+            globalFilterFields={["judul", "acara", "tanggal_pelaksanaan"]}
             showGridlines
             responsiveLayout="scroll"
             paginator
@@ -169,13 +168,11 @@ export default function HomeSuratUndangan() {
             <Column
               field="judul"
               header="Judul"
-              sortable
               style={{ width: "25%" }}
             ></Column>
             <Column
               header="Tanggal Pelaksanaan"
               body={showDate}
-              sortable
               style={{ width: "25%" }}
             ></Column>
             <Column header="Detail" body={viewBodyTemplate}></Column>

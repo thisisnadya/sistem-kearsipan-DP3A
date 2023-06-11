@@ -71,6 +71,7 @@ export default function Upload() {
       addMutation.mutate(model);
       setLoading(false);
       formik.resetForm();
+      setFileSrc(null);
       // console.log(uploadData);
     }
   }
@@ -167,6 +168,12 @@ export default function Upload() {
                     options={categories}
                     optionLabel="name"
                     placeholder="Pilih kode dan kategori"
+                    className={
+                      formik.errors.klasifikasi_surat &&
+                      formik.touched.klasifikasi_surat
+                        ? "p-invalid"
+                        : ""
+                    }
                     // className="w-full"
                     {...formik.getFieldProps("klasifikasi_surat")}
                   />

@@ -67,6 +67,7 @@ export default function Upload() {
       addMutation.mutate(model);
       setLoading(false);
       formik.resetForm();
+      setFileSrc(null);
       // console.log(uploadData);
     }
   }

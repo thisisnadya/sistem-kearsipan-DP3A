@@ -46,8 +46,10 @@ export default function Home() {
   //     router.replace(`${BASE_URL}/auth/login`);
   // }, [session.status]);
 
-  useEffect(async () => {
-    setChartData(await getChartData());
+  useEffect(() => {
+    (async () => {
+      setChartData(await getChartData());
+    })();
   }, []);
 
   // filters
@@ -104,6 +106,7 @@ export default function Home() {
     const res = await deleteFileCloudinary(public_id);
 
     console.log(res);
+    return;
   }
 
   const reject = () => {
@@ -126,9 +129,9 @@ export default function Home() {
     "Jul",
     "Agust",
     "Sept",
-    "Oct",
+    "Okt",
     "Nov",
-    "Dec",
+    "Des",
   ];
   const dummyData2 = {
     // labels: chartData?.map((item) => item.bulan),
@@ -146,6 +149,12 @@ export default function Home() {
         backgroundColor: "rgba(255, 99, 132, 0.5)",
         borderWidth: 1,
       },
+      {
+        label: "Surat Undangan",
+        data: chartData?.undangan,
+        backgroundColor: "rgba(126, 190, 71, 0.5)",
+        borderWidth: 1,
+      },
     ],
   };
 
@@ -156,7 +165,7 @@ export default function Home() {
       y: {
         beginAtZero: true,
         stepSize: 10,
-        max: 50,
+        max: 20,
       },
     },
   };
@@ -341,7 +350,7 @@ export default function Home() {
               showGridlines
               responsiveLayout="scroll"
               paginator
-              rows={10}
+              rows={5}
             >
               <Column
                 field="klasifikasi_surat"
@@ -354,7 +363,6 @@ export default function Home() {
               <Column
                 header="Tanggal Diarsipkan"
                 body={showDate}
-                sortable
                 style={{ width: "20%" }}
               ></Column>
               <Column header="Detail" body={viewBodyTemplate}></Column>
