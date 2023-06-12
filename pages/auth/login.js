@@ -37,25 +37,32 @@ const LoginPage = () => {
     onSubmit,
   });
 
-  async function onSubmit(values) {
-    setIsLoading(true);
+  async function signInUser(username, password) {
     const status = await signIn("credentials", {
       redirect: false,
-      username: values.username,
-      password: values.password,
+      username,
+      password,
       callbackUrl,
     });
+    return status;
+  }
 
-    console.log(status);
-    if (status.ok) {
-      setIsLoggedIn({ status: "logged in" });
+  async function onSubmit(values) {
+    setIsLoading(true);
+    try {
+      const status = await signInUser(values.username, values.password);
+
+      if (status.ok) {
+        setIsLoggedIn({ status: "logged in" });
+        setIsLoading(false);
+        router.push(status.url);
+      } else {
+        setIsLoggedIn({ status: "not logged in" });
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error("Error during sign in:", error);
       setIsLoading(false);
-      router.push(status.url);
-      return;
-    } else {
-      setIsLoggedIn({ status: "not logged in" });
-      setIsLoading(false);
-      return;
     }
   }
 
