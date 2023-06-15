@@ -55,7 +55,7 @@ const LoginPage = () => {
       if (status.ok) {
         setIsLoggedIn({ status: "logged in" });
         setIsLoading(false);
-        router.push(status.url);
+        router.push(callbackUrl);
       } else {
         setIsLoggedIn({ status: "not logged in" });
         setIsLoading(false);
