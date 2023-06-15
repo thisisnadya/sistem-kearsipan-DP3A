@@ -5,6 +5,10 @@ import Users from "@/model/admin";
 import { compare } from "bcryptjs";
 
 export const authOptions = {
+  baseUrl:
+    process.env == "production"
+      ? process.env.NEXTAUTH_URL
+      : "http://localhost:3000",
   providers: [
     CredentialsProvider({
       name: "Credentials",
