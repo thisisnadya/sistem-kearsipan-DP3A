@@ -11,27 +11,19 @@ export const authOptions = {
       session: {
         strategy: "jwt",
       },
-      async authorize(credentials, req) {
-        await connectMongo().catch((err) => {
-          error: "Connection Failed";
-        });
-
-        // check user existance
-        const result = await Users.findOne({ username: credentials.username });
-        if (!result) {
-          throw new Error("No user found");
+      secret: process.env.NEXTAUTH_SECRET,
+      authorize: async (credentials) => {
+        // Perform custom authentication logic here
+        if (
+          credentials.username === "admin" &&
+          credentials.password === "admin1234"
+        ) {
+          // If authentication succeeds, return the user object
+          return { id: 1, name: "Admin" };
+        } else {
+          // If authentication fails, throw an error
+          throw new Error("Invalid credentials");
         }
-
-        // compare password
-        const checkPassword = await compare(
-          credentials.password,
-          result.password
-        );
-
-        if (!checkPassword) {
-          throw new Error("Password not match");
-        }
-        return result;
       },
       callbacks: {
         async session({ session, token }) {

@@ -39,12 +39,12 @@ export default function Home() {
   // const { data: session } = useSession();
   const session = useSession();
   const router = useRouter();
-  // console.log(session);
+  console.log(session);
 
-  useEffect(() => {
-    if (session.status == "unauthenticated")
-      router.replace(`${BASE_URL}/auth/login`);
-  }, [session.status]);
+  // useEffect(() => {
+  //   if (session.status == "unauthenticated")
+  //     router.replace(`${BASE_URL}/auth/login`);
+  // }, [session.status]);
 
   useEffect(() => {
     (async () => {
