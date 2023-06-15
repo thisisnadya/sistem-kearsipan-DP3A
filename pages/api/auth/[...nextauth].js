@@ -15,7 +15,6 @@ export const authOptions = {
       session: {
         strategy: "jwt",
       },
-      secret: process.env.NEXTAUTH_SECRET,
       authorize: async (credentials) => {
         // Perform custom authentication logic here
         if (
@@ -43,6 +42,7 @@ export const authOptions = {
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 export default NextAuth(authOptions);
