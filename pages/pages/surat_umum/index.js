@@ -18,6 +18,7 @@ import ToastMessage from "@/components/Toast";
 import { InputText } from "primereact/inputtext";
 import { FilterMatchMode } from "primereact/api";
 import moment from "moment/moment";
+import { exportToExcel } from "@/lib/helper";
 
 const BASE_URL =
   process.env.NODE_ENV == "production"
@@ -88,6 +89,10 @@ export default function HomeSuratUmum() {
           />
         </span>
       </div>
+      <Button
+        label="Export to excel"
+        onClick={() => exportToExcel("surat_umum")}
+      ></Button>
     </div>
   );
 

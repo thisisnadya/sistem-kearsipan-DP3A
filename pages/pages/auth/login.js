@@ -136,19 +136,10 @@ const LoginPage = () => {
                   {...formik.getFieldProps("password")}
                 ></Password>
               </div>
-
-              <div className="flex align-items-center justify-content-between mb-5 gap-5">
-                <span
-                  className="font-medium no-underline ml-2 text-right cursor-pointer"
-                  style={{ color: "var(--primary-color)" }}
-                >
-                  Forgot password?
-                </span>
-              </div>
               <Button
                 label={isLoading ? "Logging In..." : "Login"}
                 className="w-full p-3 text-xl"
-                // type='submit'
+                // type="submit"
                 // onClick={() => router.push("/")}
               ></Button>
             </form>
