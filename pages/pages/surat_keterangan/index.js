@@ -146,6 +146,16 @@ export default function HomeSuratKeterangan() {
     );
   };
 
+  const historyBodyTemplate = (rowData) => {
+    return (
+      <Link href={`${BASE_URL}/pages/surat_keterangan/riwayat/${rowData._id}`}>
+        <i
+          className="pi pi-history text-indigo-500 hover:text-indigo-300"
+          size={24}
+        ></i>
+      </Link>
+    );
+  };
   if (isLoading) return <Loading />;
 
   return (
@@ -178,6 +188,12 @@ export default function HomeSuratKeterangan() {
               body={actionBodyTemplate}
               exportable={false}
               style={{ minWidth: "8rem" }}
+            ></Column>
+            <Column
+              header="Riwayat"
+              body={historyBodyTemplate}
+              exportable={false}
+              // style={{ minWidth: "8rem" }}
             ></Column>
           </DataTable>
         </div>

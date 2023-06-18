@@ -1,6 +1,7 @@
 import suratUmum from "@/model/surat_umum";
 import undangan from "@/model/undangan";
 import sk from "@/model/sk";
+import staffs from "@/model/staff";
 
 // ----------------------------------SURAT UMUM------------------------------------
 
@@ -261,6 +262,70 @@ export const updateSK = async (req, res) => {
       }
     );
     res.status(200).json(updatedData);
+  } catch (error) {
+    res.status(404).json(error);
+  }
+};
+
+// --------------------------------------------staff-------------------------------------
+
+// get all staffs
+export const getAllStaffs = async (req, res) => {
+  try {
+    const allStaffs = await staffs.find({});
+
+    if (!allStaffs)
+      return res.status(404).json({ message: "Tidak ada data ditemukan" });
+
+    res.status(200).json(allStaffs);
+  } catch (error) {
+    res.status(404).json({ error });
+  }
+};
+
+// add staff
+export const addStaff = async (req, res) => {
+  try {
+    const dataStaff = req.body;
+
+    if (!dataStaff) {
+      return res.status(404).json({ message: "Dont have form data" });
+    }
+
+    await staffs.create(dataStaff, function (err, data) {
+      return res.status(200).json(data);
+    });
+  } catch (error) {
+    return res.status(404).json({ error });
+  }
+};
+
+// update staff
+export const updateStaff = async (req, res) => {
+  const { nama, nip, jabatan, nomor_telepon } = req.body;
+  try {
+    const updatedData = await staffs.updateOne(
+      { _id: req.query.id },
+      {
+        $set: {
+          nama,
+          nip,
+          jabatan,
+          nomor_telepon,
+        },
+      }
+    );
+    res.status(200).json(updatedData);
+  } catch (error) {
+    res.status(404).json(error);
+  }
+};
+
+// delete staff
+export const deleteStaff = async (req, res) => {
+  try {
+    const response = await staffs.deleteOne({ _id: req.query.id });
+    res.status(200).json(response);
   } catch (error) {
     res.status(404).json(error);
   }

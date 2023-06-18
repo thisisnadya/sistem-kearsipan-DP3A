@@ -97,7 +97,8 @@ export default function HomeSuratUmum() {
   );
 
   const showDate = (rowData) => {
-    return moment(rowData.createdAt).utc().format("DD-MM-YYYY");
+    const createdAt = new Date(rowData.createdAt);
+    return moment(createdAt).utc().format("DD-MM-YYYY");
   };
 
   const viewBodyTemplate = (rowData) => {
@@ -154,6 +155,17 @@ export default function HomeSuratUmum() {
     );
   };
 
+  const historyBodyTemplate = (rowData) => {
+    return (
+      <Link href={`${BASE_URL}/pages/surat_umum/riwayat/${rowData._id}`}>
+        <i
+          className="pi pi-history text-indigo-500 hover:text-indigo-300"
+          size={24}
+        ></i>
+      </Link>
+    );
+  };
+
   if (isLoading) return <Loading />;
 
   return (
@@ -175,15 +187,15 @@ export default function HomeSuratUmum() {
             <Column
               field="klasifikasi_surat"
               header="Kode"
-              style={{ width: "20%" }}
-              filter
-              filterPlaceholder="Cari"
+              style={{ width: "10%" }}
+              // filter
+              // filterPlaceholder="Cari"
             ></Column>
             <Column field="judul" header="Judul"></Column>
             <Column
               header="Tanggal Diarsipkan"
               body={showDate}
-              sortable
+              sortable={true}
               style={{ width: "20%" }}
             ></Column>
             <Column header="Detail" body={viewBodyTemplate}></Column>
@@ -193,6 +205,12 @@ export default function HomeSuratUmum() {
               body={actionBodyTemplate}
               exportable={false}
               style={{ minWidth: "8rem" }}
+            ></Column>
+            <Column
+              header="Riwayat"
+              body={historyBodyTemplate}
+              exportable={false}
+              // style={{ minWidth: "8rem" }}
             ></Column>
           </DataTable>
         </div>

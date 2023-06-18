@@ -18,6 +18,7 @@ import ToastMessage from "@/components/Toast";
 import { InputText } from "primereact/inputtext";
 import { FilterMatchMode } from "primereact/api";
 import moment from "moment/moment";
+import { exportToExcel } from "@/lib/helper";
 
 const BASE_URL =
   process.env.NODE_ENV == "production"
@@ -87,12 +88,18 @@ export default function HomeSuratUndangan() {
           />
         </span>
       </div>
+      <Button
+        label="Export to excel"
+        onClick={() => exportToExcel("surat_undangan")}
+      ></Button>
     </div>
   );
 
   const showDate = (rowData) => {
-    return moment(rowData.tanggal).format("DD-MM-YYYY");
+    const createdAt = new Date(rowData.tanggal);
+    return moment(createdAt).utc().format("DD-MM-YYYY");
   };
+
   const viewBodyTemplate = (rowData) => {
     return (
       <Link href={`${BASE_URL}/pages/surat_undangan/detail/${rowData._id}`}>
@@ -147,6 +154,17 @@ export default function HomeSuratUndangan() {
     );
   };
 
+  const historyBodyTemplate = (rowData) => {
+    return (
+      <Link href={`${BASE_URL}/pages/surat_undangan/riwayat/${rowData._id}`}>
+        <i
+          className="pi pi-history text-indigo-500 hover:text-indigo-300"
+          size={24}
+        ></i>
+      </Link>
+    );
+  };
+
   if (isLoading) return <Loading />;
 
   return (
@@ -173,7 +191,8 @@ export default function HomeSuratUndangan() {
             <Column
               header="Tanggal Pelaksanaan"
               body={showDate}
-              style={{ width: "25%" }}
+              style={{ width: "20%" }}
+              sortable={true}
             ></Column>
             <Column header="Detail" body={viewBodyTemplate}></Column>
             <Column header="File" body={linkBodyTemplate}></Column>
@@ -182,6 +201,12 @@ export default function HomeSuratUndangan() {
               body={actionBodyTemplate}
               exportable={false}
               style={{ minWidth: "8rem" }}
+            ></Column>
+            <Column
+              header="Riwayat"
+              body={historyBodyTemplate}
+              exportable={false}
+              // style={{ minWidth: "8rem" }}
             ></Column>
           </DataTable>
         </div>

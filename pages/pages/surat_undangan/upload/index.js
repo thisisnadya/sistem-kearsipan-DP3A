@@ -258,11 +258,11 @@ export default function Upload() {
                 />
               </form>
             </div>
-            {/* {uploadData && (
+            {uploadData && (
               <code>
                 <pre>{JSON.stringify(uploadData, null, 2)}</pre>
               </code>
-            )} */}
+            )}
           </div>
         </div>
       </div>

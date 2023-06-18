@@ -83,6 +83,23 @@ const AppMenu = () => {
         },
       ],
     },
+    {
+      label: "Staff",
+      icon: "pi pi-fw pi-user",
+      items: [
+        {
+          label: "Data Pegawai",
+          icon: "pi pi-fw pi-id-card",
+          items: [
+            {
+              label: "Data Pegawai",
+              icon: "pi pi-fw pi-id-card",
+              to: "/pages/staffs",
+            },
+          ],
+        },
+      ],
+    },
   ];
 
   return (
