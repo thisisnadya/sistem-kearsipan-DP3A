@@ -1,6 +1,11 @@
 import React, { useRef, useState } from "react";
 import Loading from "@/components/Loading";
-import { addStaff, deleteStaff, getAllStaffs } from "@/lib/helper";
+import {
+  addStaff,
+  deleteStaff,
+  getAllStaffs,
+  getDetailStaff,
+} from "@/lib/helper";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -27,9 +32,21 @@ export default function HomeSuratUmum() {
   const [visible, setVisible] = useState(false);
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [id, setId] = useState();
 
   const [globalFilterValue, setGlobalFilterValue] = useState("");
-  const { isLoading, isError, data, error } = useQuery("staffs", getAllStaffs);
+  const {
+    isLoading: isLoadingAllStaffs,
+    isError: isErrorAllStaffs,
+    data: allStaffsData,
+    error: errorAllStaffs,
+  } = useQuery("staffs", getAllStaffs);
+  // const {
+  //   isLoading: isLoadingStaff,
+  //   isError: isErrorStaff,
+  //   data: staffData,
+  //   error: errorStaff,
+  // } = useQuery(["staffs", id], () => getDetailStaff(id));
 
   const addStaffMutation = useMutation(addStaff, {
     onSuccess: () => {
@@ -87,9 +104,9 @@ export default function HomeSuratUmum() {
 
   async function handleDelete(id) {
     addMutation.mutate(id);
-    const res = await deleteStaff(id);
+    // const res = await deleteStaff(id);
 
-    console.log(res);
+    // console.log(res);
     return;
   }
 
@@ -222,22 +239,12 @@ export default function HomeSuratUmum() {
   const actionBodyTemplate = (rowData) => {
     return (
       <div>
-        <Link href={`${BASE_URL}/pages/surat_umum/update/${rowData._id}`}>
+        <Link href={`${BASE_URL}/pages/staffs/update/${rowData._id}`}>
           <Button
             icon="pi pi-pencil"
             className="p-button-rounded p-button-success mr-2"
           />
         </Link>
-        {/* <Toast ref={toast} />
-        <ConfirmDialog
-          visible={visible}
-          onHide={() => setVisible(false)}
-          message="Apakah Anda yakin ingin menghapus?"
-          header="Confirmation"
-          icon="pi pi-exclamation-triangle"
-          accept={() => handleDelete(rowData.public_id, rowData._id)}
-          reject={reject}
-        /> */}
         <>
           <Button
             icon="pi pi-trash"
@@ -250,7 +257,8 @@ export default function HomeSuratUmum() {
     );
   };
 
-  if (isLoading) return <Loading />;
+  if (isLoadingAllStaffs) return <Loading />;
+  if (errorAllStaffs) return "An error occured";
 
   return (
     <div>
@@ -258,7 +266,7 @@ export default function HomeSuratUmum() {
       <div className="my-4">
         <div className="card">
           <DataTable
-            value={data}
+            value={allStaffsData}
             header={tableHeader}
             filters={filters}
             filterDisplay="row"

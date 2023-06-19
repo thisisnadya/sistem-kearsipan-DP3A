@@ -283,6 +283,16 @@ export const getAllStaffs = async (req, res) => {
   }
 };
 
+// get detail staff
+export const getDetailStaff = async (req, res) => {
+  try {
+    const findStaff = await staffs.findById(req.query.id);
+    res.status(200).json(findStaff);
+  } catch (error) {
+    res.status(404).json({ error });
+  }
+};
+
 // add staff
 export const addStaff = async (req, res) => {
   try {
@@ -292,9 +302,8 @@ export const addStaff = async (req, res) => {
       return res.status(404).json({ message: "Dont have form data" });
     }
 
-    await staffs.create(dataStaff, function (err, data) {
-      return res.status(200).json(data);
-    });
+    const data = await staffs.create(dataStaff);
+    return res.status(200).json(data);
   } catch (error) {
     return res.status(404).json({ error });
   }
