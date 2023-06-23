@@ -119,7 +119,6 @@ export default function Riwayat() {
             <Column
               header="Tanggal Diarsipkan"
               body={showDate}
-              sortable
               style={{ width: "10%" }}
             ></Column>
             <Column

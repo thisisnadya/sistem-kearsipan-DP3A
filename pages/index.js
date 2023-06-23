@@ -5,6 +5,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Chart } from "primereact/chart";
 import { Button } from "primereact/button";
+import { Calendar } from "primereact/calendar";
 import {
   deleteFileCloudinary,
   deleteSuratUmum,
@@ -22,7 +23,7 @@ import ToastMessage from "@/components/Toast";
 import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { InputText } from "primereact/inputtext";
-import { FilterMatchMode } from "primereact/api";
+import { FilterMatchMode, FilterOperator } from "primereact/api";
 import moment from "moment/moment";
 
 const BASE_URL =
@@ -56,7 +57,10 @@ export default function Home() {
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     klasifikasi_surat: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
-    createdAt: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    createdAt: {
+      operator: FilterOperator.AND,
+      constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }],
+    },
   });
 
   const onGlobalFilterChange = (e) => {
@@ -133,7 +137,7 @@ export default function Home() {
     "Nov",
     "Des",
   ];
-  const dummyData2 = {
+  const chartDatas = {
     // labels: chartData?.map((item) => item.bulan),
     labels: months,
     datasets: [
@@ -186,8 +190,17 @@ export default function Home() {
     </div>
   );
 
-  const showDate = (rowData) => {
-    return moment(rowData.createdAt).utc().format("DD-MM-YYYY");
+  const formatDate = (value) => {
+    const date = new Date(value);
+    return date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  };
+
+  const dateBodyTemplate = (rowData) => {
+    return formatDate(rowData.createdAt);
   };
 
   const viewBodyTemplate = (rowData) => {
@@ -317,24 +330,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div>
-            {/* <div className="card mb-0">
-              <div className="flex justify-content-between mb-3">
-                <div>
-                  <span className="block text-500 font-medium mb-3">
-                    Orders
-                  </span>
-                  <div className="text-900 font-medium text-xl">152</div>
-                </div>
-                <div
-                  className="flex align-items-center justify-content-center bg-blue-100 border-round"
-                  style={{ width: "2.5rem", height: "2.5rem" }}
-                >
-                  <i className="pi pi-shopping-cart text-blue-500 text-xl" />
-                </div>
-              </div>
-            </div> */}
-          </div>
         </div>
         {/* Summary report end */}
 
@@ -361,9 +356,13 @@ export default function Home() {
               ></Column>
               <Column field="judul" header="Judul"></Column>
               <Column
+                field="createdAt"
                 header="Tanggal Diarsipkan"
-                body={showDate}
+                sortable
+                body={dateBodyTemplate}
                 style={{ width: "20%" }}
+                filterField="createdAt"
+                dataType="date"
               ></Column>
               <Column header="Detail" body={viewBodyTemplate}></Column>
               <Column header="File" body={linkBodyTemplate}></Column>
@@ -389,7 +388,7 @@ export default function Home() {
 
         {/* Chart starts */}
         <div className="card">
-          <Chart type="bar" data={dummyData2} options={options} />
+          <Chart type="bar" data={chartDatas} options={options} />
         </div>
         {/* Chart ends */}
       </div>

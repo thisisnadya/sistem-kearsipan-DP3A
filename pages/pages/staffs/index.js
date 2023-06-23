@@ -33,6 +33,7 @@ export default function HomeSuratUmum() {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
   const [id, setId] = useState();
+  const [addStaffError, setAddStaffError] = useState(null);
 
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   const {
@@ -52,6 +53,9 @@ export default function HomeSuratUmum() {
     onSuccess: () => {
       console.log("Data Inserted");
       queryClient.prefetchQuery("staffs", getAllStaffs);
+    },
+    onError: (error) => {
+      setAddStaffError(error.message); // Set the error message on error
     },
   });
 
@@ -157,6 +161,13 @@ export default function HomeSuratUmum() {
             />
           ) : (
             <></>
+          )}
+          {addStaffMutation.isError && (
+            <ToastMessage
+              severity="error"
+              summary="Error!"
+              detail={addStaffError}
+            />
           )}
           <div className="grid p-fluid">
             <div className="col-12 lg:col-8">
@@ -279,6 +290,7 @@ export default function HomeSuratUmum() {
             <Column
               field="nama"
               header="Nama"
+              sortable
               // style={{ width: "10%" }}
               // filter
               // filterPlaceholder="Cari"

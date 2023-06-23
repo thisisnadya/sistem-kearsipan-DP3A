@@ -88,10 +88,18 @@ export default function HomeSuratKeterangan() {
     </div>
   );
 
-  const showDate = (rowData) => {
-    return moment(rowData.createdAt).utc().format("DD-MM-YYYY");
+  const formatDate = (value) => {
+    const date = new Date(value);
+    return date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
   };
 
+  const dateBodyTemplate = (rowData) => {
+    return formatDate(rowData.createdAt);
+  };
   const viewBodyTemplate = (rowData) => {
     return (
       <Link href={`${BASE_URL}/pages/surat_keterangan/detail/${rowData._id}`}>
@@ -175,10 +183,13 @@ export default function HomeSuratKeterangan() {
             rows={10}
           >
             <Column field="judul" header="Judul"></Column>
-            <Column field="nama" header="Nama"></Column>
+            <Column field="nama" header="Nama" sortable></Column>
             <Column
+              field="createdAt"
               header="Tanggal Diarsipkan"
-              body={showDate}
+              body={dateBodyTemplate}
+              sortable
+              dataType="date"
               style={{ width: "20%" }}
             ></Column>
             <Column header="Detail" body={viewBodyTemplate}></Column>

@@ -95,9 +95,17 @@ export default function HomeSuratUndangan() {
     </div>
   );
 
-  const showDate = (rowData) => {
-    const createdAt = new Date(rowData.tanggal);
-    return moment(createdAt).utc().format("DD-MM-YYYY");
+  const formatDate = (value) => {
+    const date = new Date(value);
+    return date.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  };
+
+  const dateBodyTemplate = (rowData) => {
+    return formatDate(rowData.tanggal);
   };
 
   const viewBodyTemplate = (rowData) => {
@@ -189,10 +197,12 @@ export default function HomeSuratUndangan() {
               style={{ width: "25%" }}
             ></Column>
             <Column
+              field="tanggal"
               header="Tanggal Pelaksanaan"
-              body={showDate}
+              body={dateBodyTemplate}
               style={{ width: "20%" }}
-              sortable={true}
+              dataType="date"
+              sortable
             ></Column>
             <Column header="Detail" body={viewBodyTemplate}></Column>
             <Column header="File" body={linkBodyTemplate}></Column>

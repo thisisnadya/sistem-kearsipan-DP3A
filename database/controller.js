@@ -302,6 +302,12 @@ export const addStaff = async (req, res) => {
       return res.status(404).json({ message: "Dont have form data" });
     }
 
+    const isExist = staffs.findOne({ nip: req.body.nip });
+
+    if (isExist) {
+      return res.status(400).json({ message: "Data sudah ada!" });
+    }
+
     const data = await staffs.create(dataStaff);
     return res.status(200).json(data);
   } catch (error) {

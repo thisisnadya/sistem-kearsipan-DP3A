@@ -112,14 +112,11 @@ export default function Riwayat() {
               body={showLastUpdate}
               header="Terakhir diupdate"
               style={{ width: "10%" }}
-              // filter
-              // filterPlaceholder="Cari"
             ></Column>
             <Column field="judul" header="Judul"></Column>
             <Column
               header="Tanggal Diarsipkan"
               body={showDate}
-              sortable
               style={{ width: "20%" }}
             ></Column>
             <Column

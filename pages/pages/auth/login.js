@@ -1,4 +1,3 @@
-import getConfig from "next/config";
 import { useRouter } from "next/router";
 import React, { useContext, useState } from "react";
 import AppConfig from "@/layout/AppConfig";
@@ -9,24 +8,24 @@ import { InputText } from "primereact/inputtext";
 import { classNames } from "primereact/utils";
 import { useFormik } from "formik";
 import { login_validation } from "@/lib/validation";
-import { signIn, signOut } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 const LoginPage = () => {
   const callbackUrl =
     process.env.NODE_ENV == "production"
       ? "https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react/"
       : "http://localhost:3000";
-  const { layoutConfig } = useContext(LayoutContext);
-  // const contextPath = getConfig().publicRuntimeConfig.contextPath;
   const router = useRouter();
-  const containerClassName = classNames(
-    "surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden",
-    { "p-input-filled": layoutConfig.inputStyle === "filled" }
-  );
+  const { layoutConfig } = useContext(LayoutContext);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState({
     status: "",
   });
+
+  const containerClassName = classNames(
+    "surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden",
+    { "p-input-filled": layoutConfig.inputStyle === "filled" }
+  );
 
   const formik = useFormik({
     initialValues: {
