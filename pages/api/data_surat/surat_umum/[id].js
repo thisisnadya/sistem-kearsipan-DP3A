@@ -26,5 +26,7 @@ export default function handler(req, res) {
     case "DELETE":
       deleteSuratUmum(req, res);
       break;
+    default:
+      res.status(405).json({ error: "Method Not Allowed" });
   }
 }

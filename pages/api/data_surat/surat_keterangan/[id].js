@@ -22,5 +22,7 @@ export default function handler(req, res) {
     case "DELETE":
       deleteSK(req, res);
       break;
+    default:
+      res.status(405).json({ error: "Method Not Allowed" });
   }
 }
