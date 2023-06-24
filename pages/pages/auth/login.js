@@ -54,7 +54,9 @@ const LoginPage = () => {
       console.log(response);
       if (response.ok) {
         //authentication sucess
-        router.push("/");
+        router.push(
+          "https://sistem-kearsipan-dp3a-production.up.railway.app/sakai-react/"
+        );
         setIsLoading(false);
       } else {
         setError(response.error);
