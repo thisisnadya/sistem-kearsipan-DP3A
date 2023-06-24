@@ -17,7 +17,7 @@ const LoginPage = () => {
   const [error, setError] = useState();
   const router = useRouter();
 
-  const callbackUrl =
+  const BASE_URL =
     process.env.NODE_ENV == "production"
       ? "https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react"
       : "http://localhost:3000";
@@ -69,7 +69,7 @@ const LoginPage = () => {
   async function onSubmit(values) {
     try {
       await SignIn(values.username, values.password);
-      router.push("/");
+      router.push(BASE_URL);
     } catch (error) {
       const message = getSignInErrorMessage(error) || "An error occured";
       console.log(message);
