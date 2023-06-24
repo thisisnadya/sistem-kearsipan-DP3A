@@ -37,8 +37,9 @@ export default function Home() {
   const [visible, setVisible] = useState(false);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   const [chartData, setChartData] = useState();
-  // const { data: session } = useSession();
-  const session = useSession();
+  const { data: session } = useSession({
+    required: true,
+  });
   const router = useRouter();
   console.log(session);
 
@@ -350,9 +351,7 @@ export default function Home() {
               <Column
                 field="klasifikasi_surat"
                 header="Kode"
-                style={{ width: "20%" }}
-                filter
-                filterPlaceholder="Cari"
+                style={{ width: "10%" }}
               ></Column>
               <Column field="judul" header="Judul"></Column>
               <Column

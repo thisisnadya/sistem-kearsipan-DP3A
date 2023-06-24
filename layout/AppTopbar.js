@@ -43,7 +43,7 @@ const AppTopbar = forwardRef((props, ref) => {
       icon: <FaSignOutAlt />,
       command: async () => {
         const status = await signOut({
-          callbackUrl: "http://localhost:3000/auth/login",
+          callbackUrl: "http://localhost:3000/pages/auth/login",
           redirect: false,
         });
         console.log(status);

@@ -5,27 +5,34 @@ import { Button } from "primereact/button";
 import { Password } from "primereact/password";
 import { LayoutContext } from "@/layout/context/layoutcontext";
 import { InputText } from "primereact/inputtext";
+import { Message } from "primereact/message";
 import { classNames } from "primereact/utils";
 import { useFormik } from "formik";
 import { login_validation } from "@/lib/validation";
 import { signIn } from "next-auth/react";
 
 const LoginPage = () => {
+  const { layoutConfig } = useContext(LayoutContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
   const callbackUrl =
     process.env.NODE_ENV == "production"
       ? "https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react/"
       : "http://localhost:3000";
   const router = useRouter();
-  const { layoutConfig } = useContext(LayoutContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState({
-    status: "",
-  });
 
   const containerClassName = classNames(
     "surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden",
     { "p-input-filled": layoutConfig.inputStyle === "filled" }
   );
+
+  const simplifyError = (error) => {
+    const errorMap = {
+      CredentialsSignin: "Username atau password salah",
+    };
+    return errorMap[error] ?? "Unknown error occured";
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -36,27 +43,21 @@ const LoginPage = () => {
     onSubmit,
   });
 
-  async function signInUser(username, password) {
-    const status = await signIn("credentials", {
-      redirect: false,
-      username,
-      password,
-      callbackUrl,
-    });
-    return status;
-  }
-
   async function onSubmit(values) {
     setIsLoading(true);
     try {
-      const status = await signInUser(values.username, values.password);
-
-      if (status.ok) {
-        setIsLoggedIn({ status: "logged in" });
+      const response = await signIn("credentials", {
+        username: values.username,
+        password: values.password,
+        redirect: false,
+      });
+      console.log(response);
+      if (response.ok) {
+        //authentication sucess
+        router.push("/");
         setIsLoading(false);
-        router.push(callbackUrl);
       } else {
-        setIsLoggedIn({ status: "not logged in" });
+        setError(response.error);
         setIsLoading(false);
       }
     } catch (error) {
@@ -85,11 +86,11 @@ const LoginPage = () => {
                 Welcome, Admin!!
               </div>
               <span className="text-600 font-medium">Sign in to continue</span>
-              <h5 className="text-red-400">
-                {isLoggedIn.status == "not logged in"
-                  ? "Username atau password salah"
-                  : ""}
-              </h5>
+              <div className="my-1">
+                {error && (
+                  <Message severity="error" text={simplifyError(error)} />
+                )}
+              </div>
             </div>
 
             <form onSubmit={formik.handleSubmit}>

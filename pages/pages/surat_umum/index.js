@@ -188,8 +188,6 @@ export default function HomeSuratUmum() {
               field="klasifikasi_surat"
               header="Kode"
               style={{ width: "10%" }}
-              // filter
-              // filterPlaceholder="Cari"
             ></Column>
             <Column field="judul" header="Judul"></Column>
             <Column
