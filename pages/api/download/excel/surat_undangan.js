@@ -1,4 +1,3 @@
-import { Parser } from "json2csv";
 import connectMongo from "@/database/conn";
 import undangan from "@/model/undangan";
 import { Readable } from "stream";

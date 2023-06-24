@@ -1,4 +1,3 @@
-import { Parser } from "json2csv";
 import connectMongo from "@/database/conn";
 import suratUmum from "@/model/surat_umum";
 import { Readable } from "stream";

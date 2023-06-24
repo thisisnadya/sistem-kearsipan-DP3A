@@ -1,4 +1,3 @@
-import { Parser } from "json2csv";
 import connectMongo from "@/database/conn";
 import staffs from "@/model/staff";
 import { Readable } from "stream";
