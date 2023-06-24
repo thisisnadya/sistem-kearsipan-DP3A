@@ -9,18 +9,18 @@ import { Message } from "primereact/message";
 import { classNames } from "primereact/utils";
 import { useFormik } from "formik";
 import { login_validation } from "@/lib/validation";
-import { signIn } from "next-auth/react";
+import { SignIn, getSignInErrorMessage } from "@/lib/firebase";
 
 const LoginPage = () => {
   const { layoutConfig } = useContext(LayoutContext);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
+  const router = useRouter();
 
   const callbackUrl =
     process.env.NODE_ENV == "production"
       ? "https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react/"
       : "http://localhost:3000";
-  const router = useRouter();
 
   const containerClassName = classNames(
     "surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden",
@@ -43,28 +43,36 @@ const LoginPage = () => {
     onSubmit,
   });
 
+  // async function onSubmit(values) {
+  //   setIsLoading(true);
+  //   try {
+  //     const response = await signIn("credentials", {
+  //       username: values.username,
+  //       password: values.password,
+  //       redirect: false,
+  //     });
+  //     console.log(response);
+  //     if (response.ok) {
+  //       //authentication sucess
+  //       router.push("/");
+  //       setIsLoading(false);
+  //     } else {
+  //       setError(response.error);
+  //       setIsLoading(false);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error during sign in:", error);
+  //     setIsLoading(false);
+  //   }
+  // }
+
   async function onSubmit(values) {
-    setIsLoading(true);
     try {
-      const response = await signIn("credentials", {
-        username: values.username,
-        password: values.password,
-        redirect: false,
-      });
-      console.log(response);
-      if (response.ok) {
-        //authentication sucess
-        router.push(
-          "https://sistem-kearsipan-dp3a-production.up.railway.app/sakai-react/"
-        );
-        setIsLoading(false);
-      } else {
-        setError(response.error);
-        setIsLoading(false);
-      }
+      await SignIn(values.username, values.password);
+      router.push("/");
     } catch (error) {
-      console.error("Error during sign in:", error);
-      setIsLoading(false);
+      const message = getSignInErrorMessage(error) || "An error occured";
+      console.log(message);
     }
   }
 
@@ -88,11 +96,11 @@ const LoginPage = () => {
                 Welcome, Admin!!
               </div>
               <span className="text-600 font-medium">Sign in to continue</span>
-              <div className="my-1">
+              {/* <div className="my-1">
                 {error && (
                   <Message severity="error" text={simplifyError(error)} />
                 )}
-              </div>
+              </div> */}
             </div>
 
             <form onSubmit={formik.handleSubmit}>

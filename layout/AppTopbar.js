@@ -14,6 +14,7 @@ import { LayoutContext } from "./context/layoutcontext";
 import { FaSignOutAlt } from "react-icons/fa";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
+import { SignOut } from "@/lib/firebase";
 
 const IMAGE_URL =
   process.env.NODE_ENV == "production"
@@ -42,10 +43,7 @@ const AppTopbar = forwardRef((props, ref) => {
       label: "Sign Out",
       icon: <FaSignOutAlt />,
       command: async () => {
-        const status = await signOut({
-          callbackUrl: "http://localhost:3000/pages/auth/login",
-          redirect: false,
-        });
+        const status = await SignOut();
         console.log(status);
       },
     },

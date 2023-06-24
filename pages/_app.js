@@ -10,7 +10,8 @@ import { SessionProvider } from "next-auth/react";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 // import "../styles/demo/Demos.scss";
-
+import AuthStateChangeProvider from "context/auth";
+import { UserProvider } from "@/context/user";
 // create new client
 const queryClient = new QueryClient();
 
@@ -18,27 +19,31 @@ export default function MyApp({ Component, pageProps }) {
   if (Component.getLayout) {
     return (
       <LayoutProvider>
-        <SessionProvider session={pageProps.session}>
-          <QueryClientProvider client={queryClient}>
-            {Component.getLayout(<Component {...pageProps} />)}
-            {/* <ReactQueryDevtools initialIsOpen={false} position="bottom-right" /> */}
-          </QueryClientProvider>
-        </SessionProvider>
+        <QueryClientProvider client={queryClient}>
+          <UserProvider>
+            <AuthStateChangeProvider>
+              {Component.getLayout(<Component {...pageProps} />)}
+            </AuthStateChangeProvider>
+          </UserProvider>
+          {/* <ReactQueryDevtools initialIsOpen={false} position="bottom-right" /> */}
+        </QueryClientProvider>
       </LayoutProvider>
     );
   } else {
     return (
       <LayoutProvider>
         <Layout>
-          <SessionProvider session={pageProps.session}>
-            <QueryClientProvider client={queryClient}>
-              <Component {...pageProps} />
-              {/* <ReactQueryDevtools
+          <QueryClientProvider client={queryClient}>
+            <UserProvider>
+              <AuthStateChangeProvider>
+                <Component {...pageProps} />
+              </AuthStateChangeProvider>
+            </UserProvider>
+            {/* <ReactQueryDevtools
                 initialIsOpen={false}
                 position="bottom-right"
               /> */}
-            </QueryClientProvider>
-          </SessionProvider>
+          </QueryClientProvider>
         </Layout>
       </LayoutProvider>
     );

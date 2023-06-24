@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useSession } from "next-auth/react";
 import { useMutation, useQueries, useQuery, useQueryClient } from "react-query";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -24,30 +23,35 @@ import { Toast } from "primereact/toast";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import { InputText } from "primereact/inputtext";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
+import { useUser } from "@/context/user";
 import moment from "moment/moment";
 
 const BASE_URL =
   process.env.NODE_ENV == "production"
-    ? "https://sistem-kearsipan-dp3a-production.up.railway.app/sakai-react/"
+    ? "https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react/"
     : "http://localhost:3000";
 
 export default function Home() {
+  const router = useRouter();
+  const user = useUser();
+  const { uid } = user;
   const queryClient = useQueryClient();
   const toast = useRef(null);
   const [visible, setVisible] = useState(false);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   const [chartData, setChartData] = useState();
-  const { data: session } = useSession({
-    required: true,
-  });
-  const router = useRouter();
-  console.log(session);
 
   // useEffect(() => {
-  //   if (session.status == "unauthenticated")
+  //   if (session.status == "unauthenticated")S
   //     router.replace(`${BASE_URL}/auth/login`);
   // }, [session.status]);
-
+  console.log(uid);
+  useEffect(() => {
+    if (!uid) {
+      router.replace(`${BASE_URL}/pages/auth/login`);
+      // return;
+    }
+  }, [uid]);
   useEffect(() => {
     (async () => {
       setChartData(await getChartData());

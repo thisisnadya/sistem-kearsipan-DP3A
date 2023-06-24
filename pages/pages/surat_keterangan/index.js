@@ -18,7 +18,7 @@ import { exportToExcel } from "@/lib/helper";
 
 const BASE_URL =
   process.env.NODE_ENV == "production"
-    ? "https://sistem-kearsipan-dp3a-production.up.railway.app/sakai-react/"
+    ? "https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react/"
     : "http://localhost:3000";
 
 export default function HomeSuratKeterangan() {
