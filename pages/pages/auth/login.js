@@ -19,7 +19,7 @@ const LoginPage = () => {
 
   const callbackUrl =
     process.env.NODE_ENV == "production"
-      ? "https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react/"
+      ? "https://sistem-kearsipan-dp-3-a.vercel.app/sakai-react"
       : "http://localhost:3000";
 
   const containerClassName = classNames(
