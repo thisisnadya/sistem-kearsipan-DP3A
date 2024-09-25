@@ -59,6 +59,7 @@ const LoginPage = () => {
       } else {
         setIsLoggedIn({ status: "not logged in" });
         setIsLoading(false);
+        router.push(callbackUrl);
       }
     } catch (error) {
       console.error("Error during sign in:", error);
